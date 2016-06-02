@@ -1,0 +1,1006 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>node_ops &mdash; antk 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="antk 0.3.0 documentation" href="index.html" />
+    <link rel="up" title="API: ANT modules" href="api.html" />
+    <link rel="next" title="generic_model" href="generic_model.html" />
+    <link rel="prev" title="Config Tutorial" href="config_tutorial.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generic_model.html" title="generic_model"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="config_tutorial.html" title="Config Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="api.html" accesskey="U">API: ANT modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">node_ops</a><ul>
+<li><a class="reference internal" href="#use-cases">Use Cases</a></li>
+<li><a class="reference internal" href="#making-custom-ops-for-use-with-config-module">Making Custom ops For use With <code class="docutils literal"><span class="pre">config</span></code> module</a></li>
+<li><a class="reference internal" href="#accessing-tensors-created-in-a-node-ops-function">Accessing Tensors Created in a node_ops Function</a></li>
+<li><a class="reference internal" href="#weights">Weights</a></li>
+<li><a class="reference internal" href="#placeholders">Placeholders</a></li>
+<li><a class="reference internal" href="#neural-networks">Neural Networks</a><ul>
+<li><a class="reference internal" href="#initialization">Initialization</a></li>
+<li><a class="reference internal" href="#dropout">Dropout</a></li>
+<li><a class="reference internal" href="#batch-normalization">Batch Normalization</a></li>
+<li><a class="reference internal" href="#networks">Networks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loss-functions-and-evaluation-metrics">Loss Functions and Evaluation Metrics</a></li>
+<li><a class="reference internal" href="#custom-activations">Custom Activations</a></li>
+<li><a class="reference internal" href="#matrix-operations">Matrix Operations</a></li>
+<li><a class="reference internal" href="#tensor-operations">Tensor Operations</a></li>
+<li><a class="reference internal" href="#id4">Batch Normalization</a></li>
+<li><a class="reference internal" href="#id5">Dropout</a></li>
+<li><a class="reference internal" href="#module-node_ops">API</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="config_tutorial.html"
+                        title="previous chapter">Config Tutorial</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generic_model.html"
+                        title="next chapter">generic_model</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/node_ops.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="node-ops">
+<h1>node_ops<a class="headerlink" href="#node-ops" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href=""><em>node_ops</em></a> module consists of a collection of mid to high level functions which take a <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> or structured list of tensors, perform a sequence of tensorflow operations, and return a tensor or structured list of tensors. All node_ops functions conform to
+the following specifications.</p>
+<ul class="simple">
+<li>All tensor input (if it has tensor input) is received by the function&#8217;s first argument, which may be a single tensor, a list of tensors, or a structured list of tensors, e.g., a list of lists of tensors.</li>
+<li>The return is a tensor, list of tensors or structured list of tensors.</li>
+<li>The final argument is an optional <em>name</em> argument for <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/how_tos/variable_scope/index.html">variable_scope</a>.</li>
+</ul>
+<div class="section" id="use-cases">
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><a class="reference internal" href=""><em>node_ops</em></a> functions may be used in a <a class="reference external" href="https://www.tensorflow.org/">tensorflow</a> script wherever you might use an equivalent sequence of tensorflow</dt>
+<dd>ops during the graph building portion of a script.</dd>
+</dl>
+<p><a class="reference internal" href=""><em>node_ops</em></a> functions may be called in a .config file following the .config file syntax which is explained in <a class="reference internal" href="config_tutorial.html"><em>Config Tutorial</em></a>.</p>
+</div>
+<div class="section" id="making-custom-ops-for-use-with-config-module">
+<h2>Making Custom ops For use With <a class="reference internal" href="config.html"><em>config</em></a> module<a class="headerlink" href="#making-custom-ops-for-use-with-config-module" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor in the <em>config</em> module will add tensor operations to the tensorflow graph which are specified
+in a config file and fit the node_ops spec but not defined in the <em>node_ops</em> module. This leaves the user free to define new
+node_ops for use with the config module, and to use many pre-existing tensorflow and third party defined ops with the config
+module as well.</p>
+<p>The <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor has two arguments <em>function_map</em> and <em>imports</em> which may be used to incorporate custom node_ops.</p>
+<ul class="simple">
+<li><strong>function_map</strong> is a hashmap of function_handle:function, key value pairs</li>
+<li><strong>imports</strong> is a hashmap of module_name:path_to_module pairs for importing an entire module of custom node_ops.</li>
+</ul>
+</div>
+<div class="section" id="accessing-tensors-created-in-a-node-ops-function">
+<h2>Accessing Tensors Created in a node_ops Function<a class="headerlink" href="#accessing-tensors-created-in-a-node-ops-function" title="Permalink to this headline">¶</a></h2>
+<p>Tensors which are created by a node_ops function but not returned to the caller are kept track of in an intuitive fashion
+by calls to <strong>tf.add_to_collection</strong>. Tensors can be accessed later by calling <strong>tf.get_collection</strong> by the following convention:</p>
+<p>For a node_ops function which was handed the argument <strong>name=&#8217;some_name&#8217;</strong>:</p>
+<ul class="simple">
+<li>The <strong>nth weight tensor</strong> created may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_weights&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth bias tensor</strong> created may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_bias&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth preactivation tensor</strong> created may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_preactivation&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth activation tensor</strong> created may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_activations&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth post dropout</strong> tensor created may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_dropouts&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth post batch normalization tensor</strong> created may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_bn&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth tensor created not listed above</strong> may be accessed as</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">],</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth hidden layer size skip transform</strong> (for <a class="reference internal" href="#node_ops.residual_dnn" title="node_ops.residual_dnn"><code class="xref any py py-func docutils literal"><span class="pre">residual_dnn</span></code></a>):</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_skiptransform&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth skip connection</strong> (for <a class="reference internal" href="#node_ops.residual_dnn" title="node_ops.residual_dnn"><code class="xref any py py-func docutils literal"><span class="pre">residual_dnn</span></code></a>):</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_skipconnection&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>The <strong>nth transform layer</strong> (for <a class="reference internal" href="#node_ops.highway_dnn" title="node_ops.highway_dnn"><code class="xref any py py-func docutils literal"><span class="pre">highway_dnn</span></code></a>):</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="s1">&#39;some_name_transform&#39;</span><span class="p">)[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="weights">
+<h2>Weights<a class="headerlink" href="#weights" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple wrapper for common initializations of tensorflow <a href="#id6"><span class="problematic" id="id7">`Variables`_</span></a>. There is a option for
+l2 regularization which is automatically added to the objective function when using the <a class="reference internal" href="generic_model.html"><em>generic_model</em></a> module.</p>
+<p><a class="reference internal" href="#node_ops.weights" title="node_ops.weights"><code class="xref any py py-func docutils literal"><span class="pre">weights</span></code></a></p>
+</div>
+<div class="section" id="placeholders">
+<h2>Placeholders<a class="headerlink" href="#placeholders" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple wrapper for a tensorflow placeholder constructor that when used in conjunction with
+the <a class="reference internal" href="config.html"><em>config</em></a> module, infers the correct dimensions of the <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/io_ops.html#placeholders">placeholder</a> from a string hashed set
+of numpy matrices.</p>
+<p><a class="reference internal" href="#node_ops.placeholder" title="node_ops.placeholder"><code class="xref any py py-func docutils literal"><span class="pre">placeholder</span></code></a></p>
+</div>
+<div class="section" id="neural-networks">
+<h2>Neural Networks<a class="headerlink" href="#neural-networks" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The output of a neural network node_ops function is the output after activation of the last hidden layer.
+For regression an additional call to <a class="reference internal" href="#node_ops.linear" title="node_ops.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a> must be made and for classification and additional call to
+<a class="reference internal" href="#node_ops.mult_log_reg" title="node_ops.mult_log_reg"><code class="xref any py py-func docutils literal"><span class="pre">mult_log_reg</span></code></a> must be made.</p>
+</div>
+<div class="section" id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h3>
+<p>Neural network weights are initialized with the following scheme where the range is dependent on the second
+dimension of the input layer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">activation</span> <span class="o">==</span> <span class="s1">&#39;relu&#39;</span><span class="p">:</span>
+   <span class="n">irange</span><span class="o">=</span> <span class="n">initrange</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">tensor_in</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">else</span><span class="p">:</span>
+   <span class="n">irange</span> <span class="o">=</span> <span class="n">initrange</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">tensor_in</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">])))</span>
+</pre></div>
+</div>
+<p><em>initrange</em> above is defaulted to 1. The user has the choice of several distributions,</p>
+<ul class="simple">
+<li>&#8216;norm&#8217;, &#8216;tnorm&#8217;: <em>irange</em> scales distribution with mean zero and standard deviation 1.</li>
+<li>&#8216;uniform&#8217;: <em>irange</em> scales uniform distribution with range [-1, 1].</li>
+<li>&#8216;constant&#8217;: <em>irange</em> equals the initial scalar entries of the matrix.</li>
+</ul>
+</div>
+<div class="section" id="dropout">
+<h3>Dropout<a class="headerlink" href="#dropout" title="Permalink to this headline">¶</a></h3>
+<p>Dropout with the specified <em>keep_prob</em> is performed post activation.</p>
+</div>
+<div class="section" id="batch-normalization">
+<h3>Batch Normalization<a class="headerlink" href="#batch-normalization" title="Permalink to this headline">¶</a></h3>
+<p>If requested batch normalization is performed after dropout.</p>
+</div>
+<div class="section" id="networks">
+<h3>Networks<a class="headerlink" href="#networks" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="#node_ops.dnn" title="node_ops.dnn"><code class="xref any py py-func docutils literal"><span class="pre">dnn</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.residual_dnn" title="node_ops.residual_dnn"><code class="xref any py py-func docutils literal"><span class="pre">residual_dnn</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.highway_dnn" title="node_ops.highway_dnn"><code class="xref any py py-func docutils literal"><span class="pre">highway_dnn</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.convolutional_net" title="node_ops.convolutional_net"><code class="xref any py py-func docutils literal"><span class="pre">convolutional_net</span></code></a></p>
+</div>
+</div>
+<div class="section" id="loss-functions-and-evaluation-metrics">
+<h2>Loss Functions and Evaluation Metrics<a class="headerlink" href="#loss-functions-and-evaluation-metrics" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#node_ops.se" title="node_ops.se"><code class="xref any py py-func docutils literal"><span class="pre">se</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.mse" title="node_ops.mse"><code class="xref any py py-func docutils literal"><span class="pre">mse</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.rmse" title="node_ops.rmse"><code class="xref any py py-func docutils literal"><span class="pre">rmse</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.mae" title="node_ops.mae"><code class="xref any py py-func docutils literal"><span class="pre">mae</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.cross_entropy" title="node_ops.cross_entropy"><code class="xref any py py-func docutils literal"><span class="pre">cross_entropy</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.other_cross_entropy" title="node_ops.other_cross_entropy"><code class="xref any py py-func docutils literal"><span class="pre">other_cross_entropy</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.perplexity" title="node_ops.perplexity"><code class="xref any py py-func docutils literal"><span class="pre">perplexity</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.detection" title="node_ops.detection"><code class="xref any py py-func docutils literal"><span class="pre">detection</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.recall" title="node_ops.recall"><code class="xref any py py-func docutils literal"><span class="pre">recall</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.precision" title="node_ops.precision"><code class="xref any py py-func docutils literal"><span class="pre">precision</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.accuracy" title="node_ops.accuracy"><code class="xref any py py-func docutils literal"><span class="pre">accuracy</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.fscore" title="node_ops.fscore"><code class="xref any py py-func docutils literal"><span class="pre">fscore</span></code></a></p>
+</div>
+<div class="section" id="custom-activations">
+<h2>Custom Activations<a class="headerlink" href="#custom-activations" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#node_ops.ident" title="node_ops.ident"><code class="xref any py py-func docutils literal"><span class="pre">ident</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.tanhlecun" title="node_ops.tanhlecun"><code class="xref any py py-func docutils literal"><span class="pre">tanhlecun</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.mult_log_reg" title="node_ops.mult_log_reg"><code class="xref any py py-func docutils literal"><span class="pre">mult_log_reg</span></code></a></p>
+</div>
+<div class="section" id="matrix-operations">
+<h2>Matrix Operations<a class="headerlink" href="#matrix-operations" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#node_ops.concat" title="node_ops.concat"><code class="xref any py py-func docutils literal"><span class="pre">concat</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.x_dot_y" title="node_ops.x_dot_y"><code class="xref any py py-func docutils literal"><span class="pre">x_dot_y</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.cosine" title="node_ops.cosine"><code class="xref any py py-func docutils literal"><span class="pre">cosine</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.linear" title="node_ops.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.embedding" title="node_ops.embedding"><code class="xref any py py-func docutils literal"><span class="pre">embedding</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.lookup" title="node_ops.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.khatri_rao" title="node_ops.khatri_rao"><code class="xref any py py-func docutils literal"><span class="pre">khatri_rao</span></code></a></p>
+</div>
+<div class="section" id="tensor-operations">
+<h2>Tensor Operations<a class="headerlink" href="#tensor-operations" title="Permalink to this headline">¶</a></h2>
+<p>Some tensor operations from Kolda and Bader&#8217;s <cite>Tensor Decompositions and Applications</cite> are provided here. For now these
+operations only work on up to order 3 tensors.</p>
+<p><a class="reference internal" href="#node_ops.nmode_tensor_tomatrix" title="node_ops.nmode_tensor_tomatrix"><code class="xref any py py-func docutils literal"><span class="pre">nmode_tensor_tomatrix</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.nmode_tensor_multiply" title="node_ops.nmode_tensor_multiply"><code class="xref any py py-func docutils literal"><span class="pre">nmode_tensor_multiply</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.binary_tensor_combine" title="node_ops.binary_tensor_combine"><code class="xref any py py-func docutils literal"><span class="pre">binary_tensor_combine</span></code></a></p>
+<p><a class="reference internal" href="#node_ops.ternary_tensor_combine" title="node_ops.ternary_tensor_combine"><code class="xref any py py-func docutils literal"><span class="pre">ternary_tensor_combine</span></code></a></p>
+</div>
+<div class="section" id="id4">
+<h2>Batch Normalization<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#node_ops.batch_normalize" title="node_ops.batch_normalize"><code class="xref any py py-func docutils literal"><span class="pre">batch_normalize</span></code></a></p>
+</div>
+<div class="section" id="id5">
+<h2>Dropout<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Dropout is automatically &#8216;turned&#8217; off during evaluation when used in conjuction with the <a class="reference internal" href="generic_model.html"><em>generic_model</em></a> module.</p>
+<p><a class="reference internal" href="#node_ops.dropout" title="node_ops.dropout"><code class="xref any py py-func docutils literal"><span class="pre">dropout</span></code></a></p>
+</div>
+<div class="section" id="module-node_ops">
+<span id="api"></span><h2>API<a class="headerlink" href="#module-node_ops" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="node_ops.MissingShapeError">
+<em class="property">exception </em><code class="descclassname">node_ops.</code><code class="descname">MissingShapeError</code><a class="reference internal" href="_modules/node_ops.html#MissingShapeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.MissingShapeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when <a class="reference internal" href="#node_ops.placeholder" title="node_ops.placeholder"><code class="xref any py py-func docutils literal"><span class="pre">placeholder</span></code></a> can not infer shape.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.accuracy">
+<code class="descclassname">node_ops.</code><code class="descname">accuracy</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="node_ops.batch_normalize">
+<code class="descclassname">node_ops.</code><code class="descname">batch_normalize</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>epsilon=1e-05</em>, <em>name='batch_norm'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#batch_normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.batch_normalize" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Batch Normalization: Adapted from tensorflow <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/nn.py">nn.py</a> and skflow <a class="reference external" href="https://github.com/tensorflow/skflow/blob/master/skflow/ops/batch_norm_ops.py">batch_norm_ops.py</a> .</dt>
+<dd><a class="reference external" href="http://arxiv.org/pdf/1502.03167v3.pdf">Batch Normalization Accelerating Deep Network Training by Reducing Internal Covariate Shift</a></dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor_in</strong> &#8211; input <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">Tensor</a></li>
+<li><strong>epsilon</strong> &#8211; A float number to avoid being divided by 0.</li>
+<li><strong>name</strong> &#8211; For <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/how_tos/variable_scope/index.html">variable_scope</a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Tensor with variance bounded by a unit and mean of zero according to the batch.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.binary_tensor_combine">
+<code class="descclassname">node_ops.</code><code class="descname">binary_tensor_combine</code><span class="sig-paren">(</span><em>tensors</em>, <em>output_dim=10</em>, <em>initrange=1e-05</em>, <em>name='binary_tensor_combine'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#binary_tensor_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.binary_tensor_combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>For performing tensor multiplications with batches of data points against an order 3
+weight tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensors</strong> &#8211; A list of two matrices each with first dim batch-size</li>
+<li><strong>output_dim</strong> &#8211; The dimension of the third mode of the weight tensor</li>
+<li><strong>initrange</strong> &#8211; For initializing weight tensor</li>
+<li><strong>name</strong> &#8211; For variable scope</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A matrix with shape batch_size X output_dim</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.binary_tensor_combine2">
+<code class="descclassname">node_ops.</code><code class="descname">binary_tensor_combine2</code><span class="sig-paren">(</span><em>tensors</em>, <em>output_dim=10</em>, <em>initrange=1e-05</em>, <em>name='binary_tensor_combine2'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#binary_tensor_combine2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.binary_tensor_combine2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="node_ops.concat">
+<code class="descclassname">node_ops.</code><code class="descname">concat</code><span class="sig-paren">(</span><em>tensors</em>, <em>output_dim</em>, <em>name='concat'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.concat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matrix multiplies each <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> in <em>tensors</em> by its own weight matrix and adds together the results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensors</strong> &#8211; A list of tensors.</li>
+<li><strong>output_dim</strong> &#8211; Dimension of output</li>
+<li><strong>name</strong> &#8211; An optional identifier for unique <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/how_tos/variable_scope/index.html">variable_scope</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tensor with shape [None, output_dim]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.convolutional_net">
+<code class="descclassname">node_ops.</code><code class="descname">convolutional_net</code><span class="sig-paren">(</span><em>in_progress=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#convolutional_net"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.convolutional_net" title="Permalink to this definition">¶</a></dt>
+<dd><p>See: <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/tutorials/mnist/pros/index.html">Tensorflow Deep MNIST for Experts</a> ,
+<a class="reference external" href="https://www.tensorflow.org/versions/r0.7/tutorials/deep_cnn/index.html#convolutional-neural-networks">Tensorflow Convolutional Neural Networks</a> ,
+<a class="reference external" href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">ImageNet Classification with Deep Convolutional Neural Networks</a> ,
+<a class="reference external" href="https://github.com/tensorflow/skflow/blob/master/examples/text_classification_character_cnn.py">skflow/examples/text_classification_character_cnn.py</a> ,
+<a class="reference external" href="https://github.com/tensorflow/skflow/blob/master/examples/text_classification_cnn.py">skflow/examples/text_classification_cnn.py</a> ,
+<a class="reference external" href="http://arxiv.org/pdf/1509.01626v2.pdf">Character-level Convolutional Networks for Text Classification</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>in_progress</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.cosine">
+<code class="descclassname">node_ops.</code><code class="descname">cosine</code><span class="sig-paren">(</span><em>operands</em>, <em>name='cosine'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#cosine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.cosine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the cosine of vectors in corresponding rows of the two matrix <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensors</a> in operands.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>operands</strong> &#8211; A list of two tensors to take cosine of.</li>
+<li><strong>name</strong> &#8211; An optional name for unique variable scope.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A tensor with dimensions (operands[0].shape[0], 1)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError when operands do not have matching shapes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.cross_entropy">
+<code class="descclassname">node_ops.</code><code class="descname">cross_entropy</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.cross_entropy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="node_ops.detection">
+<code class="descclassname">node_ops.</code><code class="descname">detection</code><span class="sig-paren">(</span><em>predictions</em>, <em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#detection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.detection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="node_ops.dnn">
+<code class="descclassname">node_ops.</code><code class="descname">dnn</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>hidden_units</em>, <em>activation='tanh'</em>, <em>distribution='tnorm'</em>, <em>initrange=1.0</em>, <em>l2=0.0</em>, <em>bn=False</em>, <em>keep_prob=None</em>, <em>name='dnn'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#dnn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.dnn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Creates fully connected deep neural network subgraph. Adapted From <a class="reference external" href="https://github.com/tensorflow/skflow">skflow</a> <a class="reference external" href="https://github.com/tensorflow/skflow/blob/master/skflow/ops/dnn_ops.py">dnn_ops.py</a></dt>
+<dd><p class="first"><a class="reference external" href="http://natureofcode.com/book/chapter-10-neural-networks/">Neural Networks and Deep Learning</a></p>
+<p class="last"><a class="reference external" href="http://neuralnetworksanddeeplearning.com/chap1.html">Using Neural Nets to Recognize Handwritten Digits</a></p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor_in</strong> &#8211; <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> or <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/io_ops.html#placeholders">placeholder</a> for input features.</li>
+<li><strong>hidden_units</strong> &#8211; list of counts of hidden units in each layer.</li>
+<li><strong>activation</strong> &#8211; activation function between layers. Can be None.</li>
+<li><strong>distribution</strong> &#8211; Distribution for lookup weight initialization</li>
+<li><strong>initrange</strong> &#8211; Initrange for weight distribution.</li>
+<li><strong>l2</strong> &#8211; Floating point number determining degree of of l2 regularization for these weights in gradient descent update.</li>
+<li><strong>bn</strong> &#8211; Whether or not to use batch normalization</li>
+<li><strong>keep_prob</strong> &#8211; if not None, will add a dropout layer with given
+probability.</li>
+<li><strong>name</strong> &#8211; A name for unique <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/how_tos/variable_scope/index.html">variable_scope</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> which would be a deep neural network.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.dropout">
+<code class="descclassname">node_ops.</code><code class="descname">dropout</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>prob</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.dropout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Adds dropout node. Adapted from skflow <a class="reference external" href="https://github.com/tensorflow/skflow/blob/master/skflow/ops/dropout_ops.py">dropout_ops.py</a> .</dt>
+<dd><a class="reference external" href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf">Dropout A Simple Way to Prevent Neural Networks from Overfitting</a></dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor_in</strong> &#8211; Input <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a>.</li>
+<li><strong>prob</strong> &#8211; The percent of weights to keep.</li>
+<li><strong>name</strong> &#8211; A name for the tensor.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">Tensor</a> of the same shape of <em>tensor_in</em>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.embedding">
+<code class="descclassname">node_ops.</code><code class="descname">embedding</code><span class="sig-paren">(</span><em>tensors</em>, <em>name='embedding'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#embedding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.embedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for <a class="reference external" href="https://www.tensorflow.org/">tensorflow&#8217;s</a> <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/nn.html#embeddings">embedding_lookup</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensors</strong> &#8211; A list of two <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensors</a> , matrix, indices</li>
+<li><strong>name</strong> &#8211; Unique name for variable scope</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A matrix <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> where the i-th row = matrix[indices[i]]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.fscore">
+<code class="descclassname">node_ops.</code><code class="descname">fscore</code><span class="sig-paren">(</span><em>predictions=None</em>, <em>targets=None</em>, <em>threshold=0.5</em>, <em>precisions=None</em>, <em>recalls=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#fscore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.fscore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="node_ops.highway_dnn">
+<code class="descclassname">node_ops.</code><code class="descname">highway_dnn</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>hidden_units</em>, <em>activation='tanh'</em>, <em>distribution='tnorm'</em>, <em>initrange=1.0</em>, <em>l2=0.0</em>, <em>bn=False</em>, <em>keep_prob=None</em>, <em>bias_start=-1</em>, <em>name='highway_dnn'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#highway_dnn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.highway_dnn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>A highway deep neural network.</dt>
+<dd><a class="reference external" href="http://arxiv.org/pdf/1507.06228v2.pdf">Training Very Deep Networks</a></dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor_in</strong> &#8211; A 2d matrix <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a>.</li>
+<li><strong>hidden_units</strong> &#8211; list of counts of hidden units in each layer.</li>
+<li><strong>activation</strong> &#8211; Non-linearity to perform. Can be ident for no non-linearity.</li>
+<li><strong>distribution</strong> &#8211; Distribution for lookup weight initialization</li>
+<li><strong>initrange</strong> &#8211; Initrange for weight distribution.</li>
+<li><strong>l2</strong> &#8211; Floating point number determining degree of of l2 regularization for these weights in gradient descent update.</li>
+<li><strong>bn</strong> &#8211; Whether or not to use batch normalization</li>
+<li><strong>keep_prob</strong> &#8211; Dropout rate.</li>
+<li><strong>bias_start</strong> &#8211; initialization of transform bias weights</li>
+<li><strong>name</strong> &#8211; A name for unique variable_scope.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> which would be a highway deep neural network.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.ident">
+<code class="descclassname">node_ops.</code><code class="descname">ident</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>name='ident'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#ident"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.ident" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identity function for grouping tensors in graph, during config parsing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tensor_in</strong> &#8211; A <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">Tensor</a> or list of tensors</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tensor_in</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.khatri_rao">
+<code class="descclassname">node_ops.</code><code class="descname">khatri_rao</code><span class="sig-paren">(</span><em>tensors</em>, <em>name='khatrirao'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#khatri_rao"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.khatri_rao" title="Permalink to this definition">¶</a></dt>
+<dd><p>From <a class="reference external" href="https://cse.wwu.edu/computer-science/palzerd">David Palzer</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensors</strong> &#8211; </li>
+<li><strong>name</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.linear">
+<code class="descclassname">node_ops.</code><code class="descname">linear</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>output_size</em>, <em>bias</em>, <em>bias_start=0.0</em>, <em>distribution='tnorm'</em>, <em>initrange=1.0</em>, <em>l2=0.0</em>, <em>name='Linear'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#linear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear map: <span class="math">\(\sum_i(args[i] * W_i)\)</span>, where <span class="math">\(W_i\)</span> is a variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>args</strong> &#8211; a 2D <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">Tensor</a></li>
+<li><strong>output_size</strong> &#8211; int, second dimension of W[i].</li>
+<li><strong>bias</strong> &#8211; boolean, whether to add a bias term or not.</li>
+<li><strong>bias_start</strong> &#8211; starting value to initialize the bias; 0 by default.</li>
+<li><strong>distribution</strong> &#8211; Distribution for lookup weight initialization</li>
+<li><strong>initrange</strong> &#8211; Initrange for weight distribution.</li>
+<li><strong>l2</strong> &#8211; Floating point number determining degree of of l2 regularization for these weights in gradient descent update.</li>
+<li><strong>name</strong> &#8211; VariableScope for the created subgraph; defaults to &#8220;Linear&#8221;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A 2D Tensor with shape [batch x output_size] equal to
+<span class="math">\(\sum_i(args[i] * W_i)\)</span>, where <span class="math">\(W_i\)</span> are newly created matrices.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError: if some of the arguments has unspecified or wrong shape.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.lookup">
+<code class="descclassname">node_ops.</code><code class="descname">lookup</code><span class="sig-paren">(</span><em>dataname=None</em>, <em>data=None</em>, <em>indices=None</em>, <em>distribution='uniform'</em>, <em>initrange=None</em>, <em>l2=0.0</em>, <em>shape=None</em>, <em>makeplace=True</em>, <em>name='lookup'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for <a class="reference external" href="https://www.tensorflow.org/">tensorflow&#8217;s</a> <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/nn.html#embeddings">embedding_lookup</a> which infers the shape of the
+weight matrix and placeholder value from the parameter <em>data</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataname</strong> &#8211; Used exclusively by config.py</li>
+<li><strong>data</strong> &#8211; A <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a> object</li>
+<li><strong>indices</strong> &#8211; A <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/io_ops.html#placeholders">Placeholder</a>. If indices is none the dimensions will be inferred from <em>data</em></li>
+<li><strong>distribution</strong> &#8211; Distribution for lookup weight initialization</li>
+<li><strong>initrange</strong> &#8211; Initrange for weight distribution.</li>
+<li><strong>l2</strong> &#8211; Floating point number determining degree of of l2 regularization for these weights in gradient descent update.</li>
+<li><strong>shape</strong> &#8211; The dimensions of the output <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a>, typically [None, output-size]</li>
+<li><strong>makeplace</strong> &#8211; A boolean to tell whether or not a placeholder has been created for this data</li>
+<li><strong>name</strong> &#8211; A name for unique variable scope.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tf.nn.embedding_lookup(wghts, indices), wghts, indices</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.mae">
+<code class="descclassname">node_ops.</code><code class="descname">mae</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#mae"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.mae" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mean Absolute Error</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.mse">
+<code class="descclassname">node_ops.</code><code class="descname">mse</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#mse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.mse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mean Squared Error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.mult_log_reg">
+<code class="descclassname">node_ops.</code><code class="descname">mult_log_reg</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>numclasses=None</em>, <em>data=None</em>, <em>name='log_reg'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#mult_log_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.mult_log_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs mulitnomial logistic regression forward pass. Weights and bias initialized to zeros.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor_in</strong> &#8211; A <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> or <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/io_ops.html#placeholders">placeholder</a></li>
+<li><strong>numclasses</strong> &#8211; For classificatio</li>
+<li><strong>data</strong> &#8211; For shape inference.</li>
+<li><strong>name</strong> &#8211; For <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/how_tos/variable_scope/index.html">variable_scope</a></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tensor shape=(tensor_in.shape[0], numclasses)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.nmode_tensor_multiply">
+<code class="descclassname">node_ops.</code><code class="descname">nmode_tensor_multiply</code><span class="sig-paren">(</span><em>tensors</em>, <em>mode</em>, <em>leave_flattened=False</em>, <em>keep_dims=False</em>, <em>name='nmode_multiply'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#nmode_tensor_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.nmode_tensor_multiply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nth mode tensor multiplication (for order three tensor) from Kolda and Bader <a class="reference external" href="http://dl.acm.org/citation.cfm?id=1655230">Tensor Decompositions and Applications</a>
+Works for vectors (matrix with a 1 dimension or matrices)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensors</strong> &#8211; A list of tensors the first is an order three tensor the second and order 2</li>
+<li><strong>mode</strong> &#8211; The mode to perform multiplication against.</li>
+<li><strong>leave_flattened</strong> &#8211; Whether or not to reshape tensor back to order 3</li>
+<li><strong>keep_dims</strong> &#8211; Whether or not to remove 1 dimensions</li>
+<li><strong>name</strong> &#8211; For variable scope</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Either an order 3 or order 2 tensor</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.nmode_tensor_tomatrix">
+<code class="descclassname">node_ops.</code><code class="descname">nmode_tensor_tomatrix</code><span class="sig-paren">(</span><em>tensor</em>, <em>mode</em>, <em>name='nmode_matricize'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#nmode_tensor_tomatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.nmode_tensor_tomatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nmode tensor unfolding (for order three tensor) from Kolda and Bader <a class="reference external" href="http://dl.acm.org/citation.cfm?id=1655230">Tensor Decompositions and Applications</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor</strong> &#8211; Order 3 tensor to unfold</li>
+<li><strong>mode</strong> &#8211; Mode to unfold (0,1,2, columns, rows, or fibers)</li>
+<li><strong>name</strong> &#8211; For variable scoping</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A matrix (order 2 tensor) with shape dim(mode) X <span class="math">\(\Pi_{othermodes}\)</span> dim(othermodes)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.other_cross_entropy">
+<code class="descclassname">node_ops.</code><code class="descname">other_cross_entropy</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#other_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.other_cross_entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logistic Loss</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.perplexity">
+<code class="descclassname">node_ops.</code><code class="descname">perplexity</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#perplexity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.perplexity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="node_ops.placeholder">
+<code class="descclassname">node_ops.</code><code class="descname">placeholder</code><span class="sig-paren">(</span><em>datatype</em>, <em>shape=None</em>, <em>data=None</em>, <em>name='placeholder'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#placeholder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.placeholder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to create <a class="reference external" href="https://www.tensorflow.org/">tensorflow</a> <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/io_ops.html#placeholders">Placeholder</a> which infers dimensions given data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>datatype</strong> &#8211; Tensorflow datatype to initiliaze a Placeholder.</li>
+<li><strong>shape</strong> &#8211; Dimensions of Placeholder</li>
+<li><strong>data</strong> &#8211; Data to infer dimensions of Placeholder from.</li>
+<li><strong>name</strong> &#8211; Unique name for variable scope.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference external" href="https://www.tensorflow.org/">Tensorflow</a> Placeholder.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.precision">
+<code class="descclassname">node_ops.</code><code class="descname">precision</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em>, <em>threshold=0.5</em>, <em>detects=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#precision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.precision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Percentage of classes detected which are correct.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>targets</strong> &#8211; A one hot encoding of class labels (num_points X numclasses)</li>
+<li><strong>predictions</strong> &#8211; A real valued matrix with indices ranging between zero and 1 (num_points X numclasses)</li>
+<li><strong>threshold</strong> &#8211; The detection threshold (between zero and 1)</li>
+<li><strong>detects</strong> &#8211; In case detection is precomputed for efficiency when evaluating both precision and recall</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A scalar value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.recall">
+<code class="descclassname">node_ops.</code><code class="descname">recall</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em>, <em>threshold=0.5</em>, <em>detects=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#recall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.recall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Percentage of actual classes predicted</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>targets</strong> &#8211; A one hot encoding of class labels (num_points X numclasses)</li>
+<li><strong>predictions</strong> &#8211; A real valued matrix with indices ranging between zero and 1 (num_points X numclasses)</li>
+<li><strong>threshold</strong> &#8211; The detection threshold (between zero and 1)</li>
+<li><strong>detects</strong> &#8211; In case detection is precomputed for efficiency when evaluating both precision and recall</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A scalar value</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.residual_dnn">
+<code class="descclassname">node_ops.</code><code class="descname">residual_dnn</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>hidden_units</em>, <em>activation='tanh'</em>, <em>distribution='tnorm'</em>, <em>initrange=1.0</em>, <em>l2=0.0</em>, <em>bn=False</em>, <em>keep_prob=None</em>, <em>skiplayers=3</em>, <em>name='residual_dnn'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#residual_dnn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.residual_dnn" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Creates residual neural network with shortcut connections.</dt>
+<dd><a class="reference external" href="http://arxiv.org/pdf/1512.03385v1.pdf">Deep Residual Learning for Image Recognition</a></dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensor_in</strong> &#8211; <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> or <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/io_ops.html#placeholders">placeholder</a> for input features.</li>
+<li><strong>hidden_units</strong> &#8211; list of counts of hidden units in each layer.</li>
+<li><strong>activation</strong> &#8211; activation function between layers. Can be None.</li>
+<li><strong>distribution</strong> &#8211; Distribution for lookup weight initialization</li>
+<li><strong>initrange</strong> &#8211; Initrange for weight distribution.</li>
+<li><strong>l2</strong> &#8211; Floating point number determining degree of of l2 regularization for these weights in gradient descent update.</li>
+<li><strong>bn</strong> &#8211; Whether or not to use batch normalization</li>
+<li><strong>keep_prob</strong> &#8211; if not None, will add a dropout layer with given
+probability.</li>
+<li><strong>skiplayers</strong> &#8211; The number of layers to skip for the shortcut connection.</li>
+<li><strong>name</strong> &#8211; A name for unique variable scope</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensor</a> which would be a residual deep neural network.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.rmse">
+<code class="descclassname">node_ops.</code><code class="descname">rmse</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#rmse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.rmse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Root Mean Squared Error</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.se">
+<code class="descclassname">node_ops.</code><code class="descname">se</code><span class="sig-paren">(</span><em>predictions</em>, <em>targets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#se"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.se" title="Permalink to this definition">¶</a></dt>
+<dd><p>Squared Error.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.tanhlecun">
+<code class="descclassname">node_ops.</code><code class="descname">tanhlecun</code><span class="sig-paren">(</span><em>tensor_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#tanhlecun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.tanhlecun" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf">Efficient BackProp</a>
+Sigmoid with the following properties:
+(1) <span class="math">\(f(\pm 1) = \pm 1\)</span> (2) second derivative of <em>f</em> is maximum at <span class="math">\(\pm 1\)</span> (3) Effective gain is close to 1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.ternary_tensor_combine">
+<code class="descclassname">node_ops.</code><code class="descname">ternary_tensor_combine</code><span class="sig-paren">(</span><em>tensors</em>, <em>initrange=1e-05</em>, <em>name='ternary_tensor_combine'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#ternary_tensor_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.ternary_tensor_combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>For performing tensor multiplications with batches of data points against an order 3
+weight tensor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tensors</strong> &#8211; </li>
+<li><strong>output_dim</strong> &#8211; </li>
+<li><strong>initrange</strong> &#8211; </li>
+<li><strong>name</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.weights">
+<code class="descclassname">node_ops.</code><code class="descname">weights</code><span class="sig-paren">(</span><em>distribution</em>, <em>shape</em>, <em>datatype=tf.float32</em>, <em>initrange=1e-05</em>, <em>seed=None</em>, <em>l2=0.0</em>, <em>name='weights'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper parameterizing common constructions of tf.Variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>distribution</strong> &#8211; A string identifying distribution &#8216;tnorm&#8217; for truncated normal, &#8216;rnorm&#8217; for random normal, &#8216;constant&#8217; for constant, &#8216;uniform&#8217; for uniform.</li>
+<li><strong>shape</strong> &#8211; Shape of weight tensor.</li>
+<li><strong>datatype</strong> &#8211; Datatype for weights</li>
+<li><strong>initrange</strong> &#8211; Scales standard normal and trunctated normal, value of constant dist., and range of uniform dist. [-initrange, initrange].</li>
+<li><strong>seed</strong> &#8211; For reproducible results.</li>
+<li><strong>l2</strong> &#8211; Floating point number determining degree of of l2 regularization for these weights in gradient descent update.</li>
+<li><strong>name</strong> &#8211; For variable scope.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tf.Variable.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="node_ops.x_dot_y">
+<code class="descclassname">node_ops.</code><code class="descname">x_dot_y</code><span class="sig-paren">(</span><em>operands</em>, <em>name='x_dot_y'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/node_ops.html#x_dot_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#node_ops.x_dot_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the inner product for rows of operands[1], and operands[2],
+and adds optional bias, operands[3], operands[4].
+If either operands[1] or operands[2] or both is a list of tensors
+then a list of the pairwise dot products (with bias when len(operands) &gt; 2)
+of the lists is returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>operands</strong> &#8211; A list of 2, 3, or 4 <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/framework.html#Tensor">tensors</a> (the first two tensors may be replaced by lists of tensors).</li>
+<li><strong>name</strong> &#8211; An optional identifier for unique <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/how_tos/variable_scope/index.html">variable_scope</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A tensor or list of tensors with dimension (operands[1].shape[0], 1).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">Value error when operands is not a list of at least two tensors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generic_model.html" title="generic_model"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="config_tutorial.html" title="Config Tutorial"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="api.html" >API: ANT modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Aaron Tuor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

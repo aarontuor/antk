@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>generic_model &mdash; antk 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="antk 0.3.0 documentation" href="index.html" />
+    <link rel="up" title="API: ANT modules" href="api.html" />
+    <link rel="next" title="Models" href="models.html" />
+    <link rel="prev" title="node_ops" href="node_ops.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="node_ops.html" title="node_ops"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="api.html" accesskey="U">API: ANT modules</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="node_ops.html"
+                        title="previous chapter">node_ops</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="next chapter">Models</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/generic_model.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="generic-model">
+<h1>generic_model<a class="headerlink" href="#generic-model" title="Permalink to this headline">¶</a></h1>
+<p>A general purpose model builder equipped with generic train, and predict functions which takes parameters for
+optimization strategy, mini-batch, etc...</p>
+<span class="target" id="module-generic_model"></span><dl class="class">
+<dt id="generic_model.Model">
+<em class="property">class </em><code class="descclassname">generic_model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>objective, placeholderdict, maxbadcount=20, momentum=None, mb=1000, verbose=True, epochs=50, learnrate=0.003, save=False, opt='grad', decay=[1, 1.0], evaluate=None, predictions=None, logdir='log/', random_seed=None, model_name='generic', clip_gradients=0.0, make_histograms=False, best_model_path='/tmp/model.ckpt', save_tensors={}, tensorboard=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic model builder for training and predictions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>objective</strong> &#8211; Loss function</li>
+<li><strong>placeholderdict</strong> &#8211; A dictionary of placeholders</li>
+<li><strong>maxbadcount</strong> &#8211; For early stopping</li>
+<li><strong>momentum</strong> &#8211; The momentum for tf.MomentumOptimizer</li>
+<li><strong>mb</strong> &#8211; The mini-batch size</li>
+<li><strong>verbose</strong> &#8211; Whether to print dev error, and save_tensor evals</li>
+<li><strong>epochs</strong> &#8211; maximum number of epochs to train for.</li>
+<li><strong>learnrate</strong> &#8211; learnrate for gradient descent</li>
+<li><strong>save</strong> &#8211; Save best model to <em>best_model_path</em>.</li>
+<li><strong>opt</strong> &#8211; Optimization strategy. May be &#8216;adam&#8217;, &#8216;ada&#8217;, &#8216;grad&#8217;, &#8216;momentum&#8217;</li>
+<li><strong>decay</strong> &#8211; Parameter for decaying learn rate.</li>
+<li><strong>evaluate</strong> &#8211; Evaluation metric</li>
+<li><strong>predictions</strong> &#8211; Predictions selected from feed forward pass.</li>
+<li><strong>logdir</strong> &#8211; Where to put the tensorboard data.</li>
+<li><strong>random_seed</strong> &#8211; Random seed for TensorFlow initializers.</li>
+<li><strong>model_name</strong> &#8211; Name for model</li>
+<li><strong>clip_gradients</strong> &#8211; The limit on gradient size. If 0.0 no clipping is performed.</li>
+<li><strong>make_histograms</strong> &#8211; Whether or not to make histograms for model weights and activations</li>
+<li><strong>best_model_path</strong> &#8211; File to save best model to during training.</li>
+<li><strong>save_tensors</strong> &#8211; A hashmap of str:Tensor mappings. Tensors are evaluated during training. Evaluations of these tensors on best model are accessible via property <a class="reference internal" href="#generic_model.Model.evaluated_tensors" title="generic_model.Model.evaluated_tensors"><code class="xref any py py-attr docutils literal"><span class="pre">evaluated_tensors</span></code></a>.</li>
+<li><strong>tensorboard</strong> &#8211; Whether to make tensorboard histograms of weights and activations, and graphs of dev_error.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#generic_model.Model" title="generic_model.Model"><code class="xref any py py-class docutils literal"><span class="pre">Model</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="generic_model.Model.average_secs_per_epoch">
+<code class="descname">average_secs_per_epoch</code><a class="headerlink" href="#generic_model.Model.average_secs_per_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average number of seconds to complete an epoch.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="generic_model.Model.best_dev_error">
+<code class="descname">best_dev_error</code><a class="headerlink" href="#generic_model.Model.best_dev_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>The best dev error reached during training.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="generic_model.Model.completed_epochs">
+<code class="descname">completed_epochs</code><a class="headerlink" href="#generic_model.Model.completed_epochs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of epochs completed during training (fractional)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="generic_model.Model.eval">
+<code class="descname">eval</code><span class="sig-paren">(</span><em>tensor_in</em>, <em>data</em>, <em>supplement=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_model.html#Model.eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_model.Model.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluation of model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> &#8211; <a class="reference internal" href="loader.html#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> to evaluate on.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Result of evaluating on data for <code class="xref any docutils literal"><span class="pre">self.evaluate</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="generic_model.Model.evaluated_tensors">
+<code class="descname">evaluated_tensors</code><a class="headerlink" href="#generic_model.Model.evaluated_tensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of evaluations on best model for tensors and keys specified by <em>save_tensors</em> argument to constructor.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="generic_model.Model.placeholderdict">
+<code class="descname">placeholderdict</code><a class="headerlink" href="#generic_model.Model.placeholderdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of model placeholders</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="generic_model.Model.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>supplement=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_model.html#Model.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_model.Model.predict" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> &#8211; <a class="reference internal" href="loader.html#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> to make predictions from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A set of predictions from feed forward defined by <code class="xref any docutils literal"><span class="pre">self.predictions</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="generic_model.Model.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>train</em>, <em>dev=None</em>, <em>supplement=None</em>, <em>eval_schedule='epoch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_model.html#Model.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_model.Model.train" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> &#8211; <a class="reference internal" href="loader.html#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> to train on.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A trained <a class="reference internal" href="#generic_model.Model" title="generic_model.Model"><code class="xref any py py-class docutils literal"><span class="pre">Model</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="generic_model.get_feed_list">
+<code class="descclassname">generic_model.</code><code class="descname">get_feed_list</code><span class="sig-paren">(</span><em>batch</em>, <em>placeholderdict</em>, <em>supplement=None</em>, <em>dropouts=None</em>, <em>dropout_flag='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_model.html#get_feed_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_model.get_feed_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>batch</strong> &#8211; A dataset object.</li>
+<li><strong>placeholderdict</strong> &#8211; A dictionary where the keys match keys in batch, and the values are placeholder tensors</li>
+<li><strong>supplement</strong> &#8211; A dictionary of numpy input matrices with keys corresponding to placeholders in placeholderdict, where the row size of the matrices do not correspond to the number of datapoints. For use with input data intended for <a class="reference external" href="https://www.tensorflow.org/versions/r0.7/api_docs/python/nn.html#embeddings">embedding_lookup</a>.</li>
+<li><strong>dropouts</strong> &#8211; Dropout tensors in graph.</li>
+<li><strong>dropout_flag</strong> &#8211; Whether to use Dropout probabilities for feed forward.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A feed dictionary with keys of placeholder tensors and values of numpy matrices, paired by key</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="generic_model.parse_summary_val">
+<code class="descclassname">generic_model.</code><code class="descname">parse_summary_val</code><span class="sig-paren">(</span><em>summary_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/generic_model.html#parse_summary_val"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generic_model.parse_summary_val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to parse numeric value from tf.scalar_summary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>summary_str</strong> &#8211; Return value from running session on tf.scalar_summary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary containing the numeric values.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="node_ops.html" title="node_ops"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="api.html" >API: ANT modules</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Aaron Tuor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>
