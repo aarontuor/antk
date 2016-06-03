@@ -25,7 +25,8 @@ Supported File Formats
 ======================
 
     **.mat**:
-        Matlab files of matrices made with the matlab save command. Saved matrices to be read must be named **data**.
+        Matlab files of matrices made with the matlab save command. Saved matrices to be read must be named **data**. As of
+        now some Matlab implementations may load the files with the *load* function but the loaded matrices will have different values.
 
     **.sparsetxt**
         Plain text files where lines correspond to an entry in a matrix where a line consists of values **i j k**, so a matrix *A* is constructed where  :math:`A_{ij} = k`. Tokens must be whitespace delimited.
@@ -80,9 +81,22 @@ module. You can create a DataSet with a dictionary of numpy arrays, scipy sparse
     >>> datadict = {'feature1': test, 'feature2': test2, 'feature3': test3}
     >>> data = loader.DataSet(datadict)
     >>> data
-    <antk.core.loader.DataSet object at 0x7f5c54b5c3d0>
+    antk.core.DataSet object with fields:
+        '_labels': {}
+        '_num_examples': 3
+        '_epochs_completed': 0
+        '_index_in_epoch': 0
+        '_mix_after_epoch': False
+        '_features': {'feature2': array([[ 0.3053935 ,  0.19926099,  0.43178954,  0.21737312],
+       [ 0.47352974,  0.33052605,  0.22874512,  0.59903599],
+       [ 0.62532971,  0.70029533,  0.13582899,  0.39699691]]), 'feature3': array([[ 0.98901453,  0.48172019,  0.55349593,  0.88056326,  0.87455635],
+       [ 0.46123761,  0.94292179,  0.13315178,  0.55212266,  0.09410787],
+       [ 0.90358241,  0.88080438,  0.51443528,  0.69531831,  0.32700497]]), 'feature1': array([[ 0.55351649,  0.94648234,  0.83976935],
+       [ 0.95176126,  0.37265882,  0.72076518],
+       [ 0.97364273,  0.79038134,  0.83085418]])}
 
-There is a *show()* method that will display information about the DataSet.
+
+There is a :any:`DataSet.show` method that will display information about the DataSet.
 
     .. code-block:: python
 
@@ -173,99 +187,101 @@ If the directories specified are not present :any:`Bad_directory_structure_error
 	The hash for a matrix in a :any:`DataSet.features` attribute is whatever is between **features_** and the file extension (*.ext*) in the file name.
 	The hash for a matrix in a :any:`DataSet.labels` attribute is whatever is between **labels_** and the file extension (*.ext*) in the file name.
 
-Notes
------
-		Rows of feature and data matrices should correspond to individual data points as opposed to the transpose.
-		There should be the same number of data points in each file of the **train** directory, and the same is true for
-		the **dev** and **test** directories. The number of data points can of course vary between **dev**, **train**, and **test** directories.
-        If you have data you want to load that isn't in this format there is the option to include other directories
-        besides **dev**, **train**, and **test**
+.. note::
+
+	Rows of feature and data matrices should correspond to individual data points as opposed to the transpose.
+	There should be the same number of data points in each file of the **train** directory, and the same is true for
+	the **dev** and **test** directories. The number of data points can of course vary between **dev**, **train**, and **test** directories.
+	If you have data you want to load that doesn't correspond to the paradigm of matrices which have a number of data points columns there you may use the :any:`read_data_sets` **folders** argument (a list of folder names) to include other directories besides **dev**, **train**, and **test**. In this case all and only the folders specified by the **folders** argument will be loaded into a :any:`DataSets` object.
 
 Examples
 --------
 
-Here are some examples from a processed and supplemented Movielens 100k dataset, where data points are user/item pairs
+Below we download, untar, and load a processed and supplemented Movielens 100k dataset, where data points are user/item pairs
 for observed movie ratings.
 
 **Basic usage:**
 
 .. code-block:: python
 
-    >>> loader.read_data_sets('/home/hutch_research/data/ml100k').show()
-    reading train...
-    reading dev...
-    reading test...
-    dev:
-    features:
-             item: vec.shape: (10000,) dim: 1682 <class 'antk.core.loader.HotIndex'>
-             user: vec.shape: (10000,) dim: 943 <class 'antk.core.loader.HotIndex'>
-             words: (10000, 12734) <class 'scipy.sparse.csc.csc_matrix'>
-             time: (10000, 1) <type 'numpy.ndarray'>
-    labels:
-             genre: (10000, 19) <type 'numpy.ndarray'>
-             ratings: (10000, 1) <type 'numpy.ndarray'>
-             genre_dist: (10000, 19) <type 'numpy.ndarray'>
-    test:
-    features:
-             item: vec.shape: (10000,) dim: 1682 <class 'antk.core.loader.HotIndex'>
-             user: vec.shape: (10000,) dim: 943 <class 'antk.core.loader.HotIndex'>
-             words: (10000, 12734) <class 'scipy.sparse.csc.csc_matrix'>
-             time: (10000, 1) <type 'numpy.ndarray'>
-    labels:
-             genre: (10000, 19) <type 'numpy.ndarray'>
-             ratings: (10000, 1) <type 'numpy.ndarray'>
-             genre_dist: (10000, 19) <type 'numpy.ndarray'>
-    train:
-    features:
-             item: vec.shape: (80000,) dim: 1682 <class 'antk.core.loader.HotIndex'>
-             user: vec.shape: (80000,) dim: 943 <class 'antk.core.loader.HotIndex'>
-             words: (80000, 12734) <class 'scipy.sparse.csc.csc_matrix'>
-             time: (80000, 1) <type 'numpy.ndarray'>
-    labels:
-             genre: (80000, 19) <type 'numpy.ndarray'>
-             ratings: (80000, 1) <type 'numpy.ndarray'>
-             genre_dist: (80000, 19) <type 'numpy.ndarray'>
+	>>> loader.maybe_download('ml100k.tar.gz', '.', 'http://sw.cs.wwu.edu/~tuora/aarontuor/ml100k.tar.gz')
+	>>> loader.untar('ml100k.tar.gz')
+	>>> loader.read_data_sets('ml100k).show()
+	reading train...
+	reading dev...
+	reading test...
+	dev:
+	features:
+		item: vec.shape: (10000,) dim: 1682 <class 'antk.core.loader.HotIndex'>
+		user: vec.shape: (10000,) dim: 943 <class 'antk.core.loader.HotIndex'>
+		words: (10000, 12734) <class 'scipy.sparse.csc.csc_matrix'>
+		time: (10000, 1) <type 'numpy.ndarray'>
+	labels:
+		genre: (10000, 19) <type 'numpy.ndarray'>
+		ratings: (10000, 1) <type 'numpy.ndarray'>
+		genre_dist: (10000, 19) <type 'numpy.ndarray'>
+	test:
+	features:
+		item: vec.shape: (10000,) dim: 1682 <class 'antk.core.loader.HotIndex'>
+		user: vec.shape: (10000,) dim: 943 <class 'antk.core.loader.HotIndex'>
+		words: (10000, 12734) <class 'scipy.sparse.csc.csc_matrix'>
+		time: (10000, 1) <type 'numpy.ndarray'>
+	labels:
+		genre: (10000, 19) <type 'numpy.ndarray'>
+		ratings: (10000, 1) <type 'numpy.ndarray'>
+		genre_dist: (10000, 19) <type 'numpy.ndarray'>
+	train:
+	features:
+	item: vec.shape: (80000,) dim: 1682 <class 'antk.core.loader.HotIndex'>
+		user: vec.shape: (80000,) dim: 943 <class 'antk.core.loader.HotIndex'>
+		words: (80000, 12734) <class 'scipy.sparse.csc.csc_matrix'>
+		time: (80000, 1) <type 'numpy.ndarray'>
+	labels:
+		genre: (80000, 19) <type 'numpy.ndarray'>
+		ratings: (80000, 1) <type 'numpy.ndarray'>
+		genre_dist: (80000, 19) <type 'numpy.ndarray'>
 
 **Other Folders:**
 
 .. code-block:: python
 
-    >>> loader.read_data_sets('/home/hutch_research/data/ml100k', folders=['user', 'item']).show()
-    reading user...
-    reading item...
-    item:
-    features:
-             bin_doc_term: (1682, 12734) <class 'scipy.sparse.csc.csc_matrix'>
-             month: vec.shape: (1682,) dim: 12 <class 'antk.core.loader.HotIndex'>
-             doc_term: (1682, 12734) <class 'scipy.sparse.csc.csc_matrix'>
-             tfidf_doc_term: (1682, 12734) <class 'scipy.sparse.csc.csc_matrix'>
-             year: (1682, 1) <type 'numpy.ndarray'>
-             genre: (1682, 19) <type 'numpy.ndarray'>
-    labels:
-    user:
-    features:
-             occ: vec.shape: (943,) dim: 21 <class 'antk.core.loader.HotIndex'>
-             age: (943, 1) <type 'numpy.ndarray'>
-             zip: vec.shape: (943,) dim: 1000 <class 'antk.core.loader.HotIndex'>
-             sex: vec.shape: (943,) dim: 2 <class 'antk.core.loader.HotIndex'>
-    labels:
+	>>> loader.read_data_sets('ml100k', folders=['user', 'item']).show()
+	reading user...
+	reading item...
+	item:
+	features:
+		genres: (1682, 19) <type 'numpy.ndarray'>
+		bin_doc_term: (1682, 12734) <class 'scipy.sparse.csc.csc_matrix'>
+		month: vec.shape: (1682,) dim: 12 <class 'antk.core.loader.HotIndex'>
+		doc_term: (1682, 12734) <class 'scipy.sparse.csc.csc_matrix'>
+		tfidf_doc_term: (1682, 12734) <class 'scipy.sparse.csc.csc_matrix'>
+		year: (1682, 1) <type 'numpy.ndarray'>
+	labels:
+	user:
+	features:
+		occ: vec.shape: (943,) dim: 21 <class 'antk.core.loader.HotIndex'>
+		age: (943, 1) <type 'numpy.ndarray'>
+		zip: vec.shape: (943,) dim: 1000 <class 'antk.core.loader.HotIndex'>
+		sex: vec.shape: (943,) dim: 2 <class 'antk.core.loader.HotIndex'>
+	labels:
 
 **Selecting Files:**
 
 .. code-block:: python
 
-    >>> loader.read_data_sets('/home/hutch_research/data/ml100k', folders=['user', 'item'], hashlist=['zip', 'sex', 'year']).show()
-    reading user...
-    reading item...
-    item:
-    features:
-             year: (1682, 1) <type 'numpy.ndarray'>
-    labels:
-    user:
-    features:
-             zip: vec.shape: (943,) dim: 1000 <class 'antk.core.loader.HotIndex'>
-             sex: vec.shape: (943,) dim: 2 <class 'antk.core.loader.HotIndex'>
-    labels:
+	>>> loader.read_data_sets('ml100k', folders=['user', 'item'], hashlist=['zip', 'sex', 'year']).show()
+	reading user...
+	reading item...
+	item:
+	features:
+		year: (1682, 1) <type 'numpy.ndarray'>
+	labels:
+	user:
+	features:
+		zip: vec.shape: (943,) dim: 1000 <class 'antk.core.loader.HotIndex'>
+		sex: vec.shape: (943,) dim: 2 <class 'antk.core.loader.HotIndex'>
+	labels:
+
 
 
 Loading, Saving, and Testing

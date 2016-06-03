@@ -142,6 +142,7 @@ class Model(object):
         self.save_tensors = save_tensors
         self._completed_epochs = 0.0
         self._evaluated_tensors = {}
+        self.finaldev = 0.0
 
         # ================================================================
         # ======================For tensorboard===========================
@@ -267,7 +268,7 @@ class Model(object):
         :param data: :any:`DataSet` to train on.
         :return: A trained :any:`Model`
         """
-        epochfrac = 0.0
+        self._completed_epochs = 0.0
         if self.save:
             self.saver.restore(self.session, self.best_model_path)
         # ========================================================
@@ -280,24 +281,28 @@ class Model(object):
         # ============================================================================================
         # =============================TRAINING=======================================================
         # ============================================================================================
+        counter = 0
         while self._completed_epochs < self.epochs: # keeps track of the epoch iteration
             # ==============PER MINI-BATCH=====================================
-            newbatch = train.next_batch(self.mb)
 
+            newbatch = train.next_batch(self.mb)
             fd = get_feed_list(newbatch, self.placeholderdict, supplement,
                                dropouts=tf.get_collection('dropout_prob'))
             self.session.run(self.train_step, feed_dict=fd)
-            if (train.index_in_epoch % eval_schedule) == 0:
+            counter += self.mb
+            self._completed_epochs += float(self.mb)/float(train.num_examples)
+            if (counter >= eval_schedule or self._completed_epochs >= self.epochs):
                 #=================PER eval_schedule==================================
-                epochfrac = epochfrac + float(eval_schedule)/float(train.num_examples)
-                self._log_summaries(epochfrac, dev, supplement)
+                counter = 0
+                self._log_summaries(dev, supplement)
                 if dev:
                     deverror = self.eval(self.evaluate, dev, supplement)
+                    self.finaldev = deverror
                     if np.isnan(deverror):
                         print("Aborting training...dev evaluates to nan.")
                         break
                     if self.verbose:
-                        print("epoch: %f dev error: %f" % (epochfrac, deverror))
+                        print("epoch: %f dev error: %.10f" % (self._completed_epochs, deverror))
                     for tname in self.save_tensors:
                         self._evaluated_tensors[tname] = self.eval(self.save_tensors[tname], dev, supplement)
                         if self.verbose:
@@ -308,16 +313,14 @@ class Model(object):
                         self._best_dev_error = deverror
                         if self.save:
                             self.save_path = self.saver.save(self.session, self.best_model_path)
-
-                        self._completed_epochs = epochfrac
-                        self.epoch_times.append(time.time() - start_time)
-                        start_time = time.time()
                     else:
                         badcount += 1
                     if badcount > self.maxbadcount:
                         print('badcount exceeded: %d' % badcount)
                         break
                     # ==================================================================
+            self.epoch_times.append(time.time() - start_time)
+            start_time = time.time()
 
 
     # ================================================================
@@ -344,7 +347,7 @@ class Model(object):
         self._summary_writer = tf.train.SummaryWriter(summary_directory,
                                                       self.session.graph.as_graph_def())
 
-    def _log_summaries(self, epochfrac, dev, supplement):
+    def _log_summaries(self,  dev, supplement):
         fd = get_feed_list(dev, self.placeholderdict, supplement=supplement,
                            dropouts=tf.get_collection('dropout_prob'),
                            dropout_flag='eval')
@@ -358,7 +361,7 @@ class Model(object):
         if dev:
             if self.tensorboard:
                 dev_sum_str = self.session.run(self.dev_error_summary, fd)
-                self._summary_writer.add_summary(dev_sum_str, epochfrac)
+                self._summary_writer.add_summary(dev_sum_str, self._completed_epochs)
 
 
 

@@ -201,7 +201,7 @@ def placeholder(datatype, shape=None, data=None, name='placeholder'):
     return tf.placeholder(datatype, shape, name)
 
 
-def mult_log_reg(tensor_in, numclasses=None, data=None, name='log_reg'):
+def mult_log_reg(tensor_in, numclasses=None, data=None, initrange=1, name='log_reg'):
     """
     Performs mulitnomial logistic regression forward pass. Weights and bias initialized to zeros.
 
@@ -222,7 +222,9 @@ def mult_log_reg(tensor_in, numclasses=None, data=None, name='log_reg'):
         raise MissingShapeError('Can not infer shape. Need numclasses or data argument.')
     with tf.variable_scope(name):
         inshape = tensor_in.get_shape().as_list()
-        W = tf.Variable(tf.zeros([inshape[1], numclasses]))
+        W = tf.Variable(tf.random_uniform([inshape[1], numclasses],
+                                          minval= -initrange, maxval=initrange,
+                                          dtype=tf.float32, seed=None))
         b = tf.Variable(tf.zeros([numclasses]))
     tf.add_to_collection(name+'_weights', W)
     tf.add_to_collection(name+'_bias', b)
@@ -253,7 +255,7 @@ def concat(tensors, output_dim, name='concat'):
         return combo
 
 def dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
-        initrange=1.0, l2=0.0, bn=False, keep_prob=None, name='dnn'):
+        initrange=1.0, l2=0.0, bn=False, keep_prob=None, fan_scaling=False, name='dnn'):
     """
     Creates fully connected deep neural network subgraph. Adapted From skflow_ `dnn_ops.py`_
         `Neural Networks and Deep Learning`_
@@ -277,12 +279,14 @@ def dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
     with tf.variable_scope(name):
         for i, n_units in enumerate(hidden_units):
             with tf.variable_scope('layer%d' % i):
-                if activation == 'relu':
-                    irange= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
-                else:
-                    irange = initrange*(1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
+                if fan_scaling:
+                    if activation == 'relu':
+                        initrange *= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
+                    else:
+                        initrange *= (1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
+
                 tensor_in = linear(tensor_in, n_units, bias=True,
-                                   distribution=distribution, initrange=irange, l2=l2, name=name)
+                                   distribution=distribution, initrange=initrange, l2=l2, name=name)
                 tf.add_to_collection(name + '_preactivation', tensor_in)
                 tensor_in = activation(tensor_in)
                 tf.add_to_collection(ACTIVATION_LAYERS, tensor_in)
@@ -665,7 +669,7 @@ def other_cross_entropy(predictions, targets):
     return -1*tf.reduce_sum(targets * tf.log(predictions) + (1.0 - targets) * tf.log(1.0 - predictions))
 
 def cross_entropy(predictions, targets):
-    return -tf.reduce_sum(targets*tf.log(predictions))
+    return -tf.reduce_sum(targets*tf.log(predictions + 1e-8))
 
 def perplexity(predictions, targets):
     return tf.exp(cross_entropy(predictions, targets))

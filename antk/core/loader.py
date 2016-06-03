@@ -71,6 +71,9 @@ class DataSet(object):
         self._index_in_epoch = 0
         self._mix_after_epoch = mix
 
+    def __repr__(self):
+        attrs = vars(self)
+        return 'antk.core.DataSet object with fields:\n' + '\n'.join("\t%r: %r" % item for item in attrs.items())
 
     # ======================================================================================
     # =============================PROPERTIES===============================================
@@ -208,6 +211,10 @@ class DataSets(object):
     def __init__(self, datasets_map):
         for k, v in datasets_map.items():
             setattr(self, k, DataSet(v['features'], v['labels'], v['num_examples']))
+
+    def __repr__(self):
+        attrs = vars(self)
+        return 'antk.core.DataSets object with fields:\n' + '\n'.join("\t%s: %s" % item for item in attrs.items())
 
     def show(self):
         datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show']
