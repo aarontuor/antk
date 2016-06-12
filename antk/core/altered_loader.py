@@ -7,16 +7,6 @@ from antk.lib import termcolor as tc
 import tarfile
 import os.path
 import urllib
-import numbers
-import repr
-
-##====================================================================================
-##==========Proposed extensions=======================================================
-##DataSet.split(scheme={devtraintest, crossvalidate, traintest} returns DataSets
-##DataSets.join() returns DataSet (combines train or cross validation)
-##DataSet + DataSet returns DataSet
-##DataSets + DataSets returns DataSets
-##DataSets constructor from list of DataSet objects
 
 slash = '/'
 if os.name == 'nt':
@@ -143,28 +133,20 @@ class DataSet(object):
         :param batch_size: int
         :return: A :any:`DataSet` object with the next `batch_size` examples.
         '''
-
         assert batch_size <= self._num_examples
         start = self._index_in_epoch
-        if self._index_in_epoch + batch_size > self._num_examples:
-
-            if not self._mix_after_epoch:
-                self._index_in_epoch = self._index_in_epoch + batch_size - self._num_examples
-                end = self._index_in_epoch
-                newbatch = DataSet(self._next_batch_(self._features, start, end),
+        if self._index_in_epoch + batch_size >= self._num_examples:
+            end = self._num_examples
+            self._index_in_epoch = 0
+            self._epochs_completed += 1
+            newbatch = DataSet(self._next_batch_(self._features, start, end),
                                self._next_batch_(self._labels, start, end),
                                batch_size)
-            else:
+            if self._mix_after_epoch:
                 perm = numpy.arange(self._num_examples)
                 numpy.random.shuffle(perm)
                 self._shuffle_(perm, self._features)
                 self._shuffle_(perm, self._labels)
-                start = 0
-                end = batch_size
-                newbatch = DataSet(self._next_batch_(self._features, start, end),
-                               self._next_batch_(self._labels, start, end),
-                               batch_size)
-                self._index_in_epoch = batch_size
             return newbatch
         else:
             end = self._index_in_epoch + batch_size
@@ -179,31 +161,19 @@ class DataSet(object):
         '''
 
         print('features:')
-        for name, feature, in self.features.iteritems():
-            if type(feature) is HotIndex:
-                print('\t %s: vec.shape: %s dim: %s %s' % (name, feature.vec.shape,
-                                                           feature.dim, type(feature)))
+        for feature in self.features:
+            if type(self.features[feature]) is HotIndex:
+                print('\t %s: vec.shape: %s dim: %s %s' % (feature, self.features[feature].vec.shape,
+                                                          self.features[feature].dim, type(self.features[feature])))
             else:
-                print('\t %s: %s %s' % (name, feature.shape, type(feature)))
+                print('\t %s: %s %s' % (feature, self.features[feature].shape, type(self.features[feature])))
         print('labels:')
-        for name, label in self.labels.iteritems():
-            if type(label) is HotIndex:
-                print('\t %s: vec.shape: %s dim: %s %s' % (name, (label.vec.shape),
-                                                           label.dim, type(label)))
+        for label in self.labels:
+            if type(self.labels[label]) is HotIndex:
+                print('\t %s: vec.shape: %s dim: %s %s' % (label, (self.labels[label].vec.shape),
+                                                          self.labels[label].dim, type(self.labels[feature])))
             else:
-                print('\t %s: %s %s' % (name, label.shape, type(label)))
-
-    def showmore(self):
-        '''
-        Print a sample of the first up to twenty rows of matrices in DataSet
-        '''
-
-        print('features:')
-        for name, feature in self.features.iteritems():
-            print('\t %s: \nFirst twenty rows:\n%s\n' % (name, feature[1:min(20, feature.shape[0])]))
-        print('labels:')
-        for name, label in self.labels.iteritems():
-            print('\t %s: \nFirst twenty rows:\n%s\n' % (name, feature[1:min(20, feature.shape[0])]))
+                print('\t %s: %s %s' % (label, self.labels[label].shape, type(self.labels[label])))
 
     # ======================================================================================
     # =============================PRIVATE METHODS===========================================
@@ -231,32 +201,11 @@ class DataSet(object):
         if end is None:
             end = self._num_examples
         batch_data_map = {}
-        if end <= start:
-            start2=0
-            end2= end
-            end = self._num_examples
-            wrapdata = {}
-            for matrix in datamap:
-                if type(datamap[matrix]) is HotIndex:
-                    wrapdata[matrix] = datamap[matrix].vec[start2:end2]
-                    batch_data_map[matrix] = datamap[matrix].vec[start:end]
-                else:
-                    wrapdata[matrix] = datamap[matrix][start2:end2]
-                    batch_data_map[matrix] = datamap[matrix][start:end]
-                if sps.issparse(batch_data_map[matrix]):
-                        batch_data_map[matrix] = sps.vstack([batch_data_map[matrix], wrapdata[matrix]])
-                else:
-                    batch_data_map[matrix] = numpy.concatenate([batch_data_map[matrix], wrapdata[matrix]], axis=0)
-        else:
-            for matrix in datamap:
-                if type(datamap[matrix]) is HotIndex:
-                    batch_data_map[matrix] = datamap[matrix].vec[start:end]
-                else:
-                    batch_data_map[matrix] = datamap[matrix][start:end]
-
-
-
-
+        for matrix in datamap:
+            if type(datamap[matrix]) is HotIndex:
+                batch_data_map[matrix] = datamap[matrix].vec[start:end]
+            else:
+                batch_data_map[matrix] = datamap[matrix][start:end]
         return batch_data_map
 
 class DataSets(object):
@@ -273,17 +222,10 @@ class DataSets(object):
         return 'antk.core.DataSets object with fields:\n' + '\n'.join("\t%s: %s" % item for item in attrs.items())
 
     def show(self):
-        datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show' and not s == 'showmore']
+        datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show']
         for dataset in datasets:
             print tc.colored(dataset + ':', 'yellow')
             getattr(self, dataset).show()
-
-    def showmore(self):
-        datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show' and not s == 'showmore']
-        for dataset in datasets:
-            print tc.colored(dataset + ':', 'yellow')
-            getattr(self, dataset).showmore()
-
 
 
 class HotIndex(object):
@@ -297,30 +239,10 @@ class HotIndex(object):
             self._vec = toIndex(matrix).flatten()
         else:
             self._dim = dimension
-            self._vec = numpy.array(matrix).flatten()
+            self._vec = matrix.flatten()
 
     def __repr__(self):
-        vector = repr.repr(self._vec.tolist())
-        return '%s(shape=%s)\nvec=%s' % (type(self), self.shape, vector)
-
-
-    def __str__(self):
-        return '%s(shape=%s)\n%s' % (type(self), self.shape, self._vec)
-
-    def __len__(self):
-        return self._vec.shape[0]
-
-    def __getitem__(self, index):
-        cls = type(self)
-        if isinstance(index, numbers.Integral):
-            return cls(self._vec[index], self.dim)
-        elif isinstance(index, HotIndex):
-            return cls(self._vec[index._vec], self.dim)
-        else:
-            try:
-                return cls(self._vec[index], self._dim)
-            except IndexError:
-                return int(self._vec[index[0]] == index[1])
+        return '%s(shape=%s)' % (type(self), self.shape)
 
     @property
     def dim(self):
@@ -426,34 +348,14 @@ def export_data(filename, data):
     if extension == 'mat':
         scipy.io.savemat(filename, {'data': data})
     elif extension == 'index':
-        if not isinstance(data, HotIndex):
-            raise Unsupported_format_error('Only HotIndex objects may be saved in .index format.')
         _imatsave(filename, data)
     elif extension == 'sparse':
-        if not sps.issparse(data):
-            raise Unsupported_format_error('Only scipy sparse matrices may be saved in .sparse format.')
         _smatsave(filename, data)
     elif extension == 'binary' or extension == 'dense':
-        if sps.issparse(data):
-            raise Unsupported_format_error('Only numpy 2d arrays may be saved in .binary or .dense format.')
         _matsave(filename, data)
-    elif extension == 'densetxt':
-        if sps.issparse(data):
-            raise Unsupported_format_error('Only numpy 2d arrays may be saved in .densetxt format')
-        numpy.savetxt(filename, data)
-    elif extension == 'sparsetxt':
-        if not sps.issparse(data):
-            raise Unsupported_format_error('Only scipy sparse matrices my be saved in .sparsetxt format.')
-        scipy.io.mmwrite(filename, data)
-        with open(filename + '.mtx', 'r') as f:
-            lines = f.read().strip().split('\n')
-        os.system('rm ' + filename + '.mtx')
-        matrixstr = '\n'.join(lines[2:-1])
-        with open(filename, 'w') as f:
-            f.write(matrixstr)
     else:
         raise Unsupported_format_error('Supported extensions: '
-                                       'mat, sparse, binary, dense, index, sparsetxt, densetxt')
+                                       'mat, sparse, binary, dense, index')
 
 def _write_int64(file_obj, num):
     """

@@ -4,7 +4,6 @@ import numpy
 import scipy.sparse as sps
 from antk.core import loader
 import numbers
-from antk.lib.decorate import pholder, variable, node_op
 
 ACTIVATION_LAYERS = 'activation_layers'
 NORMALIZED_ACTIVATIONS = 'normalized_activations'
@@ -39,8 +38,6 @@ def ident(tensor_in, name='ident'):
     """
     return tensor_in
 
-
-# @variable
 def weights(distribution, shape, datatype=tf.float32, initrange=1e-5,
             seed=None, l2=0.0, name='weights'):
     """
@@ -64,18 +61,15 @@ def weights(distribution, shape, datatype=tf.float32, initrange=1e-5,
         elif distribution == 'uniform':
             wghts = tf.Variable(tf.random_uniform(shape, -initrange, initrange, datatype, seed))
         elif distribution == 'constant':
-            wghts = tf.Variable(tf.constant(initrange, dtype=datatype, shape=shape))
+            wghts = tf.Variable(tf.constant(initrange, dtype=None, shape=None))
         else:
             raise ValueError("Function weights takes values 'norm', 'tnorm', 'uniform', 'constant', "
                              "for argument distribution. You passed %s" % distribution)
-    if l2 != 0.0:
-        tf.add_to_collection('losses', tf.mul(tf.nn.l2_loss(wghts), l2, name=name + 'weight_loss'))
+    tf.add_to_collection(name+'_weights', wghts)
+    # if l2 != 0.0:
+    #     tf.add_to_collection('losses', tf.mul(tf.nn.l2_loss(wghts), l2, name=name + 'weight_loss'))
     return wghts
 
-def sqrt(*args, **kwargs):
-    return node_op(tf.sqrt)
-
-@node_op
 def cosine(operands, name='cosine'):
     """
     Takes the cosine of vectors in corresponding rows of the two matrix tensors_ in operands.
@@ -92,14 +86,14 @@ def cosine(operands, name='cosine'):
                          "operands[1] shape = %s" % (shape1, shape2))
     else:
         with tf.variable_scope(name):
-            xlen = node_op(tf.sqrt)(tf.reduce_sum(tf.mul(operands[0], operands[0]), 1, keep_dims=True), name='cosine')
+            xlen = tf.sqrt(tf.reduce_sum(tf.mul(operands[0], operands[0]), 1, keep_dims=True))
             ylen = tf.sqrt(tf.reduce_sum(tf.mul(operands[1], operands[1]), 1, keep_dims=True))
             norm = tf.mul(xlen, ylen)
-            #tf.add_to_collection(name, xlen)
+            tf.add_to_collection(name, xlen)
             tf.add_to_collection(name, ylen)
             tf.add_to_collection(name, norm)
             tensor_out = tf.div(x_dot_y(operands), norm, name=name)
-            # tf.add_to_collection(name, tensor_out)
+            tf.add_to_collection(name, tensor_out)
             return tensor_out
 
 def x_dot_y(operands, name='x_dot_y'):
@@ -185,9 +179,6 @@ def embedding(tensors, name='embedding'):
     tf.add_to_collection(name, tensor_out)
     return tensor_out
 
-
-
-@pholder
 def placeholder(datatype, shape=None, data=None, name='placeholder'):
     """
     Wrapper to create tensorflow_ Placeholder_ which infers dimensions given data.
@@ -234,7 +225,7 @@ def mult_log_reg(tensor_in, numclasses=None, data=None, initrange=1, name='log_r
         W = tf.Variable(tf.random_uniform([inshape[1], numclasses],
                                           minval= -initrange, maxval=initrange,
                                           dtype=tf.float32, seed=None))
-        b = tf.Variable(tf.random_uniform([numclasses], minval=-initrange, maxval=initrange, dtype=tf.float32, seed=None))
+        b = tf.Variable(tf.zeros([numclasses]))
     tf.add_to_collection(name+'_weights', W)
     tf.add_to_collection(name+'_bias', b)
     tensor_out = tf.nn.softmax(tf.matmul(tensor_in, W) + b)
@@ -492,7 +483,7 @@ def linear(tensor_in, output_size, bias, bias_start=0.0,
         tensor_out = tf.matmul(tf.cast(tensor_in, tf.float32), matrix)
         if not bias:
             return tensor_out
-        bias_term = weights('uniform', [output_size], initrange=initrange)
+        bias_term = weights('constant', [output_size], initrange=bias_start)
         tf.add_to_collection(name+'_bias', bias_term)
     return tensor_out + bias_term
 
@@ -580,7 +571,7 @@ def nmode_tensor_multiply(tensors, mode, leave_flattened=False,
         return product
 
 
-def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='binary_tensor_combine'):
+def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, name='binary_tensor_combine'):
     '''
     For performing tensor multiplications with batches of data points against an order 3
     weight tensor.
@@ -601,13 +592,13 @@ def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='
     # t = weights('tnorm', mat2.dtype, [tensors[0].get_shape().as_list()[1], tensors[1].get_shape().as_list()[1], output_dim])
     t = weights('tnorm', [mat1.get_shape().as_list()[1],
                                     mat2.get_shape().as_list()[1],
-                                    output_dim],  datatype=mat1.dtype, l2=l2)
+                                    output_dim],  datatype=mat1.dtype)
     tf.add_to_collection(name+'_weights', t)
     prod = nmode_tensor_multiply([t, mat1], mode=0, keep_dims=True)
     mat2 = tf.expand_dims(mat2, 1)
     return tf.squeeze(tf.batch_matmul(mat2, prod), [1])
 
-def ternary_tensor_combine(tensors, initrange=1e-5, l2=0.0,name='ternary_tensor_combine'):
+def ternary_tensor_combine(tensors, initrange=1e-5, name='ternary_tensor_combine'):
     '''
     For performing tensor multiplications with batches of data points against an order 3
     weight tensor.
@@ -619,7 +610,7 @@ def ternary_tensor_combine(tensors, initrange=1e-5, l2=0.0,name='ternary_tensor_
     :return:
     '''
     combine_pair = [tensors[0], tensors[1]]
-    combined = binary_tensor_combine(combine_pair, output_dim=tensors[2].get_shape().as_list()[1], l2=l2)
+    combined = binary_tensor_combine2(combine_pair, output_dim = tensors[2].get_shape().as_list()[1])
     return x_dot_y([combined,tensors[2]])
 
 def khatri_rao(tensors, name='khatrirao'):
@@ -642,10 +633,9 @@ def khatri_rao(tensors, name='khatrirao'):
 def binary_tensor_combine2(tensors, output_dim=10, initrange=1e-5, name='binary_tensor_combine2'):
     with tf.variable_scope(name):
         x = khatri_rao(tensors)
-        # p = weights()
-        w = weights('tnorm', [tensors[0].get_shape().as_list()[1] * tensors[1].get_shape().as_list()[1], output_dim], datatype=x.dtype)
-        # print(x.get_shape())
-        # print(w.get_shape())
+        w = weights('tnorm', x.dtype, [tensors[0].get_shape().as_list()[1] * tensors[1].get_shape().as_list()[1], output_dim])
+        print(x.get_shape())
+        print(w.get_shape())
         return tf.matmul(x, w)
 
 # ==================================================================================

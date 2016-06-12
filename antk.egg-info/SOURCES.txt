@@ -11,6 +11,7 @@ antk/core/config.py
 antk/core/generic_model.py
 antk/core/loader.py
 antk/core/node_ops.py
+antk/core/rep.py
 antk/datascripts/__init__.py
 antk/datascripts/datatest.py
 antk/datascripts/ml20ml.py

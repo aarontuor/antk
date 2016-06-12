@@ -204,7 +204,7 @@ class AntGraph(object):
                 try:
                     self._tensordict[name] = eval(function_call, NODE_GLOBALS, locals())
                     if self.develop:
-                        heading = 'Node %s: %s' % (name, self.tensordict[name])
+                        heading = 'Node %s: %s' % (name, self.tensordict[name] )
                         print(termcolor.colored(heading, 'green'))
                         print('\tFunction Call: %s\n\tTensor Inputs:\n\t\t' %
                               (function_call), end="")

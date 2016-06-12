@@ -1,0 +1,3 @@
+lamb=1.000000 uembed=50 iembed=50 gembed=50 learnrate=0.030000 mb=500 initrange=0.000100 epochs=0.125000 avspe=7.587397 bestdev=100.000000
+lamb=1.000000 uembed=50 iembed=50 gembed=50 learnrate=0.001000 mb=500 initrange=0.000100 epochs=0.250000 avspe=10.725771 bestdev=100.000000
+lamb=1.000000 uembed=50 iembed=50 gembed=50 learnrate=0.000100 mb=500 initrange=0.000100 epochs=10.006250 avspe=13.870330 bestdev=1.052128

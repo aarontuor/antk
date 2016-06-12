@@ -10,9 +10,11 @@ def tree(data, configfile, lamb=0.001,
             maxbadcount=20,
             mb=500,
             initrange=0.00001,
-            epochs=1000,
-            random_seed=500,
-            eval_rate=500):
+            epochs=10,
+            random_seed=None,
+            eval_rate=500,
+            keep_prob=0.95,
+            act='tanh'):
 
     datadict = data.user.features.copy()
     datadict.update(data.item.features)
@@ -24,7 +26,8 @@ def tree(data, configfile, lamb=0.001,
         ant = config.AntGraph(configfile,
                                 data=configdatadict,
                                 marker='-',
-                                variable_bindings = {'kfactors': kfactors, 'initrange': initrange},
+                                variable_bindings = {'kfactors': kfactors, 'initrange': initrange, 'keep_prob':
+                                    keep_prob, 'act': act},
                                 graph_name='tree')
 
     y = ant.tensor_out

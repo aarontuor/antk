@@ -143,8 +143,6 @@ class Model(object):
         self._completed_epochs = 0.0
         self._evaluated_tensors = {}
         self.finaldev = 0.0
-        self._badcount=0
-        self.batch= tf.Variable(0)
 
         # ================================================================
         # ======================For tensorboard===========================
@@ -161,7 +159,7 @@ class Model(object):
         global_step = tf.Variable(0, trainable=False) #keeps track of the mini-batch iteration
 
         if not (decay_step == 1 and decay_rate == 1.0):
-            self.learnrate = tf.train.exponential_decay(self.learnrate, self.batch*self.mb,
+            self.learnrate = tf.train.exponential_decay(self.learnrate, global_step,
                                                    decay_step, decay_rate, name='learnrate_decay')
 
 
@@ -175,20 +173,20 @@ class Model(object):
             if self.opt == 'mom':
                 self.train_step = optimizer(self.learnrate,
                                        self.momentum).apply_gradients(grads_and_vars,
-                                                                      global_step=self.batch,
+                                                                      global_step=global_step,
                                                                       name="train")
             else:
                 self.train_step = optimizer(self.learnrate).apply_gradients(grads_and_vars,
-                                                                       global_step=self.batch,
+                                                                       global_step=global_step,
                                                                        name="train")
         else:
             if self.opt == 'mom':
                 self.train_step = optimizer(self.learnrate,
                                        self.momentum).minimize(self.objective,
-                                                               global_step=self.batch)
+                                                               global_step=global_step)
             else:
                 self.train_step = optimizer(self.learnrate).minimize(self.objective,
-                                                                global_step=self.batch)
+                                                                global_step=global_step)
 
         # =============================================================================
         # ===================Initialize graph =====================================
@@ -236,7 +234,10 @@ class Model(object):
         Number of epochs completed during training (fractional)
         '''
         return self._completed_epochs
-
+    
+    # ======================================================================
+    # ====================METHODS===========================================
+    # ======================================================================
     def predict(self, data, supplement=None):
         """
 
@@ -275,7 +276,7 @@ class Model(object):
         # ========================================================
         if eval_schedule == 'epoch':
             eval_schedule = train.num_examples
-        self._badcount = 0
+        badcount = 0
         start_time = time.time()
         # ============================================================================================
         # =============================TRAINING=======================================================
@@ -308,14 +309,14 @@ class Model(object):
                             print("\t%s: %s" % (tname, self._evaluated_tensors[tname]))
                     # ================Early Stopping====================================
                     if deverror < self.best_dev_error:
-                        self._badcount = 0
+                        badcount = 0
                         self._best_dev_error = deverror
                         if self.save:
                             self.save_path = self.saver.save(self.session, self.best_model_path)
                     else:
-                        self._badcount += 1
-                    if self._badcount > self.maxbadcount:
-                        print('badcount exceeded: %d' % self._badcount)
+                        badcount += 1
+                    if badcount > self.maxbadcount:
+                        print('badcount exceeded: %d' % badcount)
                         break
                     # ==================================================================
             self.epoch_times.append(time.time() - start_time)

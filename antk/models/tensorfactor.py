@@ -4,10 +4,11 @@ from antk.core import config
 from antk.core import generic_model
 from antk.core import node_ops
 from antk.core import loader
+from antk.models import tensor_factor_model
 
 
-def mf(data, configfile, lamb=0.001,
-            kfactors=20,
+def tensorfactor(data, configfile, lamb=.001,
+            kfactors=1000,
             learnrate=0.01,
             verbose=True,
             epochs=1000,
@@ -15,8 +16,7 @@ def mf(data, configfile, lamb=0.001,
             mb=500,
             initrange=1,
             eval_rate=500,
-            random_seed=None,
-            develop=False):
+            random_seed=None):
 
 
     with tf.name_scope('ant_graph'):
@@ -24,19 +24,14 @@ def mf(data, configfile, lamb=0.001,
                               data=data.dev.features,
                               marker='-',
                               graph_name='basic_mf',
-                              develop=develop,
-                              variable_bindings={'kfactors': kfactors,
-                                                 'initrange': initrange,
-                                                 'lamb': lamb})
+                              variable_bindings = {'kfactors': kfactors,
+                                                   'initrange': initrange,
+                                                   'lamb': lamb})
         y = ant.tensor_out
         y_ = tf.placeholder("float", [None, None], name='Target')
         ant.placeholderdict['ratings'] = y_
         with tf.name_scope('objective'):
             objective = (tf.reduce_sum(tf.square(y_ - y)))
-        objective += (lamb*tf.reduce_sum(tf.square(ant.tensordict['huser'])) +
-                     lamb*tf.reduce_sum(tf.square(ant.tensordict['hitem'])) +
-                     lamb*tf.reduce_sum(tf.square(ant.tensordict['ubias'])) +
-                     lamb*tf.reduce_sum(tf.square(ant.tensordict['ibias'])))
         with tf.name_scope('dev_rmse'):
             dev_rmse = node_ops.rmse(y_, y)
         model = generic_model.Model(objective, ant.placeholderdict,
@@ -49,6 +44,6 @@ def mf(data, configfile, lamb=0.001,
                                     predictions=y,
                                     model_name='mf',
                                     random_seed=random_seed)
-        model.train(data.train, dev=data.dev, eval_schedule=eval_rate)
+        model.train(data.train, dev=data.dev, eval_schedule=200)
 
         return model
