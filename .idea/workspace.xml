@@ -6,32 +6,7 @@
     <bookmark url="file://$PROJECT_DIR$/antk/models/tensor_factor_model2.py" line="28" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="79574535-f4d5-410b-8abb-3fb83680b279" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/core/decorator_test.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/lib/decorate.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/models/svdplus_model.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/models/svdplus_model2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/models/tensor_factor_model.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/models/tensor_factor_model2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/models/tensorfactor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/config/svdplus.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/config/svdplus.config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/hotindextest.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/indexlookuptest.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/modelwrappers/svdplus.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/modelwrappers/svdplus2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/modelwrappers/tensorfactor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/modelwrappers/tensorfactor2.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk.egg-info/SOURCES.txt" afterPath="$PROJECT_DIR$/antk.egg-info/SOURCES.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/config.py" afterPath="$PROJECT_DIR$/antk/core/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/generic_model.py" afterPath="$PROJECT_DIR$/antk/core/generic_model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/loader.py" afterPath="$PROJECT_DIR$/antk/core/loader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/node_ops.py" afterPath="$PROJECT_DIR$/antk/core/node_ops.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/models/mfmodel.py" afterPath="$PROJECT_DIR$/antk/models/mfmodel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/models/tree_model.py" afterPath="$PROJECT_DIR$/antk/models/tree_model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/config/tree.config" afterPath="$PROJECT_DIR$/test/config/tree.config" />
-    </list>
+    <list default="true" id="79574535-f4d5-410b-8abb-3fb83680b279" name="Default" comment="" />
     <ignored path="toolkit.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -102,8 +77,8 @@
       <file leaf-file-name="tree.config" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/config/tree.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40944883">
-              <caret line="21" column="60" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
+            <state vertical-scroll-proportion="1.015748">
+              <caret line="43" column="87" selection-start-line="43" selection-start-column="87" selection-end-line="43" selection-end-column="87" />
               <folding />
             </state>
           </provider>
@@ -219,7 +194,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="63" />
+    <option name="y" value="39" />
     <option name="width" value="1920" />
     <option name="height" value="1041" />
   </component>
@@ -596,7 +571,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="63" width="1920" height="1041" extended-state="0" />
+    <frame x="0" y="39" width="1920" height="1041" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22245651" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1098,8 +1073,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/config/tree.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40944883">
-          <caret line="21" column="60" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
+        <state vertical-scroll-proportion="1.015748">
+          <caret line="43" column="87" selection-start-line="43" selection-start-column="87" selection-end-line="43" selection-end-column="87" />
           <folding />
         </state>
       </provider>
