@@ -51,11 +51,11 @@ def dssm(data, configfile,
                                 learnrate=learnrate,
                                 verbose=verbose,
                                 maxbadcount=maxbadcount,
-                                epochs=100,
+                                epochs=epochs,
                                 evaluate=dev_rmse,
                                 predictions=ant.tensor_out[0],
                                 model_name='dssm',
-                                random_seed=500)
+                                random_seed=random_seed)
 
     model.train(data.train, dev=data.dev, supplement=datadict, eval_schedule=eval_rate)
     return model

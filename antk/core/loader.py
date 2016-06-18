@@ -82,7 +82,6 @@ class DataSet(object):
             self._labels = labels # hashmap of label matrices
         else:
             self._labels = {}
-        self._epochs_completed = 0
         self._index_in_epoch = 0
         self._mix_after_epoch = mix
 
@@ -113,11 +112,6 @@ class DataSet(object):
         '''Number of rows (data points) of the matrices in this :any:`DataSet`.'''
         return self._num_examples
 
-    @property
-    def epochs_completed(self):
-        '''Number of epochs the data has been used to train with.'''
-        return self._epochs_completed
-
     # ======================================================================================
     # =============================PUBLIC METHODS===========================================
     # ======================================================================================
@@ -134,11 +128,11 @@ class DataSet(object):
         Return a sub DataSet of next batch-size examples.
             If shuffling enabled:
                 If `batch_size`
-                is greater than the number of examples left in the epoch then the remaining number of examples
-                is returned and the data is shuffled.
+                is greater than the number of examples left in the epoch then a batch size DataSet wrapping back to
+                beginning will be returned.
             If shuffling turned off:
-                If `batch_size` is greater than the number of examples left in the epoch the remaining examples in the epoch are
-                returned.
+                If `batch_size` is greater than the number of examples left in the epoch, points will be shuffled and
+                batch_size DataSet is returned starting from index 0.
 
         :param batch_size: int
         :return: A :any:`DataSet` object with the next `batch_size` examples.
@@ -149,7 +143,11 @@ class DataSet(object):
         if self._index_in_epoch + batch_size > self._num_examples:
 
             if not self._mix_after_epoch:
-                self._index_in_epoch = self._index_in_epoch + batch_size - self._num_examples
+                self._index_in_epoch = (self._index_in_epoch + batch_size) % self._num_examples
+                # if self._index_in_epoch == 0:
+                #     end = self._num_examples
+                # else:
+                #     end = self._index_in_epoch
                 end = self._index_in_epoch
                 newbatch = DataSet(self._next_batch_(self._features, start, end),
                                self._next_batch_(self._labels, start, end),
@@ -168,7 +166,12 @@ class DataSet(object):
             return newbatch
         else:
             end = self._index_in_epoch + batch_size
-            self._index_in_epoch += batch_size
+            self._index_in_epoch = (batch_size + self._index_in_epoch) % self._num_examples
+            if self._index_in_epoch == 0 and self._mix_after_epoch:
+                perm = numpy.arange(self._num_examples)
+                numpy.random.shuffle(perm)
+                self._shuffle_(perm, self._features)
+                self._shuffle_(perm, self._labels)
             return DataSet(self._next_batch_(self._features, start, end),
                            self._next_batch_(self._labels, start, end),
                            batch_size)
@@ -232,8 +235,8 @@ class DataSet(object):
             end = self._num_examples
         batch_data_map = {}
         if end <= start:
-            start2=0
-            end2= end
+            start2 = 0
+            end2 = end
             end = self._num_examples
             wrapdata = {}
             for matrix in datamap:
@@ -253,10 +256,6 @@ class DataSet(object):
                     batch_data_map[matrix] = datamap[matrix].vec[start:end]
                 else:
                     batch_data_map[matrix] = datamap[matrix][start:end]
-
-
-
-
         return batch_data_map
 
 class DataSets(object):
@@ -264,9 +263,9 @@ class DataSets(object):
     A record of DataSet objects with a display function.
     '''
 
-    def __init__(self, datasets_map):
+    def __init__(self, datasets_map, mix=False):
         for k, v in datasets_map.items():
-            setattr(self, k, DataSet(v['features'], v['labels'], v['num_examples']))
+            setattr(self, k, DataSet(v['features'], v['labels'], v['num_examples'], mix=mix))
 
     def __repr__(self):
         attrs = vars(self)
@@ -594,7 +593,7 @@ def makedirs(datadirectory, sub_directory_list=('train', 'dev', 'test')):
         os.system('mkdir ' + datadirectory + sub)
 
 
-def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=()):
+def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix=False):
     '''
     :param directory: Root directory containing data to load.
     :param folders: The subfolders of *directory* to read data from by default there are train, dev, and test folders. If you want others you have to make an explicit list.
@@ -625,7 +624,7 @@ def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=()):
                     if prefix == 'labels':
                         dataset_map['num_examples'] = dataset_map[prefix][descriptor].shape[0]
         datasets_map[folder] = dataset_map
-    return DataSets(datasets_map)
+    return DataSets(datasets_map, mix=mix)
 
 
 # ===================================================================================

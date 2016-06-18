@@ -26,8 +26,7 @@ def mf(data, configfile, lamb=0.001,
                               graph_name='basic_mf',
                               develop=develop,
                               variable_bindings={'kfactors': kfactors,
-                                                 'initrange': initrange,
-                                                 'lamb': lamb})
+                                                 'initrange': initrange})
         y = ant.tensor_out
         y_ = tf.placeholder("float", [None, None], name='Target')
         ant.placeholderdict['ratings'] = y_

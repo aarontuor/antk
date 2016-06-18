@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     args = return_parser().parse_args()
 
-    data = loader.read_data_sets(args.datadir, folders=['train', 'test', 'dev', 'user', 'item'])
+    data = loader.read_data_sets(args.datadir, folders=['train', 'test', 'dev', 'user', 'item'], mix=False)
     data.train.labels['ratings'] = loader.center(data.train.labels['ratings'], axis=None)
     data.dev.labels['ratings'] = loader.center(data.dev.labels['ratings'], axis=None)
     data.user.features['age'] = loader.center(data.user.features['age'], axis=None)
