@@ -38,6 +38,7 @@ def mf(data, configfile, lamb=0.001,
                      lamb*tf.reduce_sum(tf.square(ant.tensordict['ibias'])))
         with tf.name_scope('dev_rmse'):
             dev_rmse = node_ops.rmse(y_, y)
+        mae = node_ops.mae(y_, y)
         model = generic_model.Model(objective, ant.placeholderdict,
                                     mb=mb,
                                     learnrate=learnrate,
@@ -47,7 +48,8 @@ def mf(data, configfile, lamb=0.001,
                                     evaluate=dev_rmse,
                                     predictions=y,
                                     model_name='mf',
-                                    random_seed=random_seed)
+                                    random_seed=random_seed,
+                                    save_tensors={'mae': mae})
         model.train(data.train, dev=data.dev, eval_schedule=eval_rate)
 
         return model

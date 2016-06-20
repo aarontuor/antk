@@ -141,6 +141,7 @@ class Model(object):
         os.system('mkdir ' + self.logdir)
         self.save_tensors = save_tensors
         self._completed_epochs = 0.0
+        self._best_completed_epochs = 0.0
         self._evaluated_tensors = {}
         self.finaldev = 0.0
         self._badcount=0
@@ -237,6 +238,13 @@ class Model(object):
         '''
         return self._completed_epochs
 
+    @property
+    def best_completed_epochs(self):
+        '''
+        Number of epochs completed during at point of best dev eval during training (fractional)
+        '''
+        return self._best_completed_epochs
+
     def predict(self, data, supplement=None):
         """
 
@@ -312,6 +320,7 @@ class Model(object):
                         self._best_dev_error = deverror
                         if self.save:
                             self.save_path = self.saver.save(self.session, self.best_model_path)
+                        self._best_completed_epochs = self._completed_epochs
                     else:
                         self._badcount += 1
                     if self._badcount > self.maxbadcount:

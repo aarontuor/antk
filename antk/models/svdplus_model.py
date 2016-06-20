@@ -1,6 +1,5 @@
 from __future__ import print_function
 import tensorflow as tf
-from antk.core import config
 from antk.core import generic_model
 from antk.core import node_ops
 from antk.core import loader
@@ -61,7 +60,7 @@ def svdplus(data, lamb_bias=0.005, lambfactor=0.015,
                          lamb_bias*tf.reduce_sum(tf.square(u_bias)))
 
         placeholderdict = {'ratings': y_, 'util': xutil, 'user': xuser, 'item': xitem}
-
+        mae = node_ops.mae(y_, y)
         with tf.name_scope('dev_rmse'):
             dev_rmse = node_ops.rmse(y_, y)
         model = generic_model.Model(objective, placeholderdict,
@@ -74,7 +73,8 @@ def svdplus(data, lamb_bias=0.005, lambfactor=0.015,
                                     predictions=y,
                                     model_name='svdplus',
                                     random_seed=random_seed,
-                                    decay=(500, 0.999))
+                                    decay=(500, 0.999),
+                                    save_tensors={'mae': mae})
         model.train(data.train, dev=data.dev, supplement=data.item.features, eval_schedule=eval_rate)
 
         return model
