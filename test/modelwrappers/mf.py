@@ -24,4 +24,4 @@ if __name__ == '__main__':
     data.train.labels['ratings'] = loader.center(data.train.labels['ratings'])
     data.dev.labels['ratings'] = loader.center(data.dev.labels['ratings'])
     x = mfmodel.mf(data, args.config)
-    x.plot_train_dev_eval()
+    x.plot_train_dev_eval('testfig.pdf')

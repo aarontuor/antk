@@ -250,13 +250,13 @@ class Model(object):
         '''
         return self._best_completed_epochs
 
-    def plot_train_dev_eval(self):
+    def plot_train_dev_eval(self, figure_file='testfig.pdf'):
         plt.plot(self.dev_spot, self.deverror, label='dev')
         plt.plot(self.train_spot, self.train_eval, label='train')
         plt.ylabel('Error')
         plt.xlabel('Epoch')
         plt.legend(loc='upper right')
-        plt.savefig('testfig.pdf')
+        plt.savefig(figure_file)
 
     def predict(self, data, supplement=None):
         """
