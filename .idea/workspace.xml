@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/antk/core/generic_model.py" line="126" />
+    <bookmark url="file://$PROJECT_DIR$/antk/core/generic_model.py" line="128" />
     <bookmark url="file://$PROJECT_DIR$/antk/core/node_ops.py" line="53" />
     <bookmark url="file://$PROJECT_DIR$/antk/models/tensor_factor_model2.py" line="28" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79574535-f4d5-410b-8abb-3fb83680b279" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/loader.py" afterPath="$PROJECT_DIR$/antk/core/loader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/models/configs/tree.config" afterPath="$PROJECT_DIR$/antk/models/configs/tree.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/models/dssm_model.py" afterPath="$PROJECT_DIR$/antk/models/dssm_model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/generic_model.py" afterPath="$PROJECT_DIR$/antk/core/generic_model.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/models/mfmodel.py" afterPath="$PROJECT_DIR$/antk/models/mfmodel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/config/mf.config" afterPath="$PROJECT_DIR$/test/config/mf.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/config/tree.config" afterPath="$PROJECT_DIR$/test/config/tree.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/tree.py" afterPath="$PROJECT_DIR$/test/modelwrappers/tree.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/mf.py" afterPath="$PROJECT_DIR$/test/modelwrappers/mf.py" />
     </list>
     <ignored path="toolkit.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,41 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tree.config" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tree.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/config/tree.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17166212">
-              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="54" selection-start-line="39" selection-start-column="54" selection-end-line="39" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dssm.config" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/config/dssm.config">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.928572">
-              <caret line="31" column="33" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mfmodel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/models/mfmodel.py">
+      <file leaf-file-name="models.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/models.rst">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tree.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/modelwrappers/tree.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="93" selection-start-line="40" selection-start-column="93" selection-end-line="40" selection-end-column="93" />
+              <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -89,21 +66,11 @@
       <file leaf-file-name="loader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.785714">
+            <state vertical-scroll-proportion="0.0">
               <caret line="617" column="43" selection-start-line="617" selection-start-column="43" selection-end-line="617" selection-end-column="43" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dssm_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/models/dssm_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -128,11 +95,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generic_model.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="generic_model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/antk/core/generic_model.py">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.6430519">
+              <caret line="248" column="52" selection-start-line="248" selection-start-column="52" selection-end-line="248" selection-end-column="53" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+                <marker date="1466463539716" expanded="true" signature="16269:16687" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mfmodel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/antk/models/mfmodel.py">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="255" column="51" selection-start-line="255" selection-start-column="51" selection-end-line="255" selection-end-column="51" />
+              <caret line="50" column="81" selection-start-line="49" selection-start-column="36" selection-end-line="50" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/modelwrappers/mf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -154,7 +144,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/antk/models/dssm_restricted_model.py" />
-        <option value="$PROJECT_DIR$/antk/models/tree_model.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/dssm.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/testmodels.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/genre_pred.py" />
@@ -181,7 +170,6 @@
         <option value="$PROJECT_DIR$/antk/core/decorator_test.py" />
         <option value="$PROJECT_DIR$/antk/lib/decorate.py" />
         <option value="$PROJECT_DIR$/antk/models/tensorfactor.py" />
-        <option value="$PROJECT_DIR$/test/modelwrappers/mf.py" />
         <option value="$PROJECT_DIR$/antk/core/node_ops.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/tensorfactor.py" />
         <option value="$PROJECT_DIR$/test/hotindextest.py" />
@@ -194,7 +182,6 @@
         <option value="$PROJECT_DIR$/antk/models/tensor_factor_model2.py" />
         <option value="$PROJECT_DIR$/antk/models/tensor_factor_model.py" />
         <option value="$PROJECT_DIR$/antk/models/svdplus_model.py" />
-        <option value="$PROJECT_DIR$/antk/core/generic_model.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/svdplus.py" />
         <option value="$PROJECT_DIR$/antk/core/config.py" />
         <option value="$PROJECT_DIR$/antk/models/configs/tree.config" />
@@ -202,13 +189,17 @@
         <option value="$PROJECT_DIR$/antk/models/dssm_model.py" />
         <option value="$PROJECT_DIR$/antk/core/loader.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/tree.py" />
-        <option value="$PROJECT_DIR$/antk/models/mfmodel.py" />
         <option value="$PROJECT_DIR$/test/config/mf.config" />
+        <option value="$PROJECT_DIR$/antk/models/tree_model.py" />
+        <option value="$PROJECT_DIR$/test/modelwrappers/mf.py" />
+        <option value="$PROJECT_DIR$/antk/core/generic_model.py" />
+        <option value="$PROJECT_DIR$/antk/models/mfmodel.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="39" />
+    <option name="x" value="1920" />
+    <option name="y" value="21" />
     <option name="width" value="1920" />
     <option name="height" value="1041" />
   </component>
@@ -237,8 +228,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -317,20 +306,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="antk" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -350,46 +325,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="configs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -413,6 +348,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -585,8 +522,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="39" width="1920" height="1041" extended-state="0" />
-    <editor active="true" />
+    <frame x="1920" y="21" width="1920" height="1041" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27148128" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -594,7 +531,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12138084" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12138084" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -657,20 +594,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/antk/models/tree_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/model_crafting.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/index.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -825,7 +748,7 @@
           <caret line="603" column="76" selection-start-line="603" selection-start-column="76" selection-end-line="603" selection-end-column="76" />
           <folding>
             <element signature="e#0#31#0" expanded="false" />
-            <marker date="1465660010592" expanded="true" signature="9373:10735" placeholder="..." />
+            <marker date="1466387828669" expanded="true" signature="9373:10735" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -869,13 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="73" selection-start-line="0" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/modelwrappers/mf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -928,9 +844,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="54" column="48" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#37#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -938,9 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#37#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -956,7 +866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-16.0">
           <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -964,7 +873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-19.928572">
           <caret line="31" column="33" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -972,7 +880,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -994,17 +901,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/antk/core/generic_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="255" column="51" selection-start-line="255" selection-start-column="51" selection-end-line="255" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.785714">
+        <state vertical-scroll-proportion="0.0">
           <caret line="617" column="43" selection-start-line="617" selection-start-column="43" selection-end-line="617" selection-end-column="43" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -1016,15 +915,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="93" selection-start-line="40" selection-start-column="93" selection-end-line="40" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/antk/models/mfmodel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="39" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1036,11 +926,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/docs/models.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/models/tree_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43307087">
+          <caret line="39" column="77" selection-start-line="39" selection-start-column="77" selection-end-line="39" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/config/tree.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17166212">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="54" selection-start-line="39" selection-start-column="54" selection-end-line="39" selection-end-column="54" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/models/mfmodel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="81" selection-start-line="49" selection-start-column="36" selection-end-line="50" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/modelwrappers/mf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/generic_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.6430519">
+          <caret line="248" column="52" selection-start-line="248" selection-start-column="52" selection-end-line="248" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <marker date="1466463539716" expanded="true" signature="16269:16687" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

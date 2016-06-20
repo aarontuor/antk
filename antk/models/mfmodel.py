@@ -16,7 +16,8 @@ def mf(data, configfile, lamb=0.001,
             initrange=1,
             eval_rate=500,
             random_seed=None,
-            develop=False):
+            develop=False,
+            train_dev_eval_factor=3):
 
 
     with tf.name_scope('ant_graph'):
@@ -37,7 +38,7 @@ def mf(data, configfile, lamb=0.001,
                      lamb*tf.reduce_sum(tf.square(ant.tensordict['ubias'])) +
                      lamb*tf.reduce_sum(tf.square(ant.tensordict['ibias'])))
         with tf.name_scope('dev_rmse'):
-            dev_rmse = node_ops.rmse(y_, y)
+            _rmse = node_ops.rmse(y_, y)
         mae = node_ops.mae(y_, y)
         model = generic_model.Model(objective, ant.placeholderdict,
                                     mb=mb,
@@ -45,7 +46,9 @@ def mf(data, configfile, lamb=0.001,
                                     verbose=verbose,
                                     maxbadcount=maxbadcount,
                                     epochs=epochs,
-                                    evaluate=dev_rmse,
+                                    evaluate=_rmse,
+                                    train_evaluate=_rmse,
+                                    train_dev_eval_factor= train_dev_eval_factor,
                                     predictions=y,
                                     model_name='mf',
                                     random_seed=random_seed,

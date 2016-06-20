@@ -5,6 +5,7 @@ import time
 from antk.core import loader
 import os
 import datetime
+import matplotlib.pyplot as plt
 
 # ============================================================================================
 # ============================CONVENIENCE DICTIONARY==========================================
@@ -104,7 +105,7 @@ class Model(object):
                  logdir='log/', random_seed=None, model_name='generic',
                  clip_gradients=0.0, make_histograms=False,
                  best_model_path='/tmp/model.ckpt',
-                 save_tensors={}, tensorboard=False):
+                 save_tensors={}, tensorboard=False, train_evaluate=None):
 
         self.objective = objective
         for t in tf.get_collection('losses'):
@@ -121,6 +122,7 @@ class Model(object):
         self.decay = decay
         self.epoch_times = []
         self.evaluate = evaluate
+        self.train_evaluate = train_evaluate
         self._best_dev_error = float('inf')
         self.predictor = predictions
         self.random_seed = random_seed
@@ -143,9 +145,12 @@ class Model(object):
         self._completed_epochs = 0.0
         self._best_completed_epochs = 0.0
         self._evaluated_tensors = {}
-        self.finaldev = 0.0
-        self._badcount=0
-        self.batch= tf.Variable(0)
+        self.deverror = []
+        self._badcount = 0
+        self.batch = tf.Variable(0)
+        self.train_eval = []
+        self.dev_spot = []
+        self.train_spot = []
 
         # ================================================================
         # ======================For tensorboard===========================
@@ -245,6 +250,14 @@ class Model(object):
         '''
         return self._best_completed_epochs
 
+    def plot_train_dev_eval(self):
+        plt.plot(self.dev_spot, self.deverror, label='dev')
+        plt.plot(self.train_spot, self.train_eval, label='train')
+        plt.ylabel('Error')
+        plt.xlabel('Epoch')
+        plt.legend(loc='upper right')
+        plt.savefig('testfig.pdf')
+
     def predict(self, data, supplement=None):
         """
 
@@ -269,7 +282,7 @@ class Model(object):
                            dropout_flag='eval')
         return self.session.run(tensor_in, feed_dict=fd)
 
-    def train(self, train, dev=None, supplement=None, eval_schedule='epoch'):
+    def train(self, train, dev=None, supplement=None, eval_schedule='epoch', train_dev_eval_factor = 0):
         """
 
         :param data: :any:`DataSet` to train on.
@@ -289,6 +302,7 @@ class Model(object):
         # =============================TRAINING=======================================================
         # ============================================================================================
         counter = 0
+        train_eval_counter = 0
         while self._completed_epochs < self.epochs: # keeps track of the epoch iteration
             # ==============PER MINI-BATCH=====================================
 
@@ -297,27 +311,38 @@ class Model(object):
                                dropouts=tf.get_collection('dropout_prob'))
             self.session.run(self.train_step, feed_dict=fd)
             counter += self.mb
+            train_eval_counter += self.mb
             self._completed_epochs += float(self.mb)/float(train.num_examples)
+            if self.train_evaluate and train_eval_counter >= train_dev_eval_factor*eval_schedule:
+                self.train_eval.append(self.eval(self.evaluate, train, supplement))
+                self.train_spot.append(self._completed_epochs)
+                if np.isnan(self.train_eval[-1]):
+                    print("Aborting training...train evaluates to nan.")
+                    break
+                if self.verbose:
+                    print("epoch: %f train eval: %.10f" % (self._completed_epochs, self.train_eval[-1]))
+                train_eval_counter = 0
+
             if (counter >= eval_schedule or self._completed_epochs >= self.epochs):
                 #=================PER eval_schedule==================================
-                counter = 0
                 self._log_summaries(dev, supplement)
+                counter = 0
                 if dev:
-                    deverror = self.eval(self.evaluate, dev, supplement)
-                    self.finaldev = deverror
-                    if np.isnan(deverror):
+                    self.deverror.append(self.eval(self.evaluate, dev, supplement))
+                    self.dev_spot.append(self._completed_epochs)
+                    if np.isnan(self.deverror[-1]):
                         print("Aborting training...dev evaluates to nan.")
                         break
                     if self.verbose:
-                        print("epoch: %f dev error: %.10f" % (self._completed_epochs, deverror))
+                        print("epoch: %f dev error: %.10f" % (self._completed_epochs, self.deverror[-1]))
                     for tname in self.save_tensors:
                         self._evaluated_tensors[tname] = self.eval(self.save_tensors[tname], dev, supplement)
                         if self.verbose:
                             print("\t%s: %s" % (tname, self._evaluated_tensors[tname]))
                     # ================Early Stopping====================================
-                    if deverror < self.best_dev_error:
+                    if self.deverror[-1] < self.best_dev_error:
                         self._badcount = 0
-                        self._best_dev_error = deverror
+                        self._best_dev_error = self.deverror[-1]
                         if self.save:
                             self.save_path = self.saver.save(self.session, self.best_model_path)
                         self._best_completed_epochs = self._completed_epochs
@@ -363,9 +388,9 @@ class Model(object):
             if self.make_histograms:
                 sum_str = self.session.run(self.histogram_summaries, fd)
                 for summary in sum_str:
-                    self._summary_writer.add_summary(summary, self.epoch_counter)
+                    self._summary_writer.add_summary(summary, self._completed_epochs)
             loss_sum_str = self.session.run(self.loss_summary, fd)
-            self._summary_writer.add_summary(loss_sum_str, self.epoch_counter)
+            self._summary_writer.add_summary(loss_sum_str, self._completed_epochs)
         if dev:
             if self.tensorboard:
                 dev_sum_str = self.session.run(self.dev_error_summary, fd)
