@@ -141,7 +141,7 @@ def x_dot_y(operands, name='x_dot_y'):
             return outproducts
 
 def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
-           initrange=None, l2=0.0, shape=None, makeplace=True, name='lookup'):
+           initrange=0.1, l2=0.0, shape=None, makeplace=True, name='lookup'):
     """
     A wrapper for `tensorflow's`_ `embedding_lookup`_ which infers the shape of the
     weight matrix and placeholder value from the parameter *data*.
