@@ -48,11 +48,10 @@ def mf(data, configfile, lamb=0.001,
                                     epochs=epochs,
                                     evaluate=_rmse,
                                     train_evaluate=_rmse,
-                                    train_dev_eval_factor= train_dev_eval_factor,
                                     predictions=y,
                                     model_name='mf',
                                     random_seed=random_seed,
                                     save_tensors={'mae': mae})
-        model.train(data.train, dev=data.dev, eval_schedule=eval_rate)
+        model.train(data.train, dev=data.dev, eval_schedule=eval_rate,train_dev_eval_factor= train_dev_eval_factor)
 
         return model

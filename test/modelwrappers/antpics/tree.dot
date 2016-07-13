@@ -1,9 +1,11 @@
 digraph tree {
-	dotproduct;
-	dotproduct -> {all_user,all_item,ibias,ubias} [dir=back];
+	id;
+	id -> {dotproduct,dotproduct2} [dir=back];
+	dotproduct -> {huser,hitem} [dir=back];
+	dotproduct2 -> {all_user,all_item} [dir=back];
 	all_user -> {tanh_user} [dir=back];
 	tanh_user -> {merge_user} [dir=back];
-	merge_user -> {huser,hage,hsex,hocc,hzip,husertime} [dir=back];
+	merge_user -> {huser2,hage,hsex,hocc,hzip,husertime} [dir=back];
 	hage -> {agelookup} [dir=back];
 	agelookup -> {age,user} [dir=back];
 	hsex -> {sexlookup} [dir=back];
@@ -18,7 +20,7 @@ digraph tree {
 	husertime -> {time} [dir=back];
 	all_item -> {tanh_item} [dir=back];
 	tanh_item -> {merge_item} [dir=back];
-	merge_item -> {hitem,hgenre,hmonth,hyear,htfidf,hitemtime} [dir=back];
+	merge_item -> {hitem2,hgenre,hmonth,hyear,htfidf,hitemtime} [dir=back];
 	hgenre -> {genrelookup} [dir=back];
 	genrelookup -> {genres,item} [dir=back];
 	hmonth -> {monthlookup} [dir=back];

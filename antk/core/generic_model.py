@@ -282,7 +282,7 @@ class Model(object):
                            dropout_flag='eval')
         return self.session.run(tensor_in, feed_dict=fd)
 
-    def train(self, train, dev=None, supplement=None, eval_schedule='epoch', train_dev_eval_factor = 0):
+    def train(self, train, dev=None, supplement=None, eval_schedule='epoch', train_dev_eval_factor = 3):
         """
 
         :param data: :any:`DataSet` to train on.
