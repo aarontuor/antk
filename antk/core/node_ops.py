@@ -141,7 +141,7 @@ def x_dot_y(operands, name='x_dot_y'):
             return outproducts
 
 def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
-           initrange=None, l2=0.0, shape=None, makeplace=True, name='lookup'):
+           initrange=0.1, l2=0.0, shape=None, makeplace=True, name='lookup'):
     """
     A wrapper for `tensorflow's`_ `embedding_lookup`_ which infers the shape of the
     weight matrix and placeholder value from the parameter *data*.
@@ -161,7 +161,6 @@ def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
     if type(data) is loader.HotIndex:
         if makeplace:
             indices = tf.placeholder(tf.int32, [None], name=dataname)
-        initrange *= 1.0/numpy.sqrt(float(shape[1]))
         wghts = weights(distribution, [data.dim, shape[1]], initrange=initrange, l2=l2, name=name+'_wghts')
         tf.add_to_collection(name+'_weights', wghts)
         tensor_out = tf.nn.embedding_lookup(wghts, indices, name=name), wghts, indices
@@ -725,6 +724,3 @@ def fscore(predictions=None, targets=None, threshold=0.5, precisions=None, recal
 def accuracy(predictions, targets):
     correct_prediction = tf.equal(tf.argmax(predictions, 1), tf.argmax(targets, 1))
     return tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
-
-
