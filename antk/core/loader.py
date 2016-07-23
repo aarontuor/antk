@@ -272,12 +272,18 @@ class DataSets(object):
         return 'antk.core.DataSets object with fields:\n' + '\n'.join("\t%s: %s" % item for item in attrs.items())
 
     def show(self):
+        """
+        Pretty print data attributes.
+        """
         datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show' and not s == 'showmore']
         for dataset in datasets:
             print tc.colored(dataset + ':', 'yellow')
             getattr(self, dataset).show()
 
     def showmore(self):
+        """
+        Pretty print data attributes, and data.
+        """
         datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show' and not s == 'showmore']
         for dataset in datasets:
             print tc.colored(dataset + ':', 'yellow')
@@ -342,7 +348,8 @@ class HotIndex(object):
         """
         return toOnehot(self)
 
-
+class IndexVector(HotIndex):
+    pass
 # ===================================================================================
 # ====================== I/0 ========================================================
 # ===================================================================================
@@ -634,7 +641,28 @@ def toOnehot(X, dim=None):
     '''
     :param X: Vector of indices or :any:`HotIndex` object
     :param dim: Dimension of indexing
-    :return: Matrix of one hots
+    :return: A sparse csr_matrix of one hots.
+
+        Examples
+        --------
+        >>> import numpy
+        >>> from antk.core import loader
+        >>> x = numpy.array([0, 1, 2, 3])
+        >>> loader.toOnehot(x) #doctest: +ELLIPSIS
+        <4x4 sparse matrix of type '<type 'numpy.float64'>'...
+        >>> loader.toOnehot(x).toarray()
+        array([[ 1.,  0.,  0.,  0.],
+               [ 0.,  1.,  0.,  0.],
+               [ 0.,  0.,  1.,  0.],
+               [ 0.,  0.,  0.,  1.]])
+        >>> x = loader.HotIndex(x, dimension=8)
+        >>> loader.toOnehot(x).toarray()
+        array([[ 1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
+               [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.],
+               [ 0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.],
+               [ 0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.]])
+
+
     '''
     if isinstance(X, HotIndex):
         dim = X.dim
@@ -642,34 +670,60 @@ def toOnehot(X, dim=None):
     else:
         if dim is None:
             dim = numpy.amax(X) + 1
-
-    hotmatrix = numpy.zeros((X.shape[0], dim))
-    # fill indice positions
-    hotmatrix[numpy.arange(X.shape[0]), X.astype(int)] = 1
-    hotmatrix = sps.csr_matrix(hotmatrix)
-    return hotmatrix
+    return sps.csr_matrix(([1.0]*X.shape[0], (range(X.shape[0]), X.astype(int))), shape=(X.shape[0], dim))
 
 
 def is_one_hot(A):
     '''
     :param A: A numpy array or scipy sparse matrix
     :return: True if matrix is a sparse matrix of one hot vectors, False otherwise
+
+        Examples
+        --------
+        >>> import numpy
+        >>> from antk.core import loader
+        >>> x = numpy.eye(3)
+        >>> loader.is_one_hot(x)
+        True
+        >>> x *= 5
+        >>> loader.is_one_hot(x)
+        False
+        >>> x = numpy.array([[1, 0, 0], [1, 0, 0], [1, 0, 0]])
+        >>> loader.is_one_hot(x)
+        True
+        >>> x[0,1] = 2
+        >>> loader.is_one_hot(x)
+        False
+
     '''
-    isonehot = False
-    if sps.issparse(A):
-        (i, j, v) = sps.find(A)
-        if (numpy.sum(v) == A.shape[0] and numpy.unique(i).shape[0] == A.shape[0] and
-                    numpy.unique(v).shape[0] == 1 and numpy.unique(v)[0] == 1):
-            isonehot = True
-    return isonehot
+    A = sps.csr_matrix(A)
+    (i, j, v) = sps.find(A)
+    return (numpy.sum(v) == A.shape[0] and numpy.unique(i).shape[0] == A.shape[0] and
+                numpy.unique(v).shape[0] == 1 and numpy.unique(v)[0] == 1)
 
 
 def toIndex(A):
     '''
     :param A: A matrix of one hot row vectors.
     :return: The hot indices.
+
+        Examples
+        --------
+
+        >>> import numpy
+        >>> from antk.core import loader
+        >>> x = numpy.array([[1,0,0], [0,0,1], [1,0,0]])
+        >>> loader.toIndex(x)
+        array([0, 2, 0])
     '''
-    return sps.find(A)[1]
+    if is_one_hot(A):
+        if sps.issparse(A):
+            return sps.find(A)[1]
+        else:
+            return numpy.nonzero(A)[1]
+    else:
+        raise ValueError('Argument to function must be a one hot matrix.')
+
 
 def center(X, axis=None):
     """

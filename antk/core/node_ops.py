@@ -4,7 +4,9 @@ import numpy
 import scipy.sparse as sps
 from antk.core import loader
 import numbers
-from antk.lib.decorate import pholder, variable, node_op
+
+from antk.lib.decorate import pholder, variable, node_op, neural_net, act, relu, loss_function
+
 
 ACTIVATION_LAYERS = 'activation_layers'
 NORMALIZED_ACTIVATIONS = 'normalized_activations'
@@ -13,20 +15,15 @@ class MissingShapeError(Exception):
     '''Raised when :any:`placeholder` can not infer shape.'''
     pass
 
-def tanhlecun(tensor_in):
-    """
-    `Efficient BackProp`_
-    Sigmoid with the following properties:
-    (1) :math:`f(\pm 1) = \pm 1` (2) second derivative of *f* is maximum at :math:`\pm 1` (3) Effective gain is close to 1
-    """
-    return 1.7159*tf.nn.tanh((2.0/3.0) * tensor_in)
+def fan_scale(initrange, activation, tensor_in):
+    if activation == relu:
+        initrange *= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
+    else:
+        initrange *= (1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
 
-ACTIVATION = {'sigmoid': tf.nn.sigmoid,
-              'tanh': tf.nn.tanh,
-              'relu': tf.nn.relu,
-              'relu6': tf.nn.relu6,
-              'softplus': tf.nn.softplus,
-              'tanhlecun': tanhlecun}
+
+
+
 # ===============================================================================
 # ===================NODES=======================================================
 # ===============================================================================
@@ -39,16 +36,37 @@ def ident(tensor_in, name='ident'):
     """
     return tensor_in
 
+@pholder
+def placeholder(dtype, shape=None, data=None, name='placeholder'):
+    """
+    Wrapper to create tensorflow_ Placeholder_ which infers dimensions given data.
 
-# @variable
-def weights(distribution, shape, datatype=tf.float32, initrange=1e-5,
+    :param dtype: Tensorflow dtype to initiliaze a Placeholder.
+    :param shape: Dimensions of Placeholder
+    :param data: Data to infer dimensions of Placeholder from.
+    :param name: Unique name for variable scope.
+    :return: A Tensorflow_ Placeholder.
+    """
+    if data is None and shape is None:
+        raise MissingShapeError('Shape or data to infer the shape from must be provided')
+    if data is not None and shape is None:
+        if type(data) is loader.HotIndex:
+            shape = [None]
+        else:
+            shapespec = list(data.shape)
+            shape = [None]
+            shape.extend(shapespec[1:len(shapespec)])
+    return tf.placeholder(dtype, shape, name)
+
+@variable
+def weights(distribution, shape, dtype=tf.float32, initrange=1e-5,
             seed=None, l2=0.0, name='weights'):
     """
     Wrapper parameterizing common constructions of tf.Variables.
 
     :param distribution: A string identifying distribution 'tnorm' for truncated normal, 'rnorm' for random normal, 'constant' for constant, 'uniform' for uniform.
     :param shape: Shape of weight tensor.
-    :param datatype: Datatype for weights
+    :param dtype: dtype for weights
     :param initrange: Scales standard normal and trunctated normal, value of constant dist., and range of uniform dist. [-initrange, initrange].
     :param seed: For reproducible results.
     :param l2: Floating point number determining degree of of l2 regularization for these weights in gradient descent update.
@@ -56,24 +74,20 @@ def weights(distribution, shape, datatype=tf.float32, initrange=1e-5,
     :return: A tf.Variable.
     """
 
-    with tf.variable_scope(name):
-        if distribution == 'norm':
-            wghts = tf.Variable(initrange*tf.random_normal(shape, 0, 1, datatype, seed))
-        elif distribution == 'tnorm':
-            wghts = tf.Variable(initrange*tf.truncated_normal(shape, 0, 1, datatype, seed))
-        elif distribution == 'uniform':
-            wghts = tf.Variable(tf.random_uniform(shape, -initrange, initrange, datatype, seed))
-        elif distribution == 'constant':
-            wghts = tf.Variable(tf.constant(initrange, dtype=datatype, shape=shape))
-        else:
-            raise ValueError("Function weights takes values 'norm', 'tnorm', 'uniform', 'constant', "
-                             "for argument distribution. You passed %s" % distribution)
+    if distribution == 'norm':
+        wghts = tf.Variable(initrange*tf.random_normal(shape, 0, 1, dtype, seed))
+    elif distribution == 'tnorm':
+        wghts = tf.Variable(initrange*tf.truncated_normal(shape, 0, 1, dtype, seed))
+    elif distribution == 'uniform':
+        wghts = tf.Variable(tf.random_uniform(shape, -initrange, initrange, dtype, seed))
+    elif distribution == 'constant':
+        wghts = tf.Variable(tf.constant(initrange, dtype=dtype, shape=shape))
+    else:
+        raise ValueError("Argument 'distribution takes values 'norm', 'tnorm', 'uniform', 'constant', "
+                          "Received %s" % distribution)
     if l2 != 0.0:
         tf.add_to_collection('losses', tf.mul(tf.nn.l2_loss(wghts), l2, name=name + 'weight_loss'))
     return wghts
-
-def sqrt(*args, **kwargs):
-    return node_op(tf.sqrt)
 
 @node_op
 def cosine(operands, name='cosine'):
@@ -91,17 +105,12 @@ def cosine(operands, name='cosine'):
         raise ValueError("Cosine expects matching shapes for operands. Found operands[0] shape = %s, "
                          "operands[1] shape = %s" % (shape1, shape2))
     else:
-        with tf.variable_scope(name):
-            xlen = node_op(tf.sqrt)(tf.reduce_sum(tf.mul(operands[0], operands[0]), 1, keep_dims=True), name='cosine')
-            ylen = tf.sqrt(tf.reduce_sum(tf.mul(operands[1], operands[1]), 1, keep_dims=True))
-            norm = tf.mul(xlen, ylen)
-            #tf.add_to_collection(name, xlen)
-            tf.add_to_collection(name, ylen)
-            tf.add_to_collection(name, norm)
-            tensor_out = tf.div(x_dot_y(operands), norm, name=name)
-            # tf.add_to_collection(name, tensor_out)
-            return tensor_out
+        xlen = node_op(tf.sqrt)(tf.reduce_sum(tf.mul(operands[0], operands[0]), 1, keep_dims=True), name='cosine')
+        ylen = node_op(tf.sqrt)(tf.reduce_sum(tf.mul(operands[1], operands[1]), 1, keep_dims=True))
+        norm = node_op(tf.mul)(xlen, ylen)
+        return tf.div(x_dot_y(operands), norm, name=name)
 
+@node_op
 def x_dot_y(operands, name='x_dot_y'):
     """
     Takes the inner product for rows of operands[1], and operands[2],
@@ -110,7 +119,9 @@ def x_dot_y(operands, name='x_dot_y'):
     then a list of the pairwise dot products (with bias when len(operands) > 2)
     of the lists is returned.
 
-    :param operands: A list of 2, 3, or 4 tensors_ (the first two tensors may be replaced by lists of tensors).
+    :param operands: A list of 2, 3, or 4 tensors_ (the first two tensors may be replaced by lists of tensors
+                                                    in which case the return value will a list of the dot products
+                                                    for all members of the cross product of the two lists.).
     :param name: An optional identifier for unique variable_scope_.
     :return: A tensor or list of tensors with dimension (operands[1].shape[0], 1).
     :raises: Value error when operands is not a list of at least two tensors.
@@ -118,28 +129,26 @@ def x_dot_y(operands, name='x_dot_y'):
     if type(operands) is not list or len(operands) < 2:
         raise ValueError("x_dot_y needs a list of 2-4 tensors.")
     outproducts = []
-    with tf.variable_scope(name):
-        if type(operands[0]) is not list:
-            operands[0] = [operands[0]]
-        if type(operands[1]) is not list:
-            operands[1] = [operands[1]]
-        for i in range(len(operands[0])):
-            for j in range(len(operands[1])):
-                with tf.name_scope('right%d' % i + 'left%d' % j):
-                    dot = tf.reduce_sum(tf.mul(operands[0][i], operands[1][j]), 1, keep_dims=True)
-                    tf.add_to_collection(name, dot)
-                    if len(operands) > 2:
-                        dot = dot + operands[2]
-                    tf.add_to_collection(name, dot)
-                    if len(operands) > 3:
-                        dot = dot + operands[3]
-                    tf.add_to_collection(name, dot)
-                    outproducts.append(dot)
-        if len(outproducts) == 1:
-            return outproducts[0]
-        else:
-            return outproducts
 
+    if type(operands[0]) is not list:
+        operands[0] = [operands[0]]
+    if type(operands[1]) is not list:
+        operands[1] = [operands[1]]
+    for i in range(len(operands[0])):
+        for j in range(len(operands[1])):
+            with tf.name_scope('right%d' % i + 'left%d' % j):
+                dot = node_op(tf.reduce_sum)(tf.mul(operands[0][i], operands[1][j]), 1, keep_dims=True, name=name)
+                if len(operands) > 2:
+                    dot = dot + operands[2]
+                if len(operands) > 3:
+                    dot = dot + operands[3]
+                outproducts.append(dot)
+    if len(outproducts) == 1:
+        return outproducts[0]
+    else:
+        return outproducts
+
+@node_op
 def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
            initrange=0.1, l2=0.0, shape=None, makeplace=True, name='lookup'):
     """
@@ -153,7 +162,7 @@ def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
     :param initrange: Initrange for weight distribution.
     :param l2: Floating point number determining degree of of l2 regularization for these weights in gradient descent update.
     :param shape: The dimensions of the output tensor_, typically [None, output-size]
-    :param makeplace: A boolean to tell whether or not a placeholder has been created for this data
+    :param makeplace: A boolean to tell whether or not a placeholder has been created for this data (Used by config.py)
     :param name: A name for unique variable scope.
     :return: tf.nn.embedding_lookup(wghts, indices), wghts, indices
     """
@@ -161,15 +170,13 @@ def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
     if type(data) is loader.HotIndex:
         if makeplace:
             indices = tf.placeholder(tf.int32, [None], name=dataname)
-        wghts = weights(distribution, [data.dim, shape[1]], initrange=initrange, l2=l2, name=name+'_wghts')
-        tf.add_to_collection(name+'_weights', wghts)
-        tensor_out = tf.nn.embedding_lookup(wghts, indices, name=name), wghts, indices
-        tf.add_to_collection(name, tensor_out)
-        return tensor_out
-
+        wghts = weights(distribution, [data.dim, shape[1]], initrange=initrange, l2=l2, name=name+'_weights')
+        return tf.nn.embedding_lookup(wghts, indices, name=name), wghts, indices
     else:
         raise TypeError("Type of data for lookup indices must be antk.core.loader.HotIndex")
 
+
+@node_op
 def embedding(tensors, name='embedding'):
     """
     A wrapper for `tensorflow's`_ `embedding_lookup`_
@@ -180,44 +187,23 @@ def embedding(tensors, name='embedding'):
     """
     matrix = tensors[0]
     indices = tensors[1]
-    tensor_out = tf.nn.embedding_lookup(matrix, indices, name=name)
-    tf.add_to_collection(name, tensor_out)
-    return tensor_out
+    return tf.nn.embedding_lookup(matrix, indices, name=name)
 
-
-
-@pholder
-def placeholder(datatype, shape=None, data=None, name='placeholder'):
-    """
-    Wrapper to create tensorflow_ Placeholder_ which infers dimensions given data.
-
-    :param datatype: Tensorflow datatype to initiliaze a Placeholder.
-    :param shape: Dimensions of Placeholder
-    :param data: Data to infer dimensions of Placeholder from.
-    :param name: Unique name for variable scope.
-    :return: A Tensorflow_ Placeholder.
-    """
-    if data is None and shape is None:
-        raise MissingShapeError('Shape or data to infer the shape from must be provided')
-    if data is not None and shape is None:
-        if type(data) is loader.HotIndex:
-            shape = [None]
-        else:
-            shapespec = list(data.shape)
-            shape = [None]
-            shape.extend(shapespec[1:len(shapespec)])
-    return tf.placeholder(datatype, shape, name)
-
-
-def mult_log_reg(tensor_in, numclasses=None, data=None, initrange=1, name='log_reg'):
+@node_op
+def mult_log_reg(tensor_in, numclasses=None, data=None, dtype=tf.float32,
+                 initrange=1e-10, seed=None, l2=0.0, name='log_reg'):
     """
     Performs mulitnomial logistic regression forward pass. Weights and bias initialized to zeros.
 
     :param tensor_in: A tensor_ or placeholder_
     :param numclasses: For classificatio
     :param data: For shape inference.
+    :param dtype: For :any:`weights` initialization.
+    :param initrange: For :any:`weights` initialization.
+    :param seed: For :any:`weights` initialization.
+    :param l2: For :any:`weights` initialization.
     :param name: For `variable_scope`_
-    :return: A tensor shape=(tensor_in.shape[0], numclasses)
+    :return:  A tensor shape=(tensor_in.shape[0], numclasses)
     """
     if data is not None:
         if type(data) is loader.HotIndex:
@@ -228,18 +214,15 @@ def mult_log_reg(tensor_in, numclasses=None, data=None, initrange=1, name='log_r
             raise MissingShapeError('Can not infer shape from data: %s' % data)
     elif numclasses is None:
         raise MissingShapeError('Can not infer shape. Need numclasses or data argument.')
-    with tf.variable_scope(name):
-        inshape = tensor_in.get_shape().as_list()
-        W = tf.Variable(tf.random_uniform([inshape[1], numclasses],
-                                          minval= -initrange, maxval=initrange,
-                                          dtype=tf.float32, seed=None))
-        b = tf.Variable(tf.random_uniform([numclasses], minval=-initrange, maxval=initrange, dtype=tf.float32, seed=None))
-    tf.add_to_collection(name+'_weights', W)
-    tf.add_to_collection(name+'_bias', b)
+    inshape = tensor_in.get_shape().as_list()
+    W = weights('uniform', [inshape[1], numclasses], dtype=dtype,
+                initrange=initrange, seed=seed, l2=l2, name=name + '_weights')
+    b = weights('uniform', [numclasses], dtype=dtype,
+                initrange=initrange, seed=seed, l2=l2, name=name + '_bias')
     tensor_out = tf.nn.softmax(tf.matmul(tensor_in, W) + b)
-    tf.add_to_collection(name, tensor_out)
     return tensor_out
 
+@node_op
 def concat(tensors, output_dim, name='concat'):
     """
     Matrix multiplies each tensor_ in *tensors* by its own weight matrix and adds together the results.
@@ -249,19 +232,16 @@ def concat(tensors, output_dim, name='concat'):
     :param name: An optional identifier for unique variable_scope_.
     :return: A tensor with shape [None, output_dim]
     """
-    with tf.variable_scope(name):
-        for i, tensor in enumerate(tensors):
-            with tf.variable_scope('inTensor%d' % i):
-                tensor_in = linear(tensor, output_dim, True, name=name)
-                tf.add_to_collection(name, tensor_in)
-                if i == 0:
-                    combo = tensor_in
-                    tf.add_to_collection(name, combo)
-                else:
-                    combo = combo + tensor_in
-                    tf.add_to_collection(name, combo)
-        return combo
+    for i, tensor in enumerate(tensors):
+        with tf.variable_scope('inTensor%d' % i):
+            tensor_in = linear(tensor, output_dim, True, name=name + '_linear')
+            if i == 0:
+                combo = tensor_in
+            else:
+                combo = combo + tensor_in
+    return combo
 
+@neural_net
 def dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
         initrange=1.0, l2=0.0, bn=False, keep_prob=None, fan_scaling=False, name='dnn'):
     """
@@ -282,32 +262,21 @@ def dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
     :param name: A name for unique variable_scope_.
     :return: A tensor_ which would be a deep neural network.
     """
+    for i, n_units in enumerate(hidden_units):
+        with tf.variable_scope('layer%d' % i):
+            if fan_scaling:
+                initrange = fan_scale(initrange, activation, tensor_in)
+            tensor_in = linear(tensor_in, n_units, bias=True,
+                               distribution=distribution, initrange=initrange, l2=l2, name=name)
+            tensor_in = activation(tensor_in, name=name + '_activation')
+            if bn:
+                tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+            if keep_prob:
+                tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')
+    return tensor_in
 
-    activation = ACTIVATION[activation]
-    with tf.variable_scope(name):
-        for i, n_units in enumerate(hidden_units):
-            with tf.variable_scope('layer%d' % i):
-                if fan_scaling:
-                    if activation == 'relu':
-                        initrange *= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
-                    else:
-                        initrange *= (1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
 
-                tensor_in = linear(tensor_in, n_units, bias=True,
-                                   distribution=distribution, initrange=initrange, l2=l2, name=name)
-                tf.add_to_collection(name + '_preactivation', tensor_in)
-                tensor_in = activation(tensor_in)
-                tf.add_to_collection(ACTIVATION_LAYERS, tensor_in)
-                tf.add_to_collection(name + '_activation', tensor_in)
-                if bn:
-                    tensor_in = batch_normalize(tensor_in)
-                    tf.add_to_collection(NORMALIZED_ACTIVATIONS, tensor_in)
-                    tf.add_to_collection(name + '_bn', tensor_in)
-                if keep_prob:
-                    tensor_in = dropout(tensor_in, keep_prob)
-                    tf.add_to_collection(name + '_dropouts', tensor_in)
-        return tensor_in
-
+@neural_net
 def convolutional_net(in_progress=None):
     """
     See: `Tensorflow Deep MNIST for Experts`_ ,
@@ -321,11 +290,10 @@ def convolutional_net(in_progress=None):
     :return:
     """
 
-def residual_dnn(tensor_in, hidden_units,
-                 activation='tanh', distribution='tnorm', initrange=1.0, l2=0.0,
-                 bn=False,
-                 keep_prob=None, skiplayers=3,
-                 name='residual_dnn'):
+@neural_net
+def residual_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
+        initrange=1.0, l2=0.0, bn=False, keep_prob=None, fan_scaling=False,
+        skiplayers=3, name='dnn'):
     """
     Creates residual neural network with shortcut connections.
         `Deep Residual Learning for Image Recognition`_
@@ -345,52 +313,37 @@ def residual_dnn(tensor_in, hidden_units,
     """
     if len(hidden_units) % skiplayers != 0:
         raise ValueError('The number of layers must be a multiple of skiplayers')
-    if type(activation) is str:
-        activation = ACTIVATION[activation]
-    with tf.variable_scope(name):
-        for k in range(len(hidden_units)//skiplayers):
-            shortcut = tensor_in
-            start, end = k*skiplayers, k*skiplayers + skiplayers
-            for i, n_units in enumerate(hidden_units[start:end]):
-                with tf.variable_scope('layer%d' % i*(k+1)):
-                    if activation == 'relu':
-                        irange= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
-                    else:
-                        irange = initrange*(1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
-                    tensor_in = linear(tensor_in, n_units, bias=True, distribution=distribution,
-                                       initrange=initrange*irange,
-                                       l2=l2,
-                                       name=name)
-                    if activation:
-                        tensor_in = activation(tensor_in)
-                        tf.add_to_collection(ACTIVATION_LAYERS, tensor_in)
-                        tf.add_to_collection(name + '_activation', tensor_in)
-                    if bn:
-                        tensor_in = batch_normalize(tensor_in)
-                        tf.add_to_collection(NORMALIZED_ACTIVATIONS, tensor_in)
-                        tf.add_to_collection(name + '_bn', tensor_in)
-                    if keep_prob:
-                        tensor_in = dropout(tensor_in, keep_prob)
-                        tf.add_to_collection(name + '_dropouts', tensor_in)
-            shp1, shp2 = shortcut.get_shape().as_list(), tensor_in.get_shape().as_list()
-            if shp1[1] != shp2[1]:
-                with tf.variable_scope('skip_connect%d' % k):
-                    if activation == 'relu':
-                        irange= numpy.sqrt(2.0/float(shp1[1]))
-                    else:
-                        irange = initrange*(1.0/numpy.sqrt(float(shp1[1])))
-                    shortcut = linear(shortcut, shp2[1], bias=True,
-                                      initrange=irange,
-                                      distribution=distribution, l2=l2,
-                                      name=name)
-                    tf.add_to_collection(name + '_skiptransform', shortcut)
-            tensor_in = tensor_in + shortcut
-            tf.add_to_collection(name + '_skipconnection', tensor_in)
-        return tensor_in
+    if fan_scaling:
+        initrange = fan_scale(initrange, activation, tensor_in)
+    for k in range(len(hidden_units)//skiplayers):
+        shortcut = tensor_in
+        start, end = k*skiplayers, k*skiplayers + skiplayers
+        for i, n_units in enumerate(hidden_units[start:end]):
+            with tf.variable_scope('layer%d' % i*(k+1)):
+                tensor_in = linear(tensor_in, n_units, bias=True, distribution=distribution,
+                                   initrange=initrange,
+                                   l2=l2,
+                                   name=name)
+                tensor_in = activation(tensor_in, name = name + '_activation')
+                if bn:
+                    tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+                if keep_prob:
+                    tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')
+        shp1, shp2 = shortcut.get_shape().as_list(), tensor_in.get_shape().as_list()
+        if shp1[1] != shp2[1]:
+            with tf.variable_scope('skip_connect%d' % k):
+                shortcut = linear(shortcut, shp2[1], bias=True,
+                                  initrange=initrange,
+                                  distribution=distribution, l2=l2,
+                                  name=name + '_skiptransform')
+        tensor_in = tensor_in + shortcut
+        tf.add_to_collection(name + '_skipconnection', tensor_in)
+    return tensor_in
 
-def highway_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm', initrange=1.0,
-                l2=0.0, bn=False,
-                keep_prob=None, bias_start=-1, name='highway_dnn'):
+@neural_net
+def highway_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
+                initrange=1.0, l2=0.0, bn=False, keep_prob=None, fan_scaling=False,
+                bias_start=-1, name='highway_dnn'):
     """
     A highway deep neural network.
         `Training Very Deep Networks`_
@@ -407,45 +360,29 @@ def highway_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm'
     :param name: A name for unique variable_scope.
     :return: A tensor_ which would be a highway deep neural network.
     """
-    if type(activation) is str:
-        activation = ACTIVATION[activation]
-    with tf.variable_scope(name):
-        for i, n_units in enumerate(hidden_units):
-            with tf.variable_scope('layer%d' % i):
-                with tf.variable_scope('hidden'):
-                    if activation == 'relu':
-                        irange= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
-                    else:
-                        irange = initrange*(1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
-                    hidden = linear(tensor_in, n_units, bias=True,
-                                               distribution=distribution, initrange=irange, l2=l2,
-                                               name=name)
-                    tf.add_to_collection(name + '_preactivation', hidden)
-                    hidden = activation(hidden)
-                    tf.add_to_collection(ACTIVATION_LAYERS, hidden)
-                    tf.add_to_collection(name + '_activation', hidden)
-                with tf.variable_scope('transform'):
-                    if activation == 'relu':
-                        irange= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
-                    else:
-                        irange = initrange*(1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
-                    transform = tf.sigmoid(linear(tensor_in, n_units,
-                                                  bias_start=bias_start, bias=True,
-                                                  initrange=irange, l2=l2, distribution=distribution,
-                                                  name=name))
-                    tf.add_to_collection(ACTIVATION_LAYERS, transform)
-                    tf.add_to_collection(name + '_transform', transform)
-                tensor_in = hidden * transform + tensor_in * (1 - transform)
-                tf.add_to_collection(name, tensor_in)
-                if bn:
-                    tensor_in = batch_normalize(tensor_in)
-                    tf.add_to_collection(NORMALIZED_ACTIVATIONS, tensor_in)
-                    tf.add_to_collection(name + '_bn', tensor_in)
-                if keep_prob:
-                    tensor_in = dropout(tensor_in, keep_prob, name=name)
-                    tf.add_to_collection(name + '_dropouts', tensor_in)
-        return tensor_in
+    if fan_scaling:
+        initrange = fan_scale(initrange, activation, tensor_in)
+    for i, n_units in enumerate(hidden_units):
+        with tf.variable_scope('layer%d' % i):
+            with tf.variable_scope('hidden'):
+                hidden = linear(tensor_in, n_units, bias=True,
+                                           distribution=distribution, initrange=initrange, l2=l2,
+                                           name=name)
+                hidden = activation(hidden, name=name+'_activation')
+            with tf.variable_scope('transform'):
+                transform = act(tf.sigmoid)(linear(tensor_in, n_units,
+                                              bias_start=bias_start, bias=True,
+                                              initrange=initrange, l2=l2, distribution=distribution,
+                                              name=name + '_transform'))
+            tensor_in = hidden * transform + tensor_in * (1 - transform)
+            tf.add_to_collection(name, tensor_in)
+            if bn:
+                tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+            if keep_prob:
+                tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')
+    return tensor_in
 
+@node_op
 def dropout(tensor_in, prob, name=None):
     """
     Adds dropout node. Adapted from skflow `dropout_ops.py`_ .
@@ -456,12 +393,12 @@ def dropout(tensor_in, prob, name=None):
     :param name: A name for the tensor.
     :return: Tensor_ of the same shape of *tensor_in*.
     """
-    with tf.variable_scope("name"):
-        if isinstance(prob, float):
-            keep_prob = tf.placeholder(tf.float32)
-            tf.add_to_collection('dropout_prob', (keep_prob, prob))
-        return tf.nn.dropout(tensor_in, keep_prob)
+    if isinstance(prob, float):
+        keep_prob = tf.placeholder(tf.float32)
+        tf.add_to_collection('dropout_prob', (keep_prob, prob))
+    return tf.nn.dropout(tensor_in, keep_prob)
 
+@node_op
 def linear(tensor_in, output_size, bias, bias_start=0.0,
            distribution='tnorm', initrange=1.0, l2=0.0,
            name="Linear"):
@@ -485,17 +422,14 @@ def linear(tensor_in, output_size, bias, bias_start=0.0,
         raise ValueError("Linear is expecting 2D arguments: %s" % str(shape))
     if not shape[1]:
         raise ValueError("Linear expects shape[1] of arguments: %s" % str(shape))
-    with tf.variable_scope(name):
-        matrix = weights(distribution, [shape[1], output_size], initrange=initrange, l2=l2, name='Matrix')
-        tf.add_to_collection(name+'_weights', matrix)
-        tensor_out = tf.matmul(tf.cast(tensor_in, tf.float32), matrix)
-        if not bias:
-            return tensor_out
-        bias_term = weights('uniform', [output_size], initrange=initrange)
-        tf.add_to_collection(name+'_bias', bias_term)
-    return tensor_out + bias_term
+    W = weights(distribution, [shape[1], output_size], initrange=initrange, l2=l2, name=name+'_weights')
+    tensor_out = tf.matmul(tf.cast(tensor_in, tf.float32), W)
+    if not bias:
+        return tensor_out
+    b = weights('uniform', [output_size], initrange=bias_start, name=name+'_bias')
+    return tensor_out + b
 
-
+@node_op
 def batch_normalize(tensor_in, epsilon=1e-5, name="batch_norm"):
     """
     Batch Normalization: Adapted from tensorflow `nn.py`_ and skflow `batch_norm_ops.py`_ .
@@ -507,20 +441,15 @@ def batch_normalize(tensor_in, epsilon=1e-5, name="batch_norm"):
     :return: Tensor with variance bounded by a unit and mean of zero according to the batch.
     """
     shape = tensor_in.get_shape().as_list()
+    gamma = weights('constant', [shape[1]], initrange=0.0, name=name + '_gamma')
+    beta = weights('constant', [shape[1]], initrange=1.0, name=name + '_beta')
+    mean, variance = node_op(tf.nn.moments)(tensor_in, [0], name=name)
+    inv = node_op(tf.rsqrt)(epsilon + variance, name=name)
+    tensor_in = beta * (tensor_in - mean) * inv + gamma
+    tf.add_to_collection(NORMALIZED_ACTIVATIONS, tensor_in)
+    return tensor_in
 
-    with tf.variable_scope(name):
-        gamma = tf.get_variable("gamma", [shape[1]],
-                                initializer=tf.constant_initializer(0))
-        tf.add_to_collection(name, gamma)
-        beta = tf.get_variable("beta", [shape[1]],
-                               initializer=tf.constant_initializer(1.0))
-        mean, variance = tf.nn.moments(tensor_in, [0])
-        tf.add_to_collection(name, mean)
-        tf.add_to_collection(name, variance)
-        tf.add_to_collection(name, beta)
-        inv = tf.rsqrt(epsilon + variance)
-        return beta * (tensor_in - mean) * inv + gamma
-
+@node_op
 def nmode_tensor_tomatrix(tensor, mode, name='nmode_matricize'):
     '''
     Nmode tensor unfolding (for order three tensor) from Kolda and Bader `Tensor Decompositions and Applications`_
@@ -543,6 +472,7 @@ def nmode_tensor_tomatrix(tensor, mode, name='nmode_matricize'):
     tensor = tf.squeeze(tf.reshape(tensor, matricized_shape))
     return tensor
 
+@node_op
 def nmode_tensor_multiply(tensors, mode, leave_flattened=False,
                           keep_dims=False, name='nmode_multiply'):
     '''
@@ -556,9 +486,6 @@ def nmode_tensor_multiply(tensors, mode, leave_flattened=False,
     :param name: For variable scope
     :return: Either an order 3 or order 2 tensor
     '''
-
-
-
     tensor = tensors[0]
     matrix = tensors[1]
     tensorshape = tensor.get_shape().as_list()
@@ -578,7 +505,7 @@ def nmode_tensor_multiply(tensors, mode, leave_flattened=False,
             product = tf.squeeze(product)
         return product
 
-
+@node_op
 def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='binary_tensor_combine'):
     '''
     For performing tensor multiplications with batches of data points against an order 3
@@ -590,22 +517,21 @@ def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='
     :param name: For variable scope
     :return: A matrix with shape batch_size X output_dim
     '''
-
     mat1 = tensors[0]
     mat2 = tensors[1]
     mat1shape = mat1.get_shape().as_list()
     mat2shape = mat2.get_shape().as_list()
     if mat1shape[0] != mat2shape[0]:
         raise ValueError("Number of rows must match for matrices being combined.")
-    # t = weights('tnorm', mat2.dtype, [tensors[0].get_shape().as_list()[1], tensors[1].get_shape().as_list()[1], output_dim])
     t = weights('tnorm', [mat1.get_shape().as_list()[1],
                                     mat2.get_shape().as_list()[1],
-                                    output_dim],  datatype=mat1.dtype, l2=l2)
+                                    output_dim],  dtype=mat1.dtype, l2=l2)
     tf.add_to_collection(name+'_weights', t)
     prod = nmode_tensor_multiply([t, mat1], mode=0, keep_dims=True)
     mat2 = tf.expand_dims(mat2, 1)
     return tf.squeeze(tf.batch_matmul(mat2, prod), [1])
 
+@node_op
 def ternary_tensor_combine(tensors, initrange=1e-5, l2=0.0,name='ternary_tensor_combine'):
     '''
     For performing tensor multiplications with batches of data points against an order 3
@@ -621,6 +547,7 @@ def ternary_tensor_combine(tensors, initrange=1e-5, l2=0.0,name='ternary_tensor_
     combined = binary_tensor_combine(combine_pair, output_dim=tensors[2].get_shape().as_list()[1], l2=l2)
     return x_dot_y([combined,tensors[2]])
 
+@node_op
 def khatri_rao(tensors, name='khatrirao'):
     '''
     From `David Palzer`_
@@ -638,54 +565,65 @@ def khatri_rao(tensors, name='khatrirao'):
     h1Tiled = tf.reshape(tf.transpose(tf.tile(tf.reshape(h1, [1, -1]), [L2, 1])), [-1, L]) # how to tile h1
     return tf.mul(h1Tiled,h2Tiled)
 
+@node_op
 def binary_tensor_combine2(tensors, output_dim=10, initrange=1e-5, name='binary_tensor_combine2'):
     with tf.variable_scope(name):
         x = khatri_rao(tensors)
-        # p = weights()
-        w = weights('tnorm', [tensors[0].get_shape().as_list()[1] * tensors[1].get_shape().as_list()[1], output_dim], datatype=x.dtype)
-        # print(x.get_shape())
-        # print(w.get_shape())
+        w = weights('tnorm',
+                    [tensors[0].get_shape().as_list()[1] * tensors[1].get_shape().as_list()[1],
+                     output_dim],
+                    dtype=x.dtype)
         return tf.matmul(x, w)
 
 # ==================================================================================
 # =============EVALUATION METRICS / LOSS FUNCTIONS==================================
 # ==================================================================================
 
+@loss_function
 def se(predictions, targets):
     '''
     Squared Error.
     '''
     return tf.reduce_sum(tf.square(predictions - targets))
 
+@loss_function
 def mse(predictions, targets):
     '''
     Mean Squared Error.
     '''
     return tf.reduce_mean(tf.square(predictions - targets))
 
+@loss_function
 def rmse(predictions, targets):
     '''
     Root Mean Squared Error
     '''
     return tf.sqrt(tf.reduce_mean(tf.square(predictions - targets)))
 
+@loss_function
 def mae(predictions, targets):
     '''Mean Absolute Error'''
     return tf.reduce_mean(tf.abs(predictions - targets))
 
+
+@loss_function
 def other_cross_entropy(predictions, targets):
     '''Logistic Loss'''
     return -1*tf.reduce_sum(targets * tf.log(predictions) + (1.0 - targets) * tf.log(1.0 - predictions))
 
+@loss_function
 def cross_entropy(predictions, targets):
     return -tf.reduce_sum(targets*tf.log(predictions + 1e-8))
 
+@loss_function
 def perplexity(predictions, targets):
     return tf.exp(cross_entropy(predictions, targets))
 
+@loss_function
 def detection(predictions, threshold):
     return tf.cast(tf.greater_equal(predictions, threshold), tf.float32)
 
+@loss_function
 def recall(predictions, targets, threshold=0.5, detects=None):
     '''
     Percentage of actual classes predicted
@@ -700,6 +638,7 @@ def recall(predictions, targets, threshold=0.5, detects=None):
         detects = detection(predictions, threshold)
     return tf.div(tf.reduce_sum(tf.mul(detects, targets)), tf.reduce_sum(targets))
 
+@loss_function
 def precision(predictions, targets, threshold=0.5, detects=None):
     '''
     Percentage of classes detected which are correct.
@@ -714,6 +653,7 @@ def precision(predictions, targets, threshold=0.5, detects=None):
         detects = detection(predictions, threshold)
     return tf.reduce_sum(tf.mul(targets, detects)) / (tf.reduce_sum(detects) + 1e-8)
 
+@loss_function
 def fscore(predictions=None, targets=None, threshold=0.5, precisions=None, recalls=None):
     if not precisions and not recalls:
         detects = detection(predictions, threshold)
@@ -721,6 +661,7 @@ def fscore(predictions=None, targets=None, threshold=0.5, precisions=None, recal
         precisions = precision(targets, threshold=threshold, detects=detects)
     return 2*(tf.mul(precisions, recalls) / (precisions + recalls + 1e-8))
 
+@loss_function
 def accuracy(predictions, targets):
     correct_prediction = tf.equal(tf.argmax(predictions, 1), tf.argmax(targets, 1))
     return tf.reduce_mean(tf.cast(correct_prediction, tf.float32))

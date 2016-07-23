@@ -2,24 +2,152 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/antk/core/generic_model.py" line="128" />
-    <bookmark url="file://$PROJECT_DIR$/antk/core/node_ops.py" line="53" />
     <bookmark url="file://$PROJECT_DIR$/antk/models/tensor_factor_model2.py" line="28" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79574535-f4d5-410b-8abb-3fb83680b279" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/models/tree_mf_model.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/batch_buffer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/config/tree_mf.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/modelwrappers/tree_mf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/antpics/basic_mf.pdf" afterPath="$PROJECT_DIR$/test/modelwrappers/antpics/basic_mf.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/antpics/tree.pdf" afterPath="$PROJECT_DIR$/test/modelwrappers/antpics/tree.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/testfig.pdf" afterPath="$PROJECT_DIR$/test/modelwrappers/testfig.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/aarontuor.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/lib/dectest.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/loader_tests.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test_loader.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/antk/core/altered_config.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/antk/core/altered_generic_model.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/antk/core/altered_loader.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/antk/core/altered_node_ops.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/datatest.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/directory.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/dnn_concat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/dssm.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/ex1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/ex2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/ex3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/factormodel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/graphmf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/highway_nonlinear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/ml100kmore.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/multoutputs.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/no_name.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/tensor_print.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/tree1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/tree2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/tree_test.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/treedot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_images/weightedloss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/config.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/dnn_concat_model.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/dsaddmodel.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/dssm_model.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/generic_model.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/loader.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/mfmodel.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/node_ops.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/skipgram.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/tree_model.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/api.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/command_line.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/config.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/config_tutorial.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/generic_model.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/generic_model_tutorial.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/index.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/loader.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/loader_tutorial.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/mf_tutorial.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/model_crafting.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/models.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/node_ops.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/node_ops_tutorial.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/tutorial.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_sources/tutorials.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/ajax-loader.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/antlogo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/antlogo2.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/basic.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/basic_screenshot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/cluster.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/comment-bright.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/comment-close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/comment.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/contents.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/datatest.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/default.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/directory.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/dnn_concat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/down-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/down.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/dssm.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/ex1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/ex2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/ex3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/factormodel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/fancy_screenshot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/file.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/graphmf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/highway_nonlinear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/jquery-1.11.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/logo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/minus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/ml100kmore.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/multoutputs.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/navigation.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/no_name.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/oldantlogo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/plus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/pygments.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/sphinxdoc.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/tensor_print.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/tree1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/tree2.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/tree2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/tree_test.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/tree_test.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/treedot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/treepic1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/underscore-1.3.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/up-pressed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/up.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/websupport.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/_static/weightedloss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/api.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/command_line.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/config.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/config_tutorial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/generic_model.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/generic_model_tutorial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/loader.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/loader_tutorial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/mf_tutorial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/model_crafting.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/models.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/node_ops.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/node_ops_tutorial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/search.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/tutorial.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/html/tutorials.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/config.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/config.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/generic_model.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/generic_model.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/loader.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/loader.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/models.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/models.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/node_ops.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/node_ops.doctree" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/generic_model.py" afterPath="$PROJECT_DIR$/antk/core/generic_model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/models/mfmodel.py" afterPath="$PROJECT_DIR$/antk/models/mfmodel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/config/mf.config" afterPath="$PROJECT_DIR$/test/config/mf.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/antpics/basic_mf.dot" afterPath="$PROJECT_DIR$/test/modelwrappers/antpics/basic_mf.dot" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/antpics/tree.dot" afterPath="$PROJECT_DIR$/test/modelwrappers/antpics/tree.dot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk.egg-info/SOURCES.txt" afterPath="$PROJECT_DIR$/antk.egg-info/SOURCES.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/loader.py" afterPath="$PROJECT_DIR$/antk/core/loader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/node_ops.py" afterPath="$PROJECT_DIR$/antk/core/node_ops.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/lib/decorate.py" afterPath="$PROJECT_DIR$/antk/lib/decorate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/Makefile" afterPath="$PROJECT_DIR$/docs/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/conf.py" afterPath="$PROJECT_DIR$/docs/conf.py" />
     </list>
     <ignored path="toolkit.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,110 +168,109 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tree_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/models/tree_model.py">
+      <file leaf-file-name="antk_test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/antk_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="63" selection-start-line="38" selection-start-column="63" selection-end-line="38" selection-end-column="63" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tree_mf_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/models/tree_mf_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="115" selection-start-line="67" selection-start-column="115" selection-end-line="67" selection-end-column="115" />
+            <state vertical-scroll-proportion="0.3465982">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#0#13#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/core/config.py">
+      <file leaf-file-name="hotindextest.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/hotindextest.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="68" column="53" selection-start-line="68" selection-start-column="53" selection-end-line="68" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tree.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/modelwrappers/tree.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="69" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tree_mf.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/modelwrappers/tree_mf.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
+              <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#0#28#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mf.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/modelwrappers/mf.py">
+      <file leaf-file-name="indexlookuptest.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/indexlookuptest.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mfmodel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/models/mfmodel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="batch_buffer.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/batch_buffer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.026587889">
-              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+              <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#23#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generic_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/antk/core/generic_model.py">
+      <file leaf-file-name="mbtest.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/mbtest.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="285" column="11" selection-start-line="285" selection-start-column="11" selection-end-line="285" selection-end-column="11" />
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <marker date="1466469582316" expanded="true" signature="16294:16712" placeholder="..." />
+                <element signature="e#0#28#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tree_mf.config" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/config/tree_mf.config">
+      <file leaf-file-name="testmodels.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/testmodels.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="34" selection-start-line="46" selection-start-column="34" selection-end-line="46" selection-end-column="34" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testtensors.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/testtensors.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loader_tests.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/loader_tests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_loader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_loader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/index.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -164,10 +291,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test/testtensors.py" />
-        <option value="$PROJECT_DIR$/test/modelwrappers/dssm_restricted.py" />
-        <option value="$PROJECT_DIR$/antk/models/configs/mf.config" />
-        <option value="$PROJECT_DIR$/test/testmodels.py" />
         <option value="$PROJECT_DIR$/docs/config.rst" />
         <option value="$PROJECT_DIR$/docs/generic_model.rst" />
         <option value="$PROJECT_DIR$/docs/loader.rst" />
@@ -179,15 +302,12 @@
         <option value="$PROJECT_DIR$/docs/mf_tutorial.rst" />
         <option value="$PROJECT_DIR$/docs/index.rst" />
         <option value="$PROJECT_DIR$/docs/generic_model_tutorial.rst" />
-        <option value="$PROJECT_DIR$/docs/conf.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/docs/command_line.rst" />
         <option value="$PROJECT_DIR$/antk/core/rep.py" />
         <option value="$PROJECT_DIR$/docs/loader_tutorial.rst" />
         <option value="$PROJECT_DIR$/antk/core/decorator_test.py" />
-        <option value="$PROJECT_DIR$/antk/lib/decorate.py" />
         <option value="$PROJECT_DIR$/antk/models/tensorfactor.py" />
-        <option value="$PROJECT_DIR$/antk/core/node_ops.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/tensorfactor.py" />
         <option value="$PROJECT_DIR$/test/hotindextest.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/tensorfactor2.py" />
@@ -204,7 +324,6 @@
         <option value="$PROJECT_DIR$/antk/models/configs/tree.config" />
         <option value="$PROJECT_DIR$/test/config/tree.config" />
         <option value="$PROJECT_DIR$/antk/models/dssm_model.py" />
-        <option value="$PROJECT_DIR$/antk/core/loader.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/tree.py" />
         <option value="$PROJECT_DIR$/antk/models/tree_model.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/mf.py" />
@@ -215,14 +334,38 @@
         <option value="$PROJECT_DIR$/test/modelwrappers/tree_mf.py" />
         <option value="$PROJECT_DIR$/antk/models/mfmodel.py" />
         <option value="$PROJECT_DIR$/test/batch_buffer.py" />
+        <option value="$PROJECT_DIR$/antk/lib/dectest.py" />
+        <option value="$PROJECT_DIR$/docs/conf.py" />
+        <option value="$PROJECT_DIR$/antk/lib/decorate.py" />
+        <option value="$PROJECT_DIR$/antk/core/node_ops.py" />
+        <option value="$PROJECT_DIR$/antk/core/loader.py" />
+        <option value="$PROJECT_DIR$/test/loader_tests.py" />
+        <option value="$PROJECT_DIR$/test/test_loader.py" />
+        <option value="$PROJECT_DIR$/docs/Makefile" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1920" />
-    <option name="y" value="39" />
-    <option name="width" value="1920" />
-    <option name="height" value="1041" />
+    <option name="x" value="-1" />
+    <option name="y" value="34" />
+    <option name="width" value="1922" />
+    <option name="height" value="1046" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Buildout</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -282,99 +425,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modelwrappers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -543,16 +600,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="39" width="1920" height="1041" extended-state="0" />
-    <editor active="false" />
+    <frame x="-1" y="34" width="1922" height="1046" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16974169" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16956292" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21777777" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.107419714" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -615,55 +672,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docs/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/generic_model_tutorial.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="31" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/loader.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/mf_tutorial.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="433" column="46" selection-start-line="433" selection-start-column="46" selection-end-line="433" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/loader_tutorial.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -714,13 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/antk/lib/decorate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/modelwrappers/treetest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -735,49 +736,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/antk/core/node_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5837989">
-          <caret line="603" column="76" selection-start-line="603" selection-start-column="76" selection-end-line="603" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-            <marker date="1466387828669" expanded="true" signature="9373:10735" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/modelwrappers/tensorfactor2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/antk_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/hotindextest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mbtest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/indexlookuptest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -868,20 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/antk/core/altered_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="198" column="75" selection-start-line="198" selection-start-column="75" selection-end-line="198" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="617" column="43" selection-start-line="617" selection-start-column="43" selection-end-line="617" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/models.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -947,7 +895,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="285" column="11" selection-start-line="285" selection-start-column="11" selection-end-line="285" selection-end-column="11" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="false" />
             <marker date="1466469582316" expanded="true" signature="16294:16712" placeholder="..." />
           </folding>
         </state>
@@ -958,7 +906,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="67" column="115" selection-start-line="67" selection-start-column="115" selection-end-line="67" selection-end-column="115" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -968,7 +916,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="83" selection-start-line="22" selection-start-column="83" selection-end-line="22" selection-end-column="83" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -989,12 +937,148 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/antk/lib/dectest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/batch_buffer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.026587889">
-          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/lib/decorate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.857143">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#16#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/node_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.392857">
+          <caret line="622" column="38" selection-start-line="622" selection-start-column="38" selection-end-line="622" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="35" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="304.35715">
+          <caret line="284" column="47" selection-start-line="284" selection-start-column="47" selection-end-line="284" selection-end-column="47" />
+          <folding>
+            <marker date="1468889396543" expanded="true" signature="25139:25192" placeholder="import ..." />
+            <marker date="1468889396543" expanded="true" signature="25151:25164" placeholder="import ..." />
+            <marker date="1468889396543" expanded="true" signature="26324:26377" placeholder="import ..." />
+            <marker date="1468889396543" expanded="true" signature="26345:26377" placeholder="import ..." />
+            <marker date="1468889396543" expanded="true" signature="27073:27126" placeholder="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/hotindextest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#28#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/indexlookuptest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#23#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mbtest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#28#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/testmodels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/loader_tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/testtensors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="62" selection-start-line="34" selection-start-column="62" selection-end-line="34" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/antk_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3465982">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="false" />
           </folding>
         </state>
       </provider>

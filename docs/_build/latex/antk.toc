@@ -1,0 +1,102 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Dependencies}{3}{chapter.1}
+\contentsline {chapter}{\numberline {2}Installation}{5}{chapter.2}
+\contentsline {chapter}{\numberline {3}Documentation}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}API: ANT modules}{7}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}loader}{7}{subsection.3.1.1}
+\contentsline {subsubsection}{Loader Tutorial}{7}{subsubsection*.3}
+\contentsline {paragraph}{Supported Data Types}{7}{paragraph*.4}
+\contentsline {paragraph}{HotIndex objects}{7}{paragraph*.5}
+\contentsline {paragraph}{Supported File Formats}{7}{paragraph*.6}
+\contentsline {paragraph}{Import and export data}{8}{paragraph*.7}
+\contentsline {paragraph}{The \texttt {DataSet} object}{8}{paragraph*.8}
+\contentsline {paragraph}{read\_data\_sets: The loading function}{10}{paragraph*.9}
+\contentsline {subparagraph}{Directory Structure}{10}{subparagraph*.10}
+\contentsline {subparagraph}{Examples}{10}{subparagraph*.11}
+\contentsline {paragraph}{Loading, Saving, and Testing}{12}{paragraph*.12}
+\contentsline {paragraph}{Classes}{12}{paragraph*.13}
+\contentsline {paragraph}{Data Transforms}{12}{paragraph*.14}
+\contentsline {paragraph}{Exceptions}{12}{paragraph*.15}
+\contentsline {subsubsection}{Loading, Saving, and Testing}{12}{subsubsection*.16}
+\contentsline {subsubsection}{Classes}{13}{subsubsection*.17}
+\contentsline {subsubsection}{Data Transforms}{13}{subsubsection*.18}
+\contentsline {subsubsection}{Exceptions}{13}{subsubsection*.19}
+\contentsline {subsubsection}{API}{13}{subsubsection*.20}
+\contentsline {paragraph}{Attributes}{14}{paragraph*.23}
+\contentsline {paragraph}{Methods}{14}{paragraph*.24}
+\contentsline {paragraph}{Methods}{14}{paragraph*.34}
+\contentsline {paragraph}{Attributes}{15}{paragraph*.38}
+\contentsline {paragraph}{Methods}{15}{paragraph*.39}
+\contentsline {paragraph}{Attributes}{15}{paragraph*.45}
+\contentsline {paragraph}{Methods}{15}{paragraph*.46}
+\contentsline {paragraph}{Examples}{16}{paragraph*.54}
+\contentsline {paragraph}{Examples}{18}{paragraph*.66}
+\contentsline {paragraph}{Examples}{18}{paragraph*.68}
+\contentsline {subsection}{\numberline {3.1.2}config}{19}{subsection.3.1.2}
+\contentsline {subsubsection}{Config Tutorial}{19}{subsubsection*.71}
+\contentsline {paragraph}{Terms}{20}{paragraph*.72}
+\contentsline {paragraph}{Graph Markers}{21}{paragraph*.73}
+\contentsline {paragraph}{Node Names}{21}{paragraph*.74}
+\contentsline {paragraph}{Examples}{21}{paragraph*.75}
+\contentsline {paragraph}{Node Functions}{23}{paragraph*.76}
+\contentsline {paragraph}{The AntGraph object}{24}{paragraph*.77}
+\contentsline {paragraph}{Attributes}{27}{paragraph*.80}
+\contentsline {paragraph}{Methods}{27}{paragraph*.81}
+\contentsline {subsection}{\numberline {3.1.3}node\_ops}{28}{subsection.3.1.3}
+\contentsline {subsubsection}{Use Cases}{28}{subsubsection*.96}
+\contentsline {subsubsection}{Making Custom ops For use With \emph {config} module}{28}{subsubsection*.97}
+\contentsline {subsubsection}{Accessing Tensors Created in a node\_ops Function}{28}{subsubsection*.98}
+\contentsline {subsubsection}{Weights}{29}{subsubsection*.99}
+\contentsline {subsubsection}{Placeholders}{29}{subsubsection*.100}
+\contentsline {subsubsection}{Neural Networks}{30}{subsubsection*.101}
+\contentsline {paragraph}{Initialization}{30}{paragraph*.102}
+\contentsline {paragraph}{Dropout}{30}{paragraph*.103}
+\contentsline {paragraph}{Batch Normalization}{30}{paragraph*.104}
+\contentsline {paragraph}{Networks}{30}{paragraph*.105}
+\contentsline {subsubsection}{Loss Functions and Evaluation Metrics}{30}{subsubsection*.106}
+\contentsline {subsubsection}{Custom Activations}{31}{subsubsection*.107}
+\contentsline {subsubsection}{Matrix Operations}{31}{subsubsection*.108}
+\contentsline {subsubsection}{Tensor Operations}{31}{subsubsection*.109}
+\contentsline {subsubsection}{Batch Normalization}{31}{subsubsection*.110}
+\contentsline {subsubsection}{Dropout}{31}{subsubsection*.111}
+\contentsline {subsubsection}{API}{32}{subsubsection*.112}
+\contentsline {subsection}{\numberline {3.1.4}generic\_model}{37}{subsection.3.1.4}
+\contentsline {paragraph}{Attributes}{38}{paragraph*.147}
+\contentsline {paragraph}{Methods}{38}{paragraph*.148}
+\contentsline {subsection}{\numberline {3.1.5}Models}{39}{subsection.3.1.5}
+\contentsline {subsubsection}{Skipgram}{39}{subsubsection*.161}
+\contentsline {paragraph}{Methods}{39}{paragraph*.163}
+\contentsline {subsubsection}{Matrix Factorization}{40}{subsubsection*.169}
+\contentsline {paragraph}{Sample Config}{40}{paragraph*.171}
+\contentsline {subsubsection}{DSSM (Deep Structured Semantic Model) Variant}{41}{subsubsection*.172}
+\contentsline {paragraph}{Sample Config}{42}{paragraph*.174}
+\contentsline {subsubsection}{Weighted DSSM variant}{43}{subsubsection*.175}
+\contentsline {subsubsection}{Binary Tree of Deep Neural Networks for Multiple Inputs}{43}{subsubsection*.177}
+\contentsline {paragraph}{Sample Config}{44}{paragraph*.179}
+\contentsline {subsubsection}{A Deep Neural Network with Concatenated Input Streams}{45}{subsubsection*.180}
+\contentsline {paragraph}{Sample Config}{46}{paragraph*.182}
+\contentsline {subsubsection}{Multiplicative Interaction between Text, User, and Item}{47}{subsubsection*.183}
+\contentsline {section}{\numberline {3.2}Tutorials}{47}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Node Ops Tutorial}{47}{subsection.3.2.1}
+\contentsline {subsubsection}{Weights and Placeholders}{47}{subsubsection*.184}
+\contentsline {subsubsection}{Loss Functions and Evaluation Metrics}{47}{subsubsection*.185}
+\contentsline {subsubsection}{Custom Activations}{48}{subsubsection*.186}
+\contentsline {subsubsection}{Matrix Operations}{48}{subsubsection*.187}
+\contentsline {subsubsection}{Tensor Operations}{48}{subsubsection*.188}
+\contentsline {subsubsection}{Tricks for Training}{48}{subsubsection*.189}
+\contentsline {subsubsection}{Neural Networks}{48}{subsubsection*.190}
+\contentsline {subsubsection}{Making an op}{49}{subsubsection*.191}
+\contentsline {subsection}{\numberline {3.2.2}Generic Model Tutorial}{49}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}All in One Tutorial via Matrix Factorization}{51}{subsection.3.2.3}
+\contentsline {subsubsection}{Part 1: Matrix Factorization Model}{51}{subsubsection*.192}
+\contentsline {subsubsection}{Part 2: Tree Model}{56}{subsubsection*.193}
+\contentsline {section}{\numberline {3.3}Command Line Scripts}{61}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}datatest.py}{61}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}normalize.py}{62}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Movie Lens Processing}{62}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}generateTermDoc.py}{62}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}ml100k\_item\_process.py}{62}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}ml100k\_user\_process.py}{62}{subsection.3.4.3}
+\contentsline {chapter}{\numberline {4}Indices and tables}{65}{chapter.4}
+\contentsline {chapter}{Python Module Index}{67}{section*.194}
+\contentsline {chapter}{Index}{69}{section*.195}

@@ -22,6 +22,7 @@ sys.path.append(os.path.abspath('../antk/datascripts/'))
 sys.path.append(os.path.abspath('../antk/core/'))
 sys.path.append(os.path.abspath('../antk/datascripts/ml100k/'))
 
+# sys.setrecursionlimit(5000)
 # -- General configuration -----------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be extensions

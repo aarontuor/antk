@@ -7,10 +7,6 @@ antk.egg-info/not-zip-safe
 antk.egg-info/requires.txt
 antk.egg-info/top_level.txt
 antk/core/__init__.py
-antk/core/altered_config.py
-antk/core/altered_generic_model.py
-antk/core/altered_loader.py
-antk/core/altered_node_ops.py
 antk/core/config.py
 antk/core/decorator_test.py
 antk/core/generic_model.py
@@ -24,6 +20,7 @@ antk/datascripts/normalize.py
 antk/datascripts/orderWords.py
 antk/lib/__init__.py
 antk/lib/decorate.py
+antk/lib/dectest.py
 antk/lib/termcolor.py
 antk/models/__init__.py
 antk/models/dnn_concat_model.py
@@ -37,6 +34,7 @@ antk/models/svdplus_model2.py
 antk/models/tensor_factor_model.py
 antk/models/tensor_factor_model2.py
 antk/models/tensorfactor.py
+antk/models/tree_mf_model.py
 antk/models/tree_model.py
 test/testmodels.py
 test/testtensors.py

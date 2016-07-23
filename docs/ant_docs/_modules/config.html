@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>config &mdash; antk 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="antk 0.3.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
+<a href="../index.html"><img src="../_static/antlogo.png" border="0" alt="ant logo"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for config</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">antk.core.node_ops</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">antk.lib</span> <span class="kn">import</span> <span class="n">termcolor</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="n">NODE_GLOBALS</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ph_rep"><a class="viewcode-back" href="../config.html#config.ph_rep">[docs]</a><span class="k">def</span> <span class="nf">ph_rep</span><span class="p">(</span><span class="n">ph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convenience function for representing a tensorflow placeholder.</span>
+
+<span class="sd">    :param ph: A `tensorflow`_ `placeholder`_.</span>
+<span class="sd">    :return: A string representing the placeholder.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;Placeholder(&quot;</span><span class="si">%s</span><span class="s1">&quot;, shape=</span><span class="si">%s</span><span class="s1">, dtype=</span><span class="si">%r</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ph</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ph</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">(),</span> <span class="n">ph</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UndefinedVariableError"><a class="viewcode-back" href="../config.html#config.UndefinedVariableError">[docs]</a><span class="k">class</span> <span class="nc">UndefinedVariableError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when a a variable in config is not a key in variable_bindings map handed to graph_setup.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="UnsupportedNodeError"><a class="viewcode-back" href="../config.html#config.UnsupportedNodeError">[docs]</a><span class="k">class</span> <span class="nc">UnsupportedNodeError</span><span class="p">(</span><span class="ne">NameError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when a config file calls a function that is not defined, i.e., has not been imported, or is not in the</span>
+<span class="sd">    node_ops base file.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="RandomNodeFunctionError"><a class="viewcode-back" href="../config.html#config.RandomNodeFunctionError">[docs]</a><span class="k">class</span> <span class="nc">RandomNodeFunctionError</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when something strange happened with a node function call.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MissingTensorError"><a class="viewcode-back" href="../config.html#config.MissingTensorError">[docs]</a><span class="k">class</span> <span class="nc">MissingTensorError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when a tensor is described by name only in the graph and it is not in a dictionary.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MissingDataError"><a class="viewcode-back" href="../config.html#config.MissingDataError">[docs]</a><span class="k">class</span> <span class="nc">MissingDataError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when data needed to determine shapes is not found in the :any:`DataSet`.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ProcessLookupError"><a class="viewcode-back" href="../config.html#config.ProcessLookupError">[docs]</a><span class="k">class</span> <span class="nc">ProcessLookupError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when lookup receives a dataname argument without a corresponding value in it&#39;s :any:`DataSet`</span>
+<span class="sd">    and there is not already a Placeholder with that name.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="GraphMarkerError"><a class="viewcode-back" href="../config.html#config.GraphMarkerError">[docs]</a><span class="k">class</span> <span class="nc">GraphMarkerError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Raised when leading character of a line (other than first)</span>
+<span class="sd">    in a graph config file is not the specified level marker.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AntGraph"><a class="viewcode-back" href="../config.html#config.AntGraph">[docs]</a><span class="k">class</span> <span class="nc">AntGraph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object to store graph information from graph built with config file.</span>
+
+<span class="sd">    :param config: A plain text config file</span>
+<span class="sd">    :param tensordict: A dictionary of premade tensors represented in the config by key</span>
+<span class="sd">    :param placeholderdict: A dictionary of premade placeholder tensors represented in the config by key</span>
+<span class="sd">    :param data: A dictionary of data matrices with keys corresponding to placeholder names in graph.</span>
+<span class="sd">    :param function_map: A dictionary of function_handle:node_op pairs to use in building the graph</span>
+<span class="sd">    :param imports: A dictionary of module_name:path_to_module key value pairs for custom node_ops modules.</span>
+<span class="sd">    :param marker: The marker for representing graph structure</span>
+<span class="sd">    :param variable_bindings: A dictionary with entries of the form  *variable_name:value* for variable replacement in config file.</span>
+<span class="sd">    :param graph_name: The name of the graph. Will be used to name the graph pdf file.</span>
+<span class="sd">    :param graph_dest: The folder to write the graph pdf and graph dot string to.</span>
+<span class="sd">    :param develop: True|False. Whether to print tensor info, while constructing the tensorflow graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">tensordict</span><span class="o">=</span><span class="p">{},</span> <span class="n">placeholderdict</span><span class="o">=</span><span class="p">{},</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">function_map</span><span class="o">=</span><span class="p">{},</span>
+                <span class="n">imports</span><span class="o">=</span><span class="p">{},</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">variable_bindings</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">graph_name</span><span class="o">=</span><span class="s1">&#39;no_name&#39;</span><span class="p">,</span>
+                 <span class="n">graph_dest</span><span class="o">=</span><span class="s1">&#39;antpics/&#39;</span><span class="p">,</span> <span class="n">develop</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker</span> <span class="o">=</span> <span class="n">marker</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Data argument to AntGraph constructor must be a python dictionary with keys, corresponding&#39;</span>
+                            <span class="s1">&#39;to placeholder names, and values of numpy arrays, scipy sparse csr_matrices, or HotIndex objects.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span> <span class="o">=</span> <span class="n">tensordict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span> <span class="o">=</span> <span class="n">placeholderdict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">develop</span> <span class="o">=</span> <span class="n">develop</span>
+        <span class="c1">#==========================================================================</span>
+        <span class="c1">#==========================Node Function Extensions========================</span>
+        <span class="c1">#==========================================================================</span>
+        <span class="n">NODE_GLOBALS</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">function_map</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_import_node_files</span><span class="p">(</span><span class="n">imports</span><span class="p">)</span>
+
+        <span class="c1">#===============================================================================</span>
+        <span class="c1">#==================Make Graph===================================================</span>
+        <span class="c1">#===============================================================================</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+            <span class="n">graph_spec</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># remove whitespace at end of file</span>
+        <span class="n">graph_spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_substitute_variables</span><span class="p">(</span><span class="n">graph_spec</span><span class="p">,</span> <span class="n">variable_bindings</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">outputs</span><span class="p">,</span> <span class="n">node_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_edges</span><span class="p">(</span><span class="n">graph_spec</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">=</span> <span class="s1">&#39;digraph &#39;</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39; {&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_nodes</span><span class="p">(</span><span class="n">node_names</span><span class="p">)</span>
+        <span class="n">output_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">subgraph</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+            <span class="n">output_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traverse_graph</span><span class="p">(</span><span class="n">subgraph</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_out</span> <span class="o">=</span> <span class="n">output_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_out</span> <span class="o">=</span> <span class="n">output_list</span>
+
+        <span class="c1">#===============================================================================</span>
+        <span class="c1">#==================Make Graphviz Dot Picture====================================</span>
+        <span class="c1">#===============================================================================</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">}&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">graph_dest</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="n">graph_dest</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_path_to_graph_pic</span> <span class="o">=</span> <span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;mkdir &#39;</span> <span class="o">+</span> <span class="n">graph_dest</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.dot&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dot_file</span><span class="p">:</span>
+            <span class="n">dot_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;dot -Tpdf -o &#39;</span> <span class="o">+</span> <span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.pdf &#39;</span> <span class="o">+</span> <span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.dot&#39;</span><span class="p">)</span>
+
+    <span class="c1">#===============================================================================</span>
+    <span class="c1">#==================PROPERTIES===================================================</span>
+    <span class="c1">#===============================================================================</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tensordict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A dictionary of tensors which are nodes in the graph.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">placeholderdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A dictionary of tensors which are placeholders in the graph. The key should correspond to the key of</span>
+<span class="sd">        the corresponding data in a data dictionary.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tensor_out</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Tensor or list of tensors returned from last node of graph.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_out</span>
+
+    <span class="c1">#===============================================================================</span>
+    <span class="c1">#==================INSTANCE METHODS=============================================</span>
+    <span class="c1">#===============================================================================</span>
+<div class="viewcode-block" id="AntGraph.display_graph"><a class="viewcode-back" href="../config.html#config.AntGraph.display_graph">[docs]</a>    <span class="k">def</span> <span class="nf">display_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pdfviewer</span><span class="o">=</span><span class="s1">&#39;okular&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display the pdf image of graph from config file to screen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">pdfviewer</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path_to_graph_pic</span> <span class="o">+</span> <span class="s1">&#39; &amp;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AntGraph.get_array"><a class="viewcode-back" href="../config.html#config.AntGraph.get_array">[docs]</a>    <span class="k">def</span> <span class="nf">get_array</span><span class="p">(</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="c1">#return(graph.get_tensor_by_name)</span>
+        <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">collection_name</span><span class="p">)[</span><span class="n">index</span><span class="p">])</span></div>
+
+
+
+    <span class="c1">#===============================================================================</span>
+    <span class="c1">#==================PRIVATE METHODS==============================================</span>
+    <span class="c1">#===============================================================================</span>
+    <span class="k">def</span> <span class="nf">_traverse_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a postorder &#39;tree&#39; traversal with possibly repeated non-looping nodes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">outspec</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_tensor</span><span class="p">(</span><span class="n">outspec</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vertex_name</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">t_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">edges</span><span class="p">,</span> <span class="n">node_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_edges</span><span class="p">(</span><span class="n">vertex_name</span><span class="p">,</span> <span class="n">node_names</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">end_node</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+                <span class="n">t_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_traverse_graph</span><span class="p">(</span><span class="n">end_node</span><span class="p">))</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">tensor_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_tensor</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">intensors</span><span class="o">=</span><span class="n">t_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tensor_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_tensor</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">intensors</span><span class="o">=</span><span class="n">t_list</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">tensor_out</span>
+
+    <span class="k">def</span> <span class="nf">_make_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">intensors</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parses a line from config file to make a tensor.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">double_comma</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;,,&#39;</span><span class="p">)</span>  <span class="c1"># fix for baffling error</span>
+        <span class="n">function_spec</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">)])</span>
+        <span class="n">function_params</span> <span class="o">=</span> <span class="n">function_spec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">)</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="n">function_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">function_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">intensors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">double_comma</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;intensors,&#39;</span> <span class="o">+</span> <span class="n">params</span> <span class="o">+</span> <span class="s1">&#39;,name=name&#39;</span><span class="p">)</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">double_comma</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">params</span> <span class="o">+</span> <span class="s1">&#39;,name=name&#39;</span><span class="p">)</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">func</span> <span class="o">==</span> <span class="s1">&#39;placeholder&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_placeholder</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">func</span> <span class="o">==</span> <span class="s1">&#39;lookup&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_lookup</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">function_call</span> <span class="o">=</span> <span class="n">func</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">params</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">NODE_GLOBALS</span><span class="p">,</span> <span class="nb">locals</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">develop</span><span class="p">:</span>
+                        <span class="n">heading</span> <span class="o">=</span> <span class="s1">&#39;Node </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                        <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">heading</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">))</span>
+                        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s1">Tensor Inputs:</span><span class="se">\n\t\t</span><span class="s1">&#39;</span> <span class="o">%</span>
+                              <span class="p">(</span><span class="n">function_call</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                            <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">intensors</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\t\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">print</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above | &quot;</span>
+                                            <span class="s2">&quot;Input Tensors Below============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Input Tensors:</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">intensors</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1"> intensors: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">intensors</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above |&quot;</span>
+                                            <span class="s2">&quot;Input Tensors Below============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Input Tensors:</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">intensors</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1"> intensors: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">intensors</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above |&quot;</span>
+                                            <span class="s2">&quot;Input Tensors Below============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Input Tensors:</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="n">intensors</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">print</span><span class="p">(</span><span class="n">intensors</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1"> intensors: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">intensors</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MissingTensorError</span><span class="p">(</span><span class="s1">&#39;Name </span><span class="si">%s</span><span class="s1">: from config file is not in the tensor or placeholder &#39;</span>
+                                     <span class="s1">&#39;dictionary so it must have a function call.&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Gets subgraphs and names of parent nodes.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_level</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">node_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_level</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="n">level</span><span class="p">:</span>
+                <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">node_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">))</span>
+        <span class="n">intensors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">intensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">intensors</span><span class="p">,</span> <span class="n">node_names</span>
+
+    <span class="k">def</span> <span class="nf">_get_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Find level of line from graph markers.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">spot</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">line</span><span class="p">[</span><span class="n">spot</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">spot</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">level</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GraphMarkerError</span><span class="p">(</span><span class="s1">&#39;Need multiples of </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> to delimit edges. Line: </span><span class="si">%s</span><span class="s1">&#39;</span>
+                                   <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">level</span>
+
+    <span class="k">def</span> <span class="nf">_process_placeholder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Special treatment for placeholders which may be data dependent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">+=</span> <span class="s1">&#39;, data=self.data[name]&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MissingDataError</span><span class="p">(</span><span class="s1">&#39;There is no data called </span><span class="si">%s</span><span class="s1"> in the DataSet for this AntGraph.&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">function_call</span> <span class="o">=</span> <span class="n">func</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">params</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">NODE_GLOBALS</span><span class="p">,</span> <span class="nb">locals</span><span class="p">())</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">develop</span><span class="p">:</span>
+                    <span class="n">heading</span> <span class="o">=</span> <span class="s1">&#39;Node </span><span class="si">%s</span><span class="s1">: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">placeholderdict</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">heading</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">))</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s1">Input Data: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span>
+                          <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">name=</span><span class="si">%r</span><span class="se">\n</span><span class="s1">data: </span><span class="si">%r</span><span class="s1"> hash=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                                <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">name</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">name=</span><span class="si">%r</span><span class="se">\n</span><span class="s1">data: </span><span class="si">%r</span><span class="s1"> hash=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                                <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">name</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">name=</span><span class="si">%r</span><span class="se">\n</span><span class="s1">data: </span><span class="si">%r</span><span class="s1"> hash=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                                <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Special treatment for lookup function which may be data dependent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">paramlist</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">dataname</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paramlist</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;dataname=&#39;</span><span class="p">):</span>
+                <span class="n">dataname</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dataname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">dataname</span> <span class="o">=</span> <span class="n">dataname</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dataname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">+=</span> <span class="s1">&#39;, makeplace=False, indices=self._placeholderdict[dataname], &#39;</span> \
+                      <span class="s1">&#39;data=self.data[dataname]&#39;</span>
+        <span class="k">elif</span> <span class="n">dataname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">+=</span> <span class="s1">&#39;, data=self.data[dataname]&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">function_call</span> <span class="o">=</span> <span class="n">func</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">params</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+            <span class="k">raise</span> <span class="n">ProcessLookupError</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; is not a key in the data dictionary for this AntGraph. &#39;</span>
+                                     <span class="s1">&#39;Need to provide a valid dataname argument for lookup without tensor input.&#39;</span>
+                                     <span class="s1">&#39; </span><span class="se">\n</span><span class="s1">Call: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataname</span><span class="p">,</span> <span class="n">function_call</span><span class="p">))</span>
+        <span class="n">function_call</span> <span class="o">=</span> <span class="n">func</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="n">params</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">NODE_GLOBALS</span><span class="p">,</span> <span class="nb">locals</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">[</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_weights&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_placeholderdict</span><span class="p">[</span><span class="n">dataname</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">develop</span><span class="p">:</span>
+                <span class="n">heading</span> <span class="o">=</span> <span class="s1">&#39;Node </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">heading</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s1">Placeholder: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s1">Weights: </span><span class="si">%s</span><span class="se">\n\t</span><span class="s1">Input Data: </span><span class="si">%r</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">%</span>
+                      <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">ph_rep</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">vals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dataname</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensordict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">name=</span><span class="si">%r</span><span class="se">\n</span><span class="s1">data: </span><span class="si">%r</span><span class="s1"> hash=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dataname</span><span class="p">],</span> <span class="n">dataname</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">name=</span><span class="si">%r</span><span class="se">\n</span><span class="s1">data: </span><span class="si">%r</span><span class="s1"> hash=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dataname</span><span class="p">],</span> <span class="n">dataname</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">termcolor</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="s2">&quot;==========================Original Handled Exception Above============================&quot;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Function Call: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">name=</span><span class="si">%r</span><span class="se">\n</span><span class="s1">data: </span><span class="si">%r</span><span class="s1"> hash=</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="n">function_call</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dataname</span><span class="p">],</span> <span class="n">dataname</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_add_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add nodes to graphviz dot string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">node</span> <span class="o">+</span> <span class="s1">&#39;;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_add_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">dest</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add edges to graphviz dot string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">&#39; -&gt; {&#39;</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">dest</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">+=</span> <span class="n">node</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dotstring</span> <span class="o">+=</span> <span class="s1">&#39;} [dir=back];&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_substitute_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph_spec</span><span class="p">,</span> <span class="n">variable_bindings</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String substitution of graph text marked as variables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">has_marker</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">test_graph</span> <span class="o">=</span> <span class="n">graph_spec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">test_graph</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">):</span>
+                <span class="n">has_marker</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">has_marker</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GraphMarkerError</span><span class="p">(</span><span class="s2">&quot;There are no instances of the chosen &quot;</span>
+                                   <span class="s2">&quot;marker &#39;</span><span class="si">%s</span><span class="s2">&#39; in the graph config file.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">variable_bindings</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">indice</span> <span class="o">=</span> <span class="n">graph_spec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">indice</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UndefinedVariableError</span><span class="p">(</span><span class="s1">&#39;Need variable_bindings argument in call to AntGraph to bind &#39;</span>
+                                             <span class="s1">&#39;variable beginning: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">graph_spec</span><span class="p">[</span><span class="n">indice</span><span class="p">:</span><span class="n">indice</span><span class="o">+</span><span class="mi">10</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">variable_bindings</span><span class="p">:</span>
+                <span class="n">replacee</span> <span class="o">=</span> <span class="s1">&#39;$&#39;</span> <span class="o">+</span> <span class="n">symbol</span>
+                <span class="k">if</span> <span class="n">graph_spec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">replacee</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">variable_bindings</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+                        <span class="n">graph_spec</span> <span class="o">=</span> <span class="n">graph_spec</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">replacee</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">variable_bindings</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">graph_spec</span> <span class="o">=</span> <span class="n">graph_spec</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">replacee</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">variable_bindings</span><span class="p">[</span><span class="n">symbol</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">UndefinedVariableError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is not mentioned in config file.&#39;</span> <span class="o">%</span> <span class="n">replacee</span><span class="p">)</span>
+            <span class="n">indice</span> <span class="o">=</span> <span class="n">graph_spec</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">indice</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="n">graph_spec</span><span class="p">[</span><span class="n">indice</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">graph_spec</span><span class="p">)]</span>
+                <span class="k">if</span> <span class="n">variable</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">variable</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1">#parameter in middle of function call</span>
+                <span class="k">elif</span> <span class="n">variable</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">variable</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1">#parameter at end of function call</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">RandomNodeFunctionError</span><span class="p">(</span><span class="s1">&#39;You forgot a parenthesis.&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">UndefinedVariableError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> was not bound. Include </span><span class="si">%s</span><span class="s1"> in &#39;</span>
+                                             <span class="s1">&#39;variable_bindings dictionary&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">variable</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">graph_spec</span>
+
+    <span class="k">def</span> <span class="nf">_import_node_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Import node functions from modules in import parameter of constructor.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">files</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="nb">globals</span><span class="p">(),</span> <span class="nb">locals</span><span class="o">=</span><span class="nb">locals</span><span class="p">(),</span> <span class="n">fromlist</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">attrlist</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">__all__</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="n">attrlist</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attrlist</span> <span class="k">if</span> <span class="s1">&#39;__&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]:</span>
+                    <span class="n">NODE_GLOBALS</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Unable to read </span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">.py</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">name</span><span class="p">))</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<span class="c1"># ====================================================================</span>
+<span class="c1"># ===========Graph Format Testing ====================================</span>
+<span class="c1"># ====================================================================</span>
+<div class="viewcode-block" id="testGraph"><a class="viewcode-back" href="../config.html#config.testGraph">[docs]</a><span class="k">def</span> <span class="nf">testGraph</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">graph_dest</span><span class="o">=</span><span class="s1">&#39;antpics/&#39;</span><span class="p">,</span> <span class="n">graph_name</span><span class="o">=</span><span class="s1">&#39;test_graph&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param config: A graph specification in .config format.</span>
+<span class="sd">    :param marker: A character or string of characters to delimit graph edges.</span>
+<span class="sd">    :param graph_dest: Where to save the graphviz pdf and associated dot file.</span>
+<span class="sd">    :param graph_name: A name for the graph (without extension)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+        <span class="n">graph_spec</span> <span class="o">=</span> <span class="n">config_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># remove whitespace at end of file</span>
+    <span class="n">outputs</span><span class="p">,</span> <span class="n">node_names</span> <span class="o">=</span> <span class="n">_get_edges</span><span class="p">(</span><span class="n">graph_spec</span><span class="p">,</span> <span class="n">marker</span><span class="p">)</span>
+    <span class="n">dotstring</span> <span class="o">=</span> <span class="s1">&#39;digraph test_graph&#39;</span> <span class="o">+</span> <span class="s1">&#39; {&#39;</span>
+    <span class="n">dotstring</span> <span class="o">=</span> <span class="n">_add_nodes</span><span class="p">(</span><span class="n">node_names</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">subgraph</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+        <span class="n">dotstring</span> <span class="o">=</span> <span class="n">_traverse_graph</span><span class="p">(</span><span class="n">subgraph</span><span class="p">,</span> <span class="n">marker</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">)</span>
+    <span class="n">dotstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">}&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">graph_dest</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+        <span class="n">graph_dest</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+    <span class="n">path_to_graph_pic</span> <span class="o">=</span> <span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;mkdir &#39;</span> <span class="o">+</span> <span class="n">graph_dest</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.dot&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dot_file</span><span class="p">:</span>
+        <span class="n">dot_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dotstring</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;dot -Tpdf -o &#39;</span> <span class="o">+</span> <span class="n">path_to_graph_pic</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">graph_dest</span> <span class="o">+</span> <span class="n">graph_name</span> <span class="o">+</span> <span class="s1">&#39;.dot&#39;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;okular &#39;</span> <span class="o">+</span> <span class="n">path_to_graph_pic</span> <span class="o">+</span> <span class="s1">&#39; &amp;&#39;</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">_traverse_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">marker</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a postorder &#39;tree&#39; traversal with possibly repeated non-looping nodes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">dotstring</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">vertex_name</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">edges</span><span class="p">,</span> <span class="n">node_names</span> <span class="o">=</span> <span class="n">_get_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)],</span> <span class="n">marker</span><span class="p">)</span>
+        <span class="n">dotstring</span> <span class="o">=</span> <span class="n">_add_edges</span><span class="p">(</span><span class="n">vertex_name</span><span class="p">,</span> <span class="n">node_names</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">end_node</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+            <span class="n">dotstring</span> <span class="o">=</span> <span class="n">_traverse_graph</span><span class="p">(</span><span class="n">end_node</span><span class="p">,</span> <span class="n">marker</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dotstring</span>
+
+<span class="k">def</span> <span class="nf">_get_edges</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">marker</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Gets subgraphs and names of parent nodes.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">_get_level</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="p">)</span>
+    <span class="n">node_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">_get_level</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">marker</span><span class="p">)</span> <span class="o">==</span> <span class="n">level</span><span class="p">:</span>
+            <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">node_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">))</span>
+    <span class="n">intensors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">intensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="nb">list</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">intensors</span><span class="p">,</span> <span class="n">node_names</span>
+
+
+<span class="k">def</span> <span class="nf">_get_level</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">marker</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Find level of line from graph markers.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">spot</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">line</span><span class="p">[</span><span class="n">spot</span><span class="p">]</span> <span class="o">==</span> <span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">spot</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">level</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">marker</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GraphMarkerError</span><span class="p">(</span><span class="s1">&#39;Need multiples of </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> to delimit edges. Line: </span><span class="si">%s</span><span class="s1">&#39;</span>
+                                   <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">marker</span><span class="p">),</span> <span class="n">marker</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">level</span>
+
+<span class="k">def</span> <span class="nf">_add_nodes</span><span class="p">(</span><span class="n">node_names</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add nodes to graphviz dot string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node_names</span><span class="p">:</span>
+        <span class="n">dotstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">node</span> <span class="o">+</span> <span class="s1">&#39;;&#39;</span>
+    <span class="k">return</span> <span class="n">dotstring</span>
+
+<span class="k">def</span> <span class="nf">_add_edges</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">dest</span><span class="p">,</span> <span class="n">dotstring</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add edges to graphviz dot string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dotstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">&#39; -&gt; {&#39;</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">dest</span><span class="p">:</span>
+        <span class="n">dotstring</span> <span class="o">+=</span> <span class="n">node</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+    <span class="n">dotstring</span> <span class="o">=</span> <span class="n">dotstring</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">dotstring</span> <span class="o">+=</span> <span class="s1">&#39;} [dir=back];&#39;</span>
+    <span class="k">return</span> <span class="n">dotstring</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">home</a>|&nbsp;</li>
+        <li><a href="../search.html">search</a>|&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Aaron Tuor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

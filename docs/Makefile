@@ -34,6 +34,13 @@ html:
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
 
+update_docs:
+	mv _build/html ant_docs
+	tar -zcvf ant_docs.tar.gz ant_docs
+	scp -P 922 ant_docs.tar.gz tuora@linux.cs.wwu.edu:public_html/hutchwiki/ant_docs.tar.gz
+	ssh -p 922 tuora@linux.cs.wwu.edu
+	clean
+
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) _build/dirhtml
 	@echo
