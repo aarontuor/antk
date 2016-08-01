@@ -36,5 +36,6 @@ antk/models/tensor_factor_model2.py
 antk/models/tensorfactor.py
 antk/models/tree_mf_model.py
 antk/models/tree_model.py
+test/test_loader.py
 test/testmodels.py
 test/testtensors.py

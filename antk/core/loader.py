@@ -395,9 +395,6 @@ def import_data(filename):
         X = numpy.loadtxt(filename)
         if X.shape[1] != 3:
             raise Sparse_format_error('Sparse Format: row col val')
-        if numpy.amin(X[:, 2]) == 1 or numpy.amin(X[:, 1] == 1):
-            X[:, 0] = X[:, 0] - 1
-            X[:, 1] = X[:, 1] - 1
         return sps.csr_matrix((X[:, 2], (X[:, 0], X[:, 1])))
     elif extension == 'densetxt':
         return numpy.loadtxt(filename)
@@ -449,14 +446,12 @@ def export_data(filename, data):
         numpy.savetxt(filename, data)
     elif extension == 'sparsetxt':
         if not sps.issparse(data):
-            raise Unsupported_format_error('Only scipy sparse matrices my be saved in .sparsetxt format.')
-        scipy.io.mmwrite(filename, data)
-        with open(filename + '.mtx', 'r') as f:
-            lines = f.read().strip().split('\n')
-        os.system('rm ' + filename + '.mtx')
-        matrixstr = '\n'.join(lines[2:-1])
-        with open(filename, 'w') as f:
-            f.write(matrixstr)
+            raise Unsupported_format_error('Only scipy sparse matrices may be saved in .sparsetxt format.')
+        indices = list(data.nonzero())
+        indices.append(data.data)
+        data = [m.reshape((-1,1)) for m in indices]
+        data = numpy.concatenate(data, axis=1)
+        numpy.savetxt(filename, data)
     else:
         raise Unsupported_format_error('Supported extensions: '
                                        'mat, sparse, binary, dense, index, sparsetxt, densetxt')
@@ -840,32 +835,37 @@ NORM = {'l2': l2normalize,
          'count': l1normalize,
          'max': maxnormalize}
 
+def zero_rows(X):
+    numpy.where(~X.any(axis=1))[0]
 
-
-def tfidf(X, norm='l2row'):
+def tfidf(X, norm='l2'):
     """
     :param X: A document-term matrix.
     :param norm: Normalization strategy: 'l2row': normalizes the scores of rows by length of rows after basic tfidf (each document vector is a unit vector), 'count': normalizes the scores of rows by the the total word count of a document. 'max' normalizes the scores of rows by the maximum count for a single word in a document.
     :return: Returns tfidf of document-term matrix X with optional normalization.
     """
-
+    X = sps.csr_matrix(X)
     idf = numpy.log(X.shape[0]/X.sign().sum(0))
     # make a diagonal matrix of idf values to matrix multiply with tf.
     IDF = sps.csr_matrix((idf.tolist()[0], (range(X.shape[1]), range(X.shape[1]))))
     if norm == 'count' or norm == 'max':
         # Only normalizing tf
-        return sps.csr_matrix(NORM[norm](X)*IDF)
+        return sps.csr_matrix(sps.csr_matrix(NORM[norm](X)).dot(IDF))
     elif norm == 'l2':
         # normalizing tfidf
-        return NORM[norm](X*IDF)
+        return sps.csr_matrix(NORM[norm](X.dot(IDF)))
     else:
         # no normalization
-        return X*IDF
+        return sps.csr_matrix(X.dot(IDF))
 
 # ========================================================
 # ==================MISC==================================
 # ========================================================
 def untar(fname):
+    """
+    Untar and ungzip a file in the current directory.
+    :param fname: Name of the .tar.gz file
+    """
     if (fname.endswith("tar.gz")):
         tar = tarfile.open(fname)
         tar.extractall()
