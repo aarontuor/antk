@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial &mdash; antk 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="antk 0.3.0 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#part-1-matrix-factorization-model">Part 1: Matrix Factorization Model</a></li>
+<li><a class="reference internal" href="#part-2-tree-model">Part 2: Tree Model</a></li>
+<li><a class="reference internal" href="#part-3-crafting-a-new-model">Part 3: Crafting a new model</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the introduction/bleeding-edge testing of the <strong>Automated Neural-graph Toolkit!</strong>
+Parts 1 and 2 are meant to be a gentle introduction to the toolkit. Read the directions carefully and be prepared
+use your copy and pasting skills. In Part 3 you will be introduced to features of the toolkit for developing new models.
+Carefully reading parts 1 and 2 will pay off when you engage in the task of building a new model.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Make a folder called antlab_tutorial wherever you feel like working. Copy the tar file from /home/hutch_research/bin/ant_tutorial.tar.gz into the folder you have created. Uncompress the file: I use tar -zxvf ant_tutorial.tar.gz. Do all your work out of the folder you have extracted the files to.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For this lab you will have to ssh into a linux machine with -Y forwarding for pictures since we don&#8217;t have graphviz on
+any other machines as far as I know.</p>
+</div>
+<div class="section" id="part-1-matrix-factorization-model">
+<h2>Part 1: Matrix Factorization Model<a class="headerlink" href="#part-1-matrix-factorization-model" title="Permalink to this headline">¶</a></h2>
+<p>Low Rank Matrix Factorization is a popular machine learning technique used to produce recommendations
+given a set of ratings a user has given an item. The known ratings are collected in a user-item utility matrix
+and the missing entries are predicted by optimizing a low rank factorization of the utility matrix given the known
+entries. The basic idea behind matrix factorization models is that the information encoded for items
+in the columns of the utility matrix, and for users in the rows of the utility matrix is not
+exactly independent. We optimize the objective function <span class="math">\(\sum_{(u,i)} (R_{ui} - P_i^T U_u)^2\)</span> over the observed
+ratings for user <em>u</em> and item <em>i</em> using gradient descent.</p>
+<img alt="_images/factormodel.png" class="align-center" src="_images/factormodel.png" />
+<p>We can express the same optimization in the form of a computational graph that will play nicely with tensorflow:</p>
+<img alt="_images/graphmf.png" class="align-center" src="_images/graphmf.png" />
+<p>Here <span class="math">\(xitem_i\)</span>, and <span class="math">\(xuser_j\)</span> are some representation of the indices for the user and item vectors in the utility matrix.
+These could be one hot vectors, which can then be matrix multiplied by the <em>P</em> and <em>U</em> matrices to select the corresponding
+user and item vectors. In practice it is much faster to let <span class="math">\(xitem_i\)</span>, and <span class="math">\(xuser_j\)</span> be vectors of indices
+which can be used by tensorflow&#8217;s <strong>gather</strong> or <strong>embedding_lookup</strong> functions to select the corresponding vector from
+the <em>P</em> and <em>U</em> matrices.</p>
+<p>This simple model isn&#8217;t difficult to code directly in tensorflow, but it&#8217;s simplicity allows a
+demonstration of the functionality of the toolkit without having to tackle a more complex model.</p>
+<p>To start let&#8217;s import the modules we need and use the <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a> function to load our data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">config</span>
+<span class="kn">import</span> <span class="nn">generic_model</span>
+<span class="kn">import</span> <span class="nn">loader</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/home/hutch_research/data/deep_learning_lab/ml100k&#39;</span><span class="p">,</span>
+                             <span class="n">hashlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;ratings&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We can view the dimensions types, and dictionary keys of the data we&#8217;ve loaded using the <a class="reference internal" href="loader.html#loader.DataSets.show" title="loader.DataSets.show"><code class="xref any py py-meth docutils literal"><span class="pre">DataSets.show</span></code></a> method,
+which is a useful feature for debugging.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The previous command will display this to the terminal:</p>
+<img alt="_images/datatest.png" class="align-center" src="_images/datatest.png" />
+<p>For this data there are 5000 ratings in dev and test, and 70745 ratings in train.
+Notice that the data type of <em>item</em> and <em>user</em> above is <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>. This is a data structure for storing
+one hot vectors, with a field for a vector of indices into a one hot matrix and the column size of the one hot matrix.
+This will be important as we intend to use the <a class="reference internal" href="node_ops.html#node_ops.lookup" title="node_ops.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a> function, which takes <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>
+objects for its <em>data</em> argument, makes a placeholder associated with this data and uses the <a class="reference internal" href="loader.html#loader.HotIndex.dim" title="loader.HotIndex.dim"><code class="xref any py py-attr docutils literal"><span class="pre">dim</span></code></a> attribute of the <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>
+data to create a <strong>tf.Variable</strong> tensor with the correct dimension. The output is an <strong>embedding_lookup</strong> using the placeholder
+and variable tensors created.</p>
+<p>This model does better with the target ratings centered about the mean so let&#8217;s center the ratings.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">])</span>
+<span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Make a plain text file named mf.config using the text below. We will use this to make the tensorflow computational graph:</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dotproduct</span> <span class="n">x_dot_y</span><span class="p">()</span>
+    <span class="o">-</span><span class="n">huser</span> <span class="n">lookup</span><span class="p">(</span><span class="n">dataname</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">initrange</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+    <span class="o">-</span><span class="n">hitem</span> <span class="n">lookup</span><span class="p">(</span><span class="n">dataname</span><span class="o">=</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">initrange</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+    <span class="o">-</span><span class="n">ibias</span> <span class="n">lookup</span><span class="p">(</span><span class="n">dataname</span><span class="o">=</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="n">initrange</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">-</span><span class="n">ubias</span> <span class="n">lookup</span><span class="p">(</span><span class="n">dataname</span><span class="o">=</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">initrange</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The python syntax highlighting illustrates the fact that
+the node specifications in a .config file are just python function calls with two things omitted, the first argument
+which is a tensor or list of tensors, and the last argument which is the name of the tensor output which defines it&#8217;s unique
+variable scope. The first argument is derived from the structure of the config spec, inferred by a marker symbol which we have
+chosen as &#8216;-&#8216;. The input is
+the list of tensors or the single tensor in the spec at the next level below a node call. Tabbing is optional. It may be easier to read
+a config file with tabbing if you are using node functions without a long sequence of arguments.
+The second omitted argument, the name, is whatever directly follows the graph markers.</p>
+<p>Now we make an <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;mfgraph&#39;</span><span class="p">):</span>
+    <span class="n">ant</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">AntGraph</span><span class="p">(</span><span class="s1">&#39;mf.config&#39;</span><span class="p">,</span>
+                            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="p">,</span>
+                            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
+                            <span class="n">display_graph</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When you run this code a graphviz dot pdf image of the graph you have composed should pop up on the screen because we set
+<em>display_graph</em> =True. This pdf file will show up in the pics folder with the name <strong>no_name.pdf</strong>. There are of course
+parameters for specifying the name and location where you want the picture to go. The dot specification will be located
+in the same place as the picture and be named <strong>no_name.dot</strong> unless you have specified a name for the file.</p>
+<img alt="_images/no_name.png" class="align-center" src="_images/no_name.png" />
+<p>Shown in the graph picture above the <a class="reference internal" href="node_ops.html#node_ops.x_dot_y" title="node_ops.x_dot_y"><code class="xref any py py-func docutils literal"><span class="pre">x_dot_y</span></code></a> function takes a list of tensors as its first argument.
+The first two tensors are matrices whose rows are dot producted resulting in a vector containing a scalar for each row.
+The second two tensors are optional biases. For this model, giving a user and item bias helps a great deal. When <a class="reference internal" href="node_ops.html#node_ops.lookup" title="node_ops.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a>
+is called more than once in a config file using the same <em>data</em> argument the previously made placeholder tensor is used,
+so here <em>ibias</em> depends on the same placeholder as <em>hbias</em> and <em>ubias</em> depends on the same placeholder as <em>huser</em>, which
+is what we want.</p>
+<p>The <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> object, <em>ant</em> is a complete record of the tensors created in graph building.
+There are three accessible fields, <a class="reference internal" href="config.html#config.AntGraph.tensordict" title="config.AntGraph.tensordict"><code class="xref any py py-attr docutils literal"><span class="pre">tensordict</span></code></a>, <a class="reference internal" href="config.html#config.AntGraph.placeholderdict" title="config.AntGraph.placeholderdict"><code class="xref any py py-attr docutils literal"><span class="pre">placeholderdict</span></code></a>, and <a class="reference internal" href="config.html#config.AntGraph.tensor_out" title="config.AntGraph.tensor_out"><code class="xref any py py-attr docutils literal"><span class="pre">tensor_out</span></code></a>,
+which are a dictionary of non-placeholder tensors made during graph creation, a dictionary of placeholder tensors made during
+graph creation and the tensor or list of tensors which is the output of the top level node function.
+These should be useful if we want to access tensors post graph creation.</p>
+<p>Okay let&#8217;s finish making this model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">ant</span><span class="o">.</span><span class="n">tensor_out</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Target&#39;</span><span class="p">)</span>
+<span class="n">ant</span><span class="o">.</span><span class="n">placeholderdict</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_</span> <span class="c1"># put the new placeholder in the graph for training</span>
+<span class="n">objective</span> <span class="o">=</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span> <span class="o">+</span>
+             <span class="mf">0.01</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">ant</span><span class="o">.</span><span class="n">tensordict</span><span class="p">[</span><span class="s1">&#39;huser&#39;</span><span class="p">]))</span> <span class="o">+</span>
+             <span class="mf">0.01</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">ant</span><span class="o">.</span><span class="n">tensordict</span><span class="p">[</span><span class="s1">&#39;hitem&#39;</span><span class="p">]))</span> <span class="o">+</span>
+             <span class="mf">0.01</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">ant</span><span class="o">.</span><span class="n">tensordict</span><span class="p">[</span><span class="s1">&#39;ubias&#39;</span><span class="p">]))</span> <span class="o">+</span>
+             <span class="mf">0.01</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">ant</span><span class="o">.</span><span class="n">tensordict</span><span class="p">[</span><span class="s1">&#39;ibias&#39;</span><span class="p">])))</span>
+<span class="n">dev_rmse</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)),</span> <span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="o">.</span><span class="n">num_examples</span><span class="p">))</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">generic_model</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">ant</span><span class="o">.</span><span class="n">placeholderdict</span><span class="p">,</span>
+          <span class="n">mb</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+          <span class="n">learnrate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+          <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+          <span class="n">maxbadcount</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+          <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+          <span class="n">evaluate</span><span class="o">=</span><span class="n">dev_rmse</span><span class="p">,</span>
+          <span class="n">predictions</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+          <span class="n">targets</span><span class="o">=</span><span class="n">y_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that the <a class="reference internal" href="config.html#config.AntGraph.tensordict" title="config.AntGraph.tensordict"><code class="xref any py py-attr docutils literal"><span class="pre">tensordict</span></code></a> enables easy access to <em>huser</em>, <em>hitem</em>, <em>ubias</em>, <em>ibias</em>, which we want to regularize to
+prevent overfitting. The <a class="reference internal" href="generic_model.html#generic_model.Model" title="generic_model.Model"><code class="xref any py py-class docutils literal"><span class="pre">Model</span></code></a> object we are creating <em>model</em> needs the fields <em>objective</em>, <em>placeholderdict</em>, <em>predictions</em>, and <em>targets</em>.
+If you don&#8217;t specify the other parameters default values are set. <em>objective</em> is used as the loss function for gradient
+descent. <em>placeholderdict</em> is used to pair placeholder tensors with matrices from a dataset dictionary with the same
+keys. <em>targets</em>, and <em>predictions</em> are employed by the loss function during evaluation, and by the prediction function
+to give outputs from a trained model.</p>
+<p>Training is now as easy as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If you don&#8217;t wan&#8217;t to evaluate a model during training, for instance if you are doing cross-validation, you can just hand
+in a training set, instead of an ordered pair of train and dev sets. Note that here there must be keys in either the <a class="reference internal" href="loader.html#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a>
+<a class="reference internal" href="loader.html#loader.DataSet.features" title="loader.DataSet.features"><code class="xref any py py-attr docutils literal"><span class="pre">features</span></code></a>, or <a class="reference internal" href="loader.html#loader.DataSet.labels" title="loader.DataSet.labels"><code class="xref any py py-attr docutils literal"><span class="pre">labels</span></code></a> dictionaries, that match with the keys from the <a class="reference internal" href="config.html#config.AntGraph.placeholderdict" title="config.AntGraph.placeholderdict"><code class="xref any py py-attr docutils literal"><span class="pre">placeholderdict</span></code></a> which is handed
+to the <a class="reference internal" href="generic_model.html#generic_model.Model" title="generic_model.Model"><code class="xref any py py-class docutils literal"><span class="pre">Model</span></code></a> constructor. In our case we have placed a placeholder with the key <em>ratings</em> in the
+<code class="xref any docutils literal"><span class="pre">placeholdedict</span></code> corresponding to
+the <em>ratings</em> key in our <em>data</em> <a class="reference internal" href="loader.html#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a>. So our <a class="reference internal" href="config.html#config.AntGraph.placeholderdict" title="config.AntGraph.placeholderdict"><code class="xref any py py-attr docutils literal"><span class="pre">placeholderdict</span></code></a> is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;item&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">framework</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">Tensor</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f0bea7b43d0</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">framework</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">Tensor</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f0bea846e90</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="s1">&#39;ratings&#39;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">tensorflow</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">framework</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">Tensor</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f0bea77fc90</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we have a trained model that does pretty well but it would be nice to automate a hyper-parameter search to find the best
+we can do (should be around .91).</p>
+<p>We can change our mf.config file to accept variables for hyperparameters by substituting hard values with variable names
+prefixed with a &#8216;$&#8217;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>dotproduct x_dot_y()
+     -huser lookup(dataname=&#39;user&#39;, initrange=$initrange, shape=[None, $kfactors])
+     -hitem lookup(dataname=&#39;item&#39;, initrange=$initrange, shape=[None, $kfactors])
+     -ibias lookup(dataname=&#39;item&#39;, initrange=$initrange, shape=[None, 1])
+     -ubias lookup(dataname=&#39;user&#39;, initrange=$initrange, shape=[None, 1])
+</pre></div>
+</div>
+<p>Now we have to let the <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor know what to bind these variables to with a <em>variable_bindings</em>
+argument. So change the constructor call like so.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;mfgraph&#39;</span><span class="p">):</span>
+    <span class="n">ant</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">AntGraph</span><span class="p">(</span><span class="s1">&#39;mf.config&#39;</span><span class="p">,</span>
+                            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="p">,</span>
+                            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>
+                            <span class="n">variable_bindings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;kfactors&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;initrange&#39;</span><span class="p">:</span><span class="mf">0.001</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Modify the code you&#8217;ve written to take arguments for the hyperparameters: <em>kfactors</em>, <em>initrange</em>, <em>mb</em>, <em>learnrate</em>, <em>maxbadcount</em>, <em>lambda</em> (a regularization coefficient),
+and <em>epochs</em>, and conduct a parameter search for the best model. Limit your search to under 1000 combinations of hyperparameters.</p>
+</div>
+</div>
+<div class="section" id="part-2-tree-model">
+<h2>Part 2: Tree Model<a class="headerlink" href="#part-2-tree-model" title="Permalink to this headline">¶</a></h2>
+<p>To demonstrate the power and flexibility of using a config file we can make this more complex model
+below by changing a few lines of code and using a different config file:</p>
+<img alt="_images/tree1.png" class="align-center" src="_images/tree1.png" />
+<p>We need to change the <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a> call to omit the optional <em>hashlist</em> parameter so we get more features from
+the data folder (if a <em>hashlist</em> parameter is not supplied, <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a> reads all files with name prefixes
+<strong>features_</strong> and <strong>labels_</strong> ).</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/home/hutch_research/data/deep_learning_lab/ml100k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-3">
+<p class="first admonition-title">Todo</p>
+<p class="last">Make a plain text file called tree.config with the specs for our tree model.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span>dotproduct x_dot_y()
+..all_user dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+....merge_user concat(10)
+......huser lookup(dataname=&#39;user&#39;, initrange=$initrange, shape=[None, $kfactors])
+......huser_meta dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+........user_meta placeholder(tf.float32)
+..all_item dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+....merge_item concat(10)
+......hitem lookup(dataname=&#39;item&#39;, initrange=$initrange, shape=[None, $kfactors])
+......hitem_meta dnn([15,15,10],&#39;tanh&#39;,keep_prob=None)
+........item_meta placeholder(tf.float32)
+......hitem_term dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+........item_term placeholder(tf.float32)
+..ibias lookup(dataname=&#39;item&#39;, initrange=$initrange, shape=[None, 1])
+..ubias lookup(dataname=&#39;user&#39;, initrange=$initrange, shape=[None, 1])
+</pre></div>
+</div>
+<p>I used a different delimiter so we have to change the <em>marker</em> value in the <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor call.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ant</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">AntGraph</span><span class="p">(</span><span class="s1">&#39;tree.config&#39;</span><span class="p">,</span>
+                         <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="p">,</span>
+                         <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+                         <span class="n">variable_bindings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;kfactors&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;initrange&#39;</span><span class="p">:</span><span class="mf">0.001</span><span class="p">}))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">I have used two &#8216;.&#8217;s instead of one in the config file to mark levels of the graph for more
+readable
+indentation.
+When you specify a marker you are free to use a string of these markers of arbitrary length as long as you are
+consistent.</p>
+</div>
+<p>We get the following graphviz dot picture:</p>
+<img alt="_images/tree2.png" class="align-center" src="_images/tree2.png" />
+<div class="admonition-todo admonition" id="index-4">
+<p class="first admonition-title">Todo</p>
+<p class="last">Modify the code you&#8217;ve written to take arguments for the set of new hyperparameters, and optional optimization parameters
+from the <a class="reference internal" href="generic_model.html#generic_model.Model" title="generic_model.Model"><code class="xref any py py-class docutils literal"><span class="pre">Model</span></code></a> API. Perform a parameter search to see if you can do better than basic MF. Limit your search to under
+1000 combinations of hyperparameters.</p>
+</div>
+</div>
+<div class="section" id="part-3-crafting-a-new-model">
+<h2>Part 3: Crafting a new model<a class="headerlink" href="#part-3-crafting-a-new-model" title="Permalink to this headline">¶</a></h2>
+<p>So far we have been using functions in our config files that are defined in the <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a> module. In the model we
+have defined, the <strong>concat</strong> nodes are passed directly to <strong>dnn</strong> nodes with no intervening non-linearity. We can introduce
+non-linear transformations at these points by directly calling tensorflow non-linear transforms in the config file.</p>
+<div class="admonition-todo admonition" id="index-5">
+<p class="first admonition-title">Todo</p>
+<p class="last">Introduce tensorflow non-linear transforms in tree.config</p>
+</div>
+<p>We also have the ablility to introduce new node functions which are not defined by tensorflow or <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a>.
+One thing we might try is to replace our <strong>dnn</strong> nodes with <strong>highway_dnn</strong> nodes that we need to define. Here is a first
+approximation of defining a new <strong>highway_dnn</strong> node:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">node_ops</span>
+
+<span class="k">def</span> <span class="nf">highway_dnn</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">hidden_units</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">keep_prob</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;highway_dnn&#39;</span><span class="p">):</span>
+    <span class="n">activation</span> <span class="o">=</span> <span class="n">node_ops</span><span class="o">.</span><span class="n">ACTIVATION</span><span class="p">[</span><span class="n">activation</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n_units</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hidden_units</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;layer</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">):</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">):</span>
+                    <span class="n">hidden</span> <span class="o">=</span> <span class="n">activation</span><span class="p">(</span><span class="n">node_ops</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">n_units</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">):</span>
+                    <span class="n">transform</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">node_ops</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">n_units</span><span class="p">,</span> <span class="bp">True</span><span class="p">))</span>
+                <span class="n">tensor_in</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">hidden</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">transform</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">keep_prob</span><span class="p">:</span>
+                    <span class="n">tensor_in</span> <span class="o">=</span> <span class="n">node_ops</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tensor_in</span>
+</pre></div>
+</div>
+<p>This looks okay for a first approximation. However we would like to initialize the bias for the transform gate to some
+negative value, so we have to set the optional <em>bias_start=0</em> parameter in the call to <a class="reference internal" href="node_ops.html#node_ops.linear" title="node_ops.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a> for the transform gate to
+a value we would like.</p>
+<div class="admonition-todo admonition" id="index-6">
+<p class="first admonition-title">Todo</p>
+<p class="last">Alter the <strong>highway_dnn</strong> code to take an optional parameter for transform bias initialization. Replace <strong>dnn</strong> nodes
+in tree.config with <strong>highway_dnn</strong> nodes.</p>
+</div>
+<p>Now we need to let the <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor know about our new node by using the factory constructor <code class="xref any docutils literal"><span class="pre">graph_setup</span></code> with
+one of the two optional arguments introducing new node functions. If
+your new node definition is in it&#8217;s own module possibly full of other node definitions you have created you can use the
+<em>imports</em> argument which is a dictionary with module names as keys and the paths to modules as values. In our case since we
+have only made one new node function we will use the <em>function_map</em> parameter which takes a dictionary of function_name keys
+and function values. So we replace our <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor call as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;mfgraph&#39;</span><span class="p">):</span>
+    <span class="n">ant</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">graph_setup</span><span class="p">(</span><span class="s1">&#39;tree2.config&#39;</span><span class="p">,</span>
+                              <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="p">,</span>
+                              <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+                              <span class="n">function_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;highway_dnn&#39;</span><span class="p">:</span> <span class="n">highway_dnn</span><span class="p">},</span>
+                              <span class="n">variable_bindings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;kfactors&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;initrange&#39;</span><span class="p">:</span><span class="mf">0.001</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Here is an example config file and corresponding graphviz dot image adding non-linearity and a <strong>highway_dnn</strong> node.
+Notice that since highway networks have a fixed dimension size for hidden layers we have used an intermediate <strong>dnn</strong> node
+to map the input to a dimension we want.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>dotproduct x_dot_y()
+..all_user dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+....tanh_user tf.nn.tanh()
+......merge_user concat(10)
+........huser lookup(dataname=&#39;user&#39;, initrange=$initrange, shape=[None, $kfactors])
+........huser_meta dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+..........user_meta placeholder(tf.float32)
+..all_item dnn([10,10,10],&#39;tanh&#39;, keep_prob=None)
+....tanh_item tf.nn.tanh()
+......merge_item concat(10)
+........hitem lookup(dataname=&#39;item&#39;, initrange=$initrange, shape=[None, $kfactors])
+........highway_item_meta highway_dnn([15,15],&#39;tanh&#39;, keep_prob=None)
+..........dnn_item_meta dnn([15],&#39;tanh&#39;, keep_prob=None)
+............item_meta placeholder(tf.float32)
+........hitem_term dnn([10,10,10],&#39;tanh&#39;,keep_prob=None)
+..........item_term placeholder(tf.float32)
+..ibias lookup(dataname=&#39;item&#39;, shape=[None, 1], initrange=$initrange)
+..ubias lookup(dataname=&#39;user&#39;, shape=[None, 1], initrange=$initrange)
+</pre></div>
+</div>
+<img alt="_images/highway_nonlinear.png" class="align-center" src="_images/highway_nonlinear.png" />
+<p>Now that we are familiar with the tricks for crafting new models we can engage in creative enterprise. We have been using
+the scalar ratings targets for objectives, but there are also one hot targets for classification included in the dataset.</p>
+<div class="admonition-todo admonition" id="index-7">
+<p class="first admonition-title">Todo</p>
+<p>Using the data provided, craft your own model, and do some preliminary testing to see how it performs against
+the other models you have explored. If you run into a bug, contact me and I will try to address it but feel free
+to just take note of the bug, abandon the effort, and try something else.
+Some ideas:</p>
+<blockquote>
+<div><p>Classification</p>
+<p>Multiple targets of regression and classification</p>
+<p>A different combine function which has a multiplicative interaction between data streams</p>
+<p>Combining data streams in a binary fashion (for item streams don&#8217;t combine all three at once)</p>
+<p>Scale the regression targets and use the built in <a class="reference internal" href="node_ops.html#node_ops.cosine" title="node_ops.cosine"><code class="xref any py py-func docutils literal"><span class="pre">cosine</span></code></a> node function instead of <a class="reference internal" href="node_ops.html#node_ops.x_dot_y" title="node_ops.x_dot_y"><code class="xref any py py-func docutils literal"><span class="pre">x_dot_y</span></code></a></p>
+<p>Make the branches dealing with indices linear, as they are in basic MF, and combine them later in the tree</p>
+<p>Create an LSTM node that takes a sequence as input and outputs the last hidden state vector.</p>
+</div></blockquote>
+<p class="last">For this task results are not paramount. Think of a way to address the data that makes sense and explores the kind of
+functionality you may want to employ the toolkit for.</p>
+</div>
+<div class="admonition-todo admonition" id="index-8">
+<p class="first admonition-title">Todo</p>
+<p>Submit the code you have written along with a one to two page writeup detailing your experience with the ANT toolkit
+addressing the following.</p>
+<blockquote class="last">
+<div><ol class="arabic simple">
+<li>Analysis of model performances</li>
+<li>Bug reports</li>
+<li>Automated Neural-graph Toolkit pros and cons</li>
+<li>Wish list for toolkit functionality</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Aaron Tuor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

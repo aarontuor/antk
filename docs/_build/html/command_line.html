@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command Line Scripts &mdash; antk 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="antk 0.3.0 documentation" href="index.html" />
+    <link rel="prev" title="All in One Tutorial via Matrix Factorization" href="mf_tutorial.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mf_tutorial.html" title="All in One Tutorial via Matrix Factorization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command Line Scripts</a><ul>
+<li><a class="reference internal" href="#datatest-py">datatest.py</a></li>
+<li><a class="reference internal" href="#normalize-py">normalize.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#movie-lens-processing">Movie Lens Processing</a><ul>
+<li><a class="reference internal" href="#generatetermdoc-py">generateTermDoc.py</a></li>
+<li><a class="reference internal" href="#ml100k-item-process-py">ml100k_item_process.py</a></li>
+<li><a class="reference internal" href="#ml100k-user-process-py">ml100k_user_process.py</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mf_tutorial.html"
+                        title="previous chapter">All in One Tutorial via Matrix Factorization</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/command_line.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="command-line-scripts">
+<h1>Command Line Scripts<a class="headerlink" href="#command-line-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="datatest-py">
+<h2>datatest.py<a class="headerlink" href="#datatest-py" title="Permalink to this headline">¶</a></h2>
+<p>Tool for displaying data using <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">loader.read_data_sets</span></code></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">datatest</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">hashlist</span> <span class="n">HASHLIST</span> <span class="p">[</span><span class="n">HASHLIST</span> <span class="o">...</span><span class="p">]]</span>
+                <span class="p">[</span><span class="o">-</span><span class="n">cold</span> <span class="o">|</span> <span class="o">-</span><span class="n">subfolders</span> <span class="n">SUBFOLDERS</span> <span class="p">[</span><span class="n">SUBFOLDERS</span> <span class="o">...</span><span class="p">]]</span>
+                <span class="n">datadirectory</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Positional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd>datadirectory</kbd></td>
+<td>Path to folder where data to be loaded and displayed is stored.</td></tr>
+</tbody>
+</table>
+</dd>
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-hashlist</span></kbd></td>
+<td>List of hashes to read. Files will be read of the form &#8220;features_&lt;hash&gt;.ext&#8221;  or&#8221;labels_&lt;hash&gt;.ext&#8221; where &lt;hash&gt; is a string in hashlist. If a hashlist is not specified all files of the form &#8220;features_&lt;hash&gt;.ext&#8221;  or &#8220;labels_&lt;hash&gt;.ext&#8221; regardless what string &lt;hash&gt; is will be loaded.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-cold=False</span></kbd></td>
+<td>Extra loading and testing for cold datasets</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-subfolders=('test', 'dev', 'train')</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>List of subfolders to load and display.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="normalize-py">
+<h2>normalize.py<a class="headerlink" href="#normalize-py" title="Permalink to this headline">¶</a></h2>
+<p>Given the path to a file, Capitalization and punctuation is removed, except for infix apostrophes, e.g. &#8220;hasn&#8217;t&#8221;, &#8220;David&#8217;s&#8221;. The normalized text is saved with &#8220;_norm&#8221; appended to the file name before the extension. The normalized text is saved in the same directory as the original text. Beginning and end of sentence tokens are not provided by this normalization script.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">normalize</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">filepath</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Positional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd>filepath</kbd></td>
+<td>The path to the file including filename</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="movie-lens-processing">
+<h1>Movie Lens Processing<a class="headerlink" href="#movie-lens-processing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="generatetermdoc-py">
+<h2>generateTermDoc.py<a class="headerlink" href="#generatetermdoc-py" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">generateTermDoc</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">dictionary</span> <span class="n">descriptions</span> <span class="n">doc_term_file</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Positional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd>datapath</kbd></td>
+<td>Path to folder where dictionary and descriptions are located, and created document term matrix will be saved.</td></tr>
+<tr><td class="option-group">
+<kbd>dictionary</kbd></td>
+<td>Name of the file containing line separated words in vocabulary.</td></tr>
+<tr><td class="option-group">
+<kbd>descriptions</kbd></td>
+<td>Name of the file containing line separated text descriptions.</td></tr>
+<tr><td class="option-group">
+<kbd>doc_term_file</kbd></td>
+<td>Name of the file to save the created sparse document term matrix.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="ml100k-item-process-py">
+<h2>ml100k_item_process.py<a class="headerlink" href="#ml100k-item-process-py" title="Permalink to this headline">¶</a></h2>
+<p><p>Reads MovieLens 100k item meta data and converts to feature files. 
+features_item_month.index: The produced files are: 
+A file storing a <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a> object of movie month releases.</p>
+<p>	features_item_year.mat: A file storing a numpy array of movie year releases.</p>
+<p>	features_item_genre.mat: A file storing a scipy sparse csr_matrix of one hot encodings for movie genre.</p>
+</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ml100k_item_process</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">outpath</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Positional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd>datapath</kbd></td>
+<td>The path to ml-100k dataset. Usually &#8220;some_relative_path/ml-100k</td></tr>
+<tr><td class="option-group">
+<kbd>outpath</kbd></td>
+<td>The path to the folder to store the processed Movielens 100k item data feature files.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+<div class="section" id="ml100k-user-process-py">
+<h2>ml100k_user_process.py<a class="headerlink" href="#ml100k-user-process-py" title="Permalink to this headline">¶</a></h2>
+<p>Tool to process Movielens 100k user Metadata.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ml100k_user_process</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">outpath</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Positional arguments:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd>datapath</kbd></td>
+<td>Path to ml-100k</td></tr>
+<tr><td class="option-group">
+<kbd>outpath</kbd></td>
+<td>Path to save created files to.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mf_tutorial.html" title="All in One Tutorial via Matrix Factorization"
+             >previous</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Aaron Tuor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

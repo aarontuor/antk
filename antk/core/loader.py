@@ -874,19 +874,19 @@ def untar(fname):
     else:
         print("Not a tar.gz file: '%s '" % fname)
 
-def maybe_download(filename, work_directory, source_url):
+def maybe_download(filename, directory, source_url):
     """
     Download the data from source url, unless it's already here. From https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py
 
     :param filename: string, name of the file in the directory.
-    :param work_directory: string, path to working directory.
+    :param directory: string, path to working directory.
     :param source_url: url to download from if file doesn't exist.
     :return: Path to resulting file.
     """
 
-    filepath = os.path.join(work_directory, filename)
+    filepath = os.path.join(directory, filename)
     if not os.path.isfile(filepath):
         urlopen = urllib.URLopener()
-        urlopen.retrieve(source_url, filename)
+        urlopen.retrieve(source_url, filepath)
     return filepath
 
