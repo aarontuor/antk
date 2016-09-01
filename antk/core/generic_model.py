@@ -313,7 +313,7 @@ class Model(object):
             counter += self.mb
             train_eval_counter += self.mb
             self._completed_epochs += float(self.mb)/float(train.num_examples)
-            if self.train_evaluate and train_eval_counter >= train_dev_eval_factor*eval_schedule:
+            if self.train_evaluate is not None and train_eval_counter >= train_dev_eval_factor*eval_schedule:
                 self.train_eval.append(self.eval(self.evaluate, train, supplement))
                 self.train_spot.append(self._completed_epochs)
                 if np.isnan(self.train_eval[-1]):

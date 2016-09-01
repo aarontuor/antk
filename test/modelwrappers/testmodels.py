@@ -1,9 +1,6 @@
 
 from __future__ import print_function
-import tensorflow as tf
 import argparse
-from antk.core import config
-from antk.core import generic_model
 from antk.core import loader
 from antk.models import mfmodel
 from antk.models import tree_model

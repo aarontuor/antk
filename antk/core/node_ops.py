@@ -5,6 +5,7 @@ import scipy.sparse as sps
 from antk.core import loader
 import numbers
 
+# TODO: Change batch_normalization calc for eval after training
 from antk.lib.decorate import pholder, variable, node_op, neural_net, act, relu, loss_function
 
 
@@ -580,51 +581,50 @@ def binary_tensor_combine2(tensors, output_dim=10, initrange=1e-5, name='binary_
 # ==================================================================================
 
 @loss_function
-def se(predictions, targets):
+def se(predictions, targets, name='squared_error'):
     '''
     Squared Error.
     '''
     return tf.reduce_sum(tf.square(predictions - targets))
 
 @loss_function
-def mse(predictions, targets):
+def mse(predictions, targets, name='mse'):
     '''
     Mean Squared Error.
     '''
     return tf.reduce_mean(tf.square(predictions - targets))
 
-@loss_function
-def rmse(predictions, targets):
+def rmse(predictions, targets, name='rmse'):
     '''
     Root Mean Squared Error
     '''
     return tf.sqrt(tf.reduce_mean(tf.square(predictions - targets)))
 
 @loss_function
-def mae(predictions, targets):
+def mae(predictions, targets, name='mae'):
     '''Mean Absolute Error'''
     return tf.reduce_mean(tf.abs(predictions - targets))
 
 
 @loss_function
-def other_cross_entropy(predictions, targets):
+def other_cross_entropy(predictions, targets, name='logistic_loss'):
     '''Logistic Loss'''
     return -1*tf.reduce_sum(targets * tf.log(predictions) + (1.0 - targets) * tf.log(1.0 - predictions))
 
 @loss_function
-def cross_entropy(predictions, targets):
+def cross_entropy(predictions, targets, name='cross_entropy'):
     return -tf.reduce_sum(targets*tf.log(predictions + 1e-8))
 
 @loss_function
-def perplexity(predictions, targets):
+def perplexity(predictions, targets, name='perplexity'):
     return tf.exp(cross_entropy(predictions, targets))
 
 @loss_function
-def detection(predictions, threshold):
+def detection(predictions, threshold, name='detection'):
     return tf.cast(tf.greater_equal(predictions, threshold), tf.float32)
 
 @loss_function
-def recall(predictions, targets, threshold=0.5, detects=None):
+def recall(predictions, targets, threshold=0.5, detects=None, name='recall'):
     '''
     Percentage of actual classes predicted
 
@@ -639,7 +639,7 @@ def recall(predictions, targets, threshold=0.5, detects=None):
     return tf.div(tf.reduce_sum(tf.mul(detects, targets)), tf.reduce_sum(targets))
 
 @loss_function
-def precision(predictions, targets, threshold=0.5, detects=None):
+def precision(predictions, targets, threshold=0.5, detects=None, name='precision'):
     '''
     Percentage of classes detected which are correct.
 
@@ -654,7 +654,7 @@ def precision(predictions, targets, threshold=0.5, detects=None):
     return tf.reduce_sum(tf.mul(targets, detects)) / (tf.reduce_sum(detects) + 1e-8)
 
 @loss_function
-def fscore(predictions=None, targets=None, threshold=0.5, precisions=None, recalls=None):
+def fscore(predictions=None, targets=None, threshold=0.5, precisions=None, recalls=None, name='fscore'):
     if not precisions and not recalls:
         detects = detection(predictions, threshold)
         recalls = recall(targets, threshold=threshold, detects=detects)
@@ -662,6 +662,6 @@ def fscore(predictions=None, targets=None, threshold=0.5, precisions=None, recal
     return 2*(tf.mul(precisions, recalls) / (precisions + recalls + 1e-8))
 
 @loss_function
-def accuracy(predictions, targets):
+def accuracy(predictions, targets, name='accuracy'):
     correct_prediction = tf.equal(tf.argmax(predictions, 1), tf.argmax(targets, 1))
     return tf.reduce_mean(tf.cast(correct_prediction, tf.float32))

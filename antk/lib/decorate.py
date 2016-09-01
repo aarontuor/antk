@@ -4,38 +4,64 @@ import inspect
 import collections
 import numpy
 
+def flatten(container):
+    for i in container:
+        if isinstance(i, (list,tuple)):
+            for j in flatten(i):
+                yield j
+        else:
+            yield i
+
+def merge_dict(defaults, user):
+    context = defaults.copy()
+    context.update(user)
+    return context
+
+def get_default_args(func):
+    """
+    returns a dictionary of arg_name:default_values for the input function
+    """
+    args, varargs, keywords, defaults = inspect.getargspec(func)
+    if defaults:
+        return dict(zip(reversed(args), reversed(defaults)))
+    else:
+        return None
+
+
 def node_op(func):
+    defaults = get_default_args(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
-        defaults = get_default_args(func)
-        if 'name' not in defaults:
-            defaults['name'] = 'unnamed_tensor'
-        if 'name' not in kwargs:
-            kwargs['name'] = defaults['name']
-        with tf.variable_scope(kwargs['name']):
-            tensor_out = func(*args, **kwargs)
-        def node_repr(tensor_node):
-            return 'Tensor("%s", shape=%s, dtype=%r)' % (tensor_node.name,
-                                                         tensor_node.get_shape().as_list(),
-                                                         tensor_node.dtype)
-        tensor_out.__class__.__repr__ = node_repr
-        tensor_out.__class__.__str__ = node_repr
-        if isinstance(tensor_out, collections.Iterable):
-            for t in tensor_out:
-                tf.add_to_collection(kwargs['name'], t)
+        keyword_args = merge_dict(defaults, locals()['kwargs'])
+        if 'name' in keyword_args:
+            with tf.variable_scope(keyword_args['name']):
+                tensor_out = func(*args, **kwargs)
+
+            def node_repr(tensor_node):
+                return 'Tensor("%s", shape=%s, dtype=%r)' % (tensor_node.name,
+                                                             tensor_node.get_shape().as_list(),
+                                                             tensor_node.dtype)
+            if not isinstance(tensor_out, tuple) and not isinstance(tensor_out, list):
+                tensors = [tensor_out]
+            else:
+                tensors = flatten(tensor_out)
+            for n, t in enumerate(tensors):
+                t.__class__.__repr__ = node_repr
+                t.__class__.__str__ = node_repr
+                tf.add_to_collection(keyword_args['name'] + '_n', t)
+            return tensor_out
         else:
-            tf.add_to_collection(kwargs['name'], tensor_out)
-        return tensor_out
+            return func(*args, **kwargs)
     return new_function
 
 def act(func):
     func = node_op(func)
     @functools.wraps(func)
-    def non_linearitied(*args, **kwargs):
+    def new_function(*args, **kwargs):
         tensor_out = func(*args, **kwargs)
         tf.add_to_collection('activation_layers', tensor_out)
         return tensor_out
-    return non_linearitied
+    return new_function
 
 @act
 def tanhlecun(tensor_in):
@@ -70,16 +96,6 @@ def ph_rep(ph):
     """
     return 'Placeholder("%s", shape=%s, dtype=%r)' % (ph.name, ph.get_shape().as_list(), ph.dtype)
 
-def get_default_args(func):
-    """
-    returns a dictionary of arg_name:default_values for the input function
-    """
-    args, varargs, keywords, defaults = inspect.getargspec(func)
-    return dict(zip(reversed(args), reversed(defaults)))
-
-
-
-
 def pholder(func):
     func = node_op(func)
     @functools.wraps(func)
@@ -106,25 +122,26 @@ def variable(func):
 
 
 def loss_function(func):
+    defaults = get_default_args(func)
     func = node_op(func)
     @functools.wraps(func)
-    def loss_functioned(*args, **kwargs):
+    def new_function(*args, **kwargs):
+        keyword_args = merge_dict(defaults, locals()['kwargs'])
         tensor_out = func(*args, **kwargs)
         def loss_repr(loss):
             return 'Loss_Tensor("%s", shape=%s, dtype=%r)' % (loss.name, loss.get_shape().as_list(), loss.dtype)
         tensor_out.__class__.__repr__ = loss_repr
         tensor_out.__class__.__str__ = loss_repr
-        tf.add_to_collection(kwargs['name'] + '_loss', tensor_out)
+        tf.add_to_collection(keyword_args['name'] + '_loss', tensor_out)
         return tensor_out
-    return loss_functioned
+    return new_function
 
 
 def neural_net(func):
-
+    defaults = get_default_args(func)
     func = node_op(func)
     @functools.wraps(func)
-    def nnetted(*args, **kwargs):
-        defaults = get_default_args(func)
+    def new_function(*args, **kwargs):
         if 'activation' not in defaults:
             defaults['activation'] = 'tanh'
         if 'activation' not in kwargs:
@@ -140,7 +157,8 @@ def neural_net(func):
                             (kwargs['activation'], type(kwargs)))
         else:
             kwargs['activation'] = act(kwargs['activation'])
-        return nnetted
+        return func(*args, **kwargs)
+    return new_function
 
 
 

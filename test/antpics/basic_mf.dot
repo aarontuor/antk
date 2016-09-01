@@ -1,4 +1,4 @@
 digraph basic_mf {
-	dotproduct;
-	dotproduct -> {huser,hitem,ibias,ubias} [dir=back];
+	dotproduct1;
+	dotproduct1 -> {huser,hitem,ibias,ubias} [dir=back];
 }
