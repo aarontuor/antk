@@ -5,7 +5,6 @@ import scipy.sparse as sps
 from antk.core import loader
 import numbers
 
-# TODO: Change batch_normalization calc for eval after training
 from antk.lib.decorate import pholder, variable, node_op, neural_net, act, relu, loss_function
 
 
@@ -267,11 +266,11 @@ def dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
         with tf.variable_scope('layer%d' % i):
             if fan_scaling:
                 initrange = fan_scale(initrange, activation, tensor_in)
-            tensor_in = linear(tensor_in, n_units, bias=True,
+            tensor_in = linear(tensor_in, n_units, bias=not bn,
                                distribution=distribution, initrange=initrange, l2=l2, name=name)
-            tensor_in = activation(tensor_in, name=name + '_activation')
             if bn:
                 tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+            tensor_in = activation(tensor_in, name=name + '_activation')
             if keep_prob:
                 tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')
     return tensor_in
@@ -316,20 +315,25 @@ def residual_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm
         raise ValueError('The number of layers must be a multiple of skiplayers')
     if fan_scaling:
         initrange = fan_scale(initrange, activation, tensor_in)
-    for k in range(len(hidden_units)//skiplayers):
+
+    for k in range((len(hidden_units))//skiplayers):
         shortcut = tensor_in
-        start, end = k*skiplayers, k*skiplayers + skiplayers
-        for i, n_units in enumerate(hidden_units[start:end]):
-            with tf.variable_scope('layer%d' % i*(k+1)):
-                tensor_in = linear(tensor_in, n_units, bias=True, distribution=distribution,
+        tensor_in = linear(tensor_in, hidden_units[k*skiplayers], bias=not bn, distribution=distribution,
                                    initrange=initrange,
                                    l2=l2,
                                    name=name)
-                tensor_in = activation(tensor_in, name = name + '_activation')
+        start, end = k*(skiplayers) + 1, k*(skiplayers) + skiplayers
+        for i, n_units in enumerate(hidden_units[start:end]):
+            with tf.variable_scope('layer%d' % i*(k+1)):
                 if bn:
                     tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+                tensor_in = activation(tensor_in, name = name + '_activation')
                 if keep_prob:
                     tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')
+                tensor_in = linear(tensor_in, n_units, bias=not bn, distribution=distribution,
+                                   initrange=initrange,
+                                   l2=l2,
+                                   name=name)
         shp1, shp2 = shortcut.get_shape().as_list(), tensor_in.get_shape().as_list()
         if shp1[1] != shp2[1]:
             with tf.variable_scope('skip_connect%d' % k):
@@ -338,7 +342,7 @@ def residual_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm
                                   distribution=distribution, l2=l2,
                                   name=name + '_skiptransform')
         tensor_in = tensor_in + shortcut
-        tf.add_to_collection(name + '_skipconnection', tensor_in)
+        tensor_in = activation(tensor_in)
     return tensor_in
 
 @neural_net
@@ -366,19 +370,21 @@ def highway_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm'
     for i, n_units in enumerate(hidden_units):
         with tf.variable_scope('layer%d' % i):
             with tf.variable_scope('hidden'):
-                hidden = linear(tensor_in, n_units, bias=True,
+                hidden = linear(tensor_in, n_units, bias=not bn,
                                            distribution=distribution, initrange=initrange, l2=l2,
                                            name=name)
-                hidden = activation(hidden, name=name+'_activation')
+                if bn:
+                    tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+                    hidden = activation(hidden, name=name+'_activation')
             with tf.variable_scope('transform'):
-                transform = act(tf.sigmoid)(linear(tensor_in, n_units,
-                                              bias_start=bias_start, bias=True,
-                                              initrange=initrange, l2=l2, distribution=distribution,
-                                              name=name + '_transform'))
+                transform = linear(tensor_in, n_units,
+                                   bias_start=bias_start, bias=not bn,
+                                   initrange=initrange, l2=l2, distribution=distribution,
+                                   name=name + '_transform')
+                if bn:
+                    transform = batch_normalize(tensor_in, name=name + '_bn')
             tensor_in = hidden * transform + tensor_in * (1 - transform)
             tf.add_to_collection(name, tensor_in)
-            if bn:
-                tensor_in = batch_normalize(tensor_in, name=name + '_bn')
             if keep_prob:
                 tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')
     return tensor_in
@@ -431,24 +437,64 @@ def linear(tensor_in, output_size, bias, bias_start=0.0,
     return tensor_out + b
 
 @node_op
-def batch_normalize(tensor_in, epsilon=1e-5, name="batch_norm"):
+def batch_normalize(tensor_in, epsilon=1e-5, decay=0.999, name="batch_norm"):
     """
-    Batch Normalization: Adapted from tensorflow `nn.py`_ and skflow `batch_norm_ops.py`_ .
-        `Batch Normalization Accelerating Deep Network Training by Reducing Internal Covariate Shift`_
+    Batch Normalization:
+    `Batch Normalization Accelerating Deep Network Training by Reducing Internal Covariate Shift`_
+
+    An exponential moving average of means and variances in calculated to estimate sample mean
+    and sample variance for evaluations. For testing pair placeholder is_training
+    with [0] in feed_dict. For training pair placeholder is_training
+    with [1] in feed_dict. Example:
+
+    Let **train = 1** for training and **train = 0** for evaluation
+
+    .. code-block:: python
+        bn_deciders = {decider:[train] for decider in tf.get_collection('bn_deciders')}
+        feed_dict.update(bn_deciders)
 
     :param tensor_in: input Tensor_
     :param epsilon: A float number to avoid being divided by 0.
     :param name: For variable_scope_
     :return: Tensor with variance bounded by a unit and mean of zero according to the batch.
     """
+
+    is_training = tf.placeholder(tf.int32, shape=[None]) # [1] or [0], Using a placeholder to decide which
+                                          # statistics to use for normalization allows
+                                          # either the running stats or the batch stats to
+                                          # be used without rebuilding the graph.
+    tf.add_to_collection('bn_deciders', is_training)
+
+    pop_mean = tf.Variable(tf.zeros([tensor_in.get_shape()[-1]]), trainable=False)
+    pop_var = tf.Variable(tf.ones([tensor_in.get_shape()[-1]]), trainable=False)
+
+    # calculate batch mean/var and running mean/var
+    batch_mean, batch_variance = node_op(tf.nn.moments)(tensor_in, [0], name=name)
+
+    # The running mean/variance is updated when is_training == 1.
+    running_mean = tf.assign(pop_mean,
+                             pop_mean * (decay + (1.0 - decay)*(1.0 - tf.to_float(is_training))) +
+                             batch_mean * (1.0 - decay) * tf.to_float(is_training))
+    running_var = tf.assign(pop_var,
+                            pop_var * (decay + (1.0 - decay)*(1.0 - tf.to_float(is_training))) +
+                            batch_variance * (1.0 - decay) * tf.to_float(is_training))
+
+    # Choose statistic
+    mean = tf.nn.embedding_lookup(tf.pack([running_mean, batch_mean]), is_training)
+    variance = tf.nn.embedding_lookup(tf.pack([running_var, batch_variance]), is_training)
+
     shape = tensor_in.get_shape().as_list()
     gamma = weights('constant', [shape[1]], initrange=0.0, name=name + '_gamma')
     beta = weights('constant', [shape[1]], initrange=1.0, name=name + '_beta')
-    mean, variance = node_op(tf.nn.moments)(tensor_in, [0], name=name)
+
+    # Batch Norm Transform
     inv = node_op(tf.rsqrt)(epsilon + variance, name=name)
     tensor_in = beta * (tensor_in - mean) * inv + gamma
+
     tf.add_to_collection(NORMALIZED_ACTIVATIONS, tensor_in)
+
     return tensor_in
+
 
 @node_op
 def nmode_tensor_tomatrix(tensor, mode, name='nmode_matricize'):
@@ -594,6 +640,7 @@ def mse(predictions, targets, name='mse'):
     '''
     return tf.reduce_mean(tf.square(predictions - targets))
 
+@loss_function
 def rmse(predictions, targets, name='rmse'):
     '''
     Root Mean Squared Error

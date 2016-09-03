@@ -9,7 +9,7 @@ def return_parser():
     parser.add_argument("config", metavar="CONFIG", type=str,
                         help="The config file for building the ant architecture.")
     parser.add_argument("-layers", metavar="LAYERS", nargs='+',
-                        type=int, default=[16,8],
+                        type=int, default=[16,16,16,8,8,8],
                         help="A list of hidden layer sizes.")
     parser.add_argument("-initrange", metavar="INITRANGE", type=float,
                         default=1e-5,

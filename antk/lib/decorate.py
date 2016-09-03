@@ -32,7 +32,9 @@ def node_op(func):
     defaults = get_default_args(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
-        keyword_args = merge_dict(defaults, locals()['kwargs'])
+        keyword_args = locals()['kwargs']
+        if defaults:
+            keyword_args = merge_dict(defaults, keyword_args)
         if 'name' in keyword_args:
             with tf.variable_scope(keyword_args['name']):
                 tensor_out = func(*args, **kwargs)
@@ -64,7 +66,7 @@ def act(func):
     return new_function
 
 @act
-def tanhlecun(tensor_in):
+def tanhlecun(tensor_in, name='tanhlecun'):
     """
     `Efficient BackProp`_
     Sigmoid with the following properties:
@@ -123,16 +125,18 @@ def variable(func):
 
 def loss_function(func):
     defaults = get_default_args(func)
-    func = node_op(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
-        keyword_args = merge_dict(defaults, locals()['kwargs'])
+        keyword_args = locals()['kwargs']
+        if defaults:
+            keyword_args = merge_dict(defaults, keyword_args)
         tensor_out = func(*args, **kwargs)
-        def loss_repr(loss):
-            return 'Loss_Tensor("%s", shape=%s, dtype=%r)' % (loss.name, loss.get_shape().as_list(), loss.dtype)
-        tensor_out.__class__.__repr__ = loss_repr
-        tensor_out.__class__.__str__ = loss_repr
-        tf.add_to_collection(keyword_args['name'] + '_loss', tensor_out)
+        if 'name' in keyword_args:
+            def loss_repr(loss):
+                return 'Loss_Tensor("%s", shape=%s, dtype=%r)' % (loss.name, loss.get_shape().as_list(), loss.dtype)
+            tensor_out.__class__.__repr__ = loss_repr
+            tensor_out.__class__.__str__ = loss_repr
+            tf.add_to_collection(keyword_args['name'] + '_loss', tensor_out)
         return tensor_out
     return new_function
 

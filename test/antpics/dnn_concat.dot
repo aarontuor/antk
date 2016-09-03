@@ -1,6 +1,7 @@
 digraph dnn_concat {
 	out;
 	out -> {h1} [dir=back];
-	h1 -> {x} [dir=back];
+	h1 -> {bn} [dir=back];
+	bn -> {x} [dir=back];
 	x -> {huser,hitem} [dir=back];
 }
