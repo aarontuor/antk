@@ -65,3 +65,38 @@ def test_import_type_sparsetxt():
     x = sps.csr_matrix(np.random.rand(3, 2))
     export_data('/tmp/test.sparsetxt', x)
     assert x.dtype == import_data('/tmp/test.sparsetxt').dtype
+
+def test_import_sparse_values_mat():
+    """
+    Test values after saving and loading of .sparse format.
+    """
+    x = sps.csr_matrix(np.random.rand(3, 2))
+    export_data('/tmp/test.mat', x)
+    assert np.array_equal(x.toarray(), import_data('/tmp/test.mat').toarray())
+
+def test_import_sparse_type_mat():
+    """4
+    Test the type after saving and loading of .sparset1 format.
+    """
+    x = sps.csr_matrix(np.random.rand(3, 2))
+    export_data('/tmp/test.mat', x)
+    assert x.dtype == import_data('/tmp/test.mat').dtype
+
+def test_import_dense_values_mat():
+    """
+    Test values after saving and loading of .sparse format.
+    """
+    x = np.random.rand(3, 2)
+    export_data('/tmp/test.mat', x)
+    assert np.array_equal(x, import_data('/tmp/test.mat'))
+
+def test_import_dense_type_mat():
+    """4
+    Test the type after saving and loading of .sparset1 format.
+    """
+    x = np.random.rand(3, 2)
+    export_data('/tmp/test.mat', x)
+    assert x.dtype == import_data('/tmp/test.mat').dtype
+
+
+

@@ -6,7 +6,7 @@ from antk.core import loader
 import os
 import datetime
 import matplotlib.pyplot as plt
-
+from pprint import pprint
 # ============================================================================================
 # ============================CONVENIENCE DICTIONARY==========================================
 # ============================================================================================
@@ -18,7 +18,7 @@ OPT = {'adam': tf.train.AdamOptimizer,
 # ============================================================================================
 # ============================GLOBAL MODULE FUNCTIONS=========================================
 # ============================================================================================
-def get_feed_list(batch, placeholderdict, supplement=None, dropouts=None, dropout_flag='train'):
+def get_feed_list(batch, placeholderdict, supplement=None, train=1, debug=False):
 
     """
     :param batch: A dataset object.
@@ -33,7 +33,6 @@ def get_feed_list(batch, placeholderdict, supplement=None, dropouts=None, dropou
     datadict.update(batch.labels)
     if supplement:
         datadict.update(supplement)
-
     for desc in placeholderdict:
         ph.append(placeholderdict[desc])
         if sps.issparse(datadict[desc]):
@@ -42,16 +41,23 @@ def get_feed_list(batch, placeholderdict, supplement=None, dropouts=None, dropou
             dt.append(datadict[desc].vec)
         else:
             dt.append(datadict[desc])
+        if debug:
+            print('%s\n\tph: %s\n\tdt: %s' % (desc,
+                                              placeholderdict[desc].get_shape().as_list(),
+                                              datadict[desc].shape))
+    dropouts = tf.get_collection('dropout_prob')
     if dropouts:
         for prob in dropouts:
             ph.append(prob[0])
-            if dropout_flag == 'train':
+            if train == 1:
                 dt.append(prob[1])
-            elif dropout_flag == 'eval':
-                dt.append(1.0)
             else:
-                raise ValueError('dropout_flag must be "train" or "eval". Found %s' % dropout_flag)
-    return {i: d for i, d in zip(ph, dt)}
+                dt.append(1.0)
+    fd = {i: d for i, d in zip(ph, dt)}
+    bn_deciders = tf.get_collection('bn_deciders')
+    if bn_deciders:
+        fd.update({decider:[train] for decider in bn_deciders})
+    return fd
 
 def parse_summary_val(summary_str):
     """
@@ -105,9 +111,10 @@ class Model(object):
                  logdir='log/', random_seed=None, model_name='generic',
                  clip_gradients=0.0, make_histograms=False,
                  best_model_path='/tmp/model.ckpt',
-                 save_tensors={}, tensorboard=False, train_evaluate=None):
+                 save_tensors={}, tensorboard=False, train_evaluate=None, debug=False):
 
         self.objective = objective
+        self.debug = debug
         for t in tf.get_collection('losses'):
             self.objective += t
         self._placeholderdict = placeholderdict
@@ -264,9 +271,7 @@ class Model(object):
         :param data:  :any:`DataSet` to make predictions from.
         :return: A set of predictions from feed forward defined by :any:`self.predictions`
         """
-        fd = get_feed_list(data, self.placeholderdict, supplement=supplement,
-                           dropouts=tf.get_collection('dropout_prob'),
-                           dropout_flag='eval')
+        fd = get_feed_list(data, self.placeholderdict, supplement=supplement, train=0, debug=self.debug)
         return self.session.run(self.predictor,
                                 feed_dict=fd)
 
@@ -277,12 +282,13 @@ class Model(object):
         :param data: :any:`DataSet` to evaluate on.
         :return: Result of evaluating on data for :any:`self.evaluate`
         """
-        fd = get_feed_list(data, self.placeholderdict, supplement=supplement,
-                           dropouts=tf.get_collection('dropout_prob'),
-                           dropout_flag='eval')
+        fd = get_feed_list(data, self.placeholderdict, supplement=supplement, train=0, debug=self.debug)
         return self.session.run(tensor_in, feed_dict=fd)
 
-    def train(self, train, dev=None, supplement=None, eval_schedule='epoch', train_dev_eval_factor = 3):
+    def train(self, train,
+              dev=None, supplement=None,
+              eval_schedule='epoch',
+              train_dev_eval_factor=3):
         """
 
         :param data: :any:`DataSet` to train on.
@@ -307,8 +313,7 @@ class Model(object):
             # ==============PER MINI-BATCH=====================================
 
             newbatch = train.next_batch(self.mb)
-            fd = get_feed_list(newbatch, self.placeholderdict, supplement,
-                               dropouts=tf.get_collection('dropout_prob'))
+            fd = get_feed_list(newbatch, self.placeholderdict, supplement, debug=self.debug)
             self.session.run(self.train_step, feed_dict=fd)
             counter += self.mb
             train_eval_counter += self.mb
@@ -381,9 +386,7 @@ class Model(object):
                                                       self.session.graph.as_graph_def())
 
     def _log_summaries(self,  dev, supplement):
-        fd = get_feed_list(dev, self.placeholderdict, supplement=supplement,
-                           dropouts=tf.get_collection('dropout_prob'),
-                           dropout_flag='eval')
+        fd = get_feed_list(dev, self.placeholderdict, supplement=supplement, train=0, debug=self.debug)
         if self.tensorboard:
             if self.make_histograms:
                 sum_str = self.session.run(self.histogram_summaries, fd)

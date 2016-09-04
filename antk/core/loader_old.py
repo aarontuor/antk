@@ -61,27 +61,21 @@ if os.name == 'nt':
 
 
 class BadDirectoryStructureError(Exception):
-    """
-    Raised when a data directory specified, does not contain
-    a subfolder specified in the *folders* argument to 
-    :any:`read_data_sets`.
-    """
+    """Raised when a data directory specified, does not contain
+    a subfolder specified in the *folders* argument to
+    :any:`read_data_sets`."""
     pass
 
 
 class UnsupportedFormatError(Exception):
-    """
-    Raised when a file is requested to be loaded or saved without one
-    of the supported file extensions.
-    """
+    """Raised when a file is requested to be loaded or saved without one
+    of the supported file extensions."""
     pass
 
 
 class MatFormatError(Exception):
-    """
-    Raised if the .mat file being read does not contain a
-    variable named *data*.
-    """
+    """Raised if the .mat file being read does not contain a
+    variable named *data*."""
     pass
 
 
@@ -99,44 +93,36 @@ class DataSet(object):
     """
     General data structure for mini-batch gradient descent training involving non-sequential data.
 
-    
-    Parameters
-    ----------
-    features: dict
-        A dictionary of string label names to data matrices.
-        Matrices may be of types :any:`IndexVector`, scipy sparse csr_matrix, or numpy array.
-    labels: dict
-        A dictionary of string label names to data matrices.
-        Matrices may be of types :any:`IndexVector`, scipy sparse csr_matrix, or numpy array.
-    mix: boolean
-        Whether or not to shuffle per epoch.
+    :param features: A dictionary of string label names to data matrices. Matrices may be :any:`HotIndex`, scipy sparse csr_matrix, or numpy arrays.
+    :param labels: A dictionary of string label names to data matrices. Matrices may be :any:`HotIndex`, scipy sparse csr_matrix, or numpy arrays.
+    :param num_examples: How many data points.
+    :param mix: Whether or not to shuffle per epoch.
 
-    
     Attributes
     ----------
     features
-    labels
     index_in_epoch
+    labels
     num_examples
-    mix_after_epoch
-    
-    Methods
-    -------
-    reset_index_to_zero
-    
     """
 
-    def __init__(self, features, labels=None, mix=False):
+    def __init__(self, features, labels=None, num_examples=None, mix=False):
         self._features = features  # hashmap of feature matrices
-        self._num_examples = features[features.keys()[0]].shape[0]
+        if num_examples:
+            self._num_examples = num_examples
+        else:
+            if labels:
+                self._num_examples = labels[labels.keys()[0]].shape[0]
+            else:
+                self._num_examples = features[features.keys()[0]].shape[0]
         if labels:
             self._labels = labels # hashmap of label matrices
         else:
             self._labels = {}
         self._index_in_epoch = 0
-        self.mix_after_epoch = mix
+        self._mix_after_epoch = mix
         self._last_batch_size = self._num_examples
-    
+
     def __repr__(self):
         attrs = vars(self)
         return 'antk.core.DataSet object with fields:\n' + '\n'.join("\t%r: %r" % item for item in attrs.items())
@@ -161,24 +147,23 @@ class DataSet(object):
 
     @property
     def num_examples(self):
-        """
-
-        Returns
-        -------
-        int
-            Number of rows (data points) of the matrices in this :any:`DataSet`.
-        """
+        '''Number of rows (data points) of the matrices in this :any:`DataSet`.'''
         return self._num_examples
 
     # ======================================================================================
     # =============================PUBLIC METHODS===========================================
     # ======================================================================================
     def reset_index_to_zero(self):
-        """
-        Sets **index_in_epoch** to 0.
-        """
-        """"""
+        """Sets **index_in_epoch** to 0."""
         self._index_in_epoch = 0
+
+    def mix_after_epoch(self, mix):
+        """
+        Whether or not to shuffle after training for an epoch.
+
+        :param mix: True or False
+        """
+        self._mix_after_epoch = mix
 
     def next_batch(self, batch_size):
         '''
@@ -201,7 +186,7 @@ class DataSet(object):
         start = self._index_in_epoch
         if self._index_in_epoch + batch_size > self._num_examples:
 
-            if not self.mix_after_epoch:
+            if not self._mix_after_epoch:
                 self._index_in_epoch = (self._index_in_epoch + batch_size) % self._num_examples
                 end = self._index_in_epoch
                 newbatch = DataSet(self._next_batch_(self._features, start, end),
@@ -222,7 +207,7 @@ class DataSet(object):
         else:
             end = self._index_in_epoch + batch_size
             self._index_in_epoch = (batch_size + self._index_in_epoch) % self._num_examples
-            if self._index_in_epoch == 0 and self.mix_after_epoch:
+            if self._index_in_epoch == 0 and self._mix_after_epoch:
                 perm = np.arange(self._num_examples)
                 np.random.shuffle(perm)
                 self._shuffle_(perm, self._features)
@@ -320,7 +305,7 @@ class DataSets(object):
 
     def __init__(self, datasets_map, mix=False):
         for k, v in datasets_map.items():
-            setattr(self, k, DataSet(v['features'], v['labels'], mix=mix))
+            setattr(self, k, DataSet(v['features'], v['labels'], v['num_examples'], mix=mix))
 
     def __repr__(self):
         attrs = vars(self)
