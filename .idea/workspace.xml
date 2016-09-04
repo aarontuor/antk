@@ -2,15 +2,112 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a47a0420-99c2-43d8-9821-0e8d9bf70d77" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/core/resnet.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/antk/core/loader_old.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/config/dnn_concat_highwaynet.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test_DataSet.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test_HotIndex.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/test_import_export_data.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/doctest/output.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/Makefile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.aux" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.idx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.ilg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.ind" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.out" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/antk.toc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/datatest.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/directory.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/dnn_concat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/dssm.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/ex1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/ex2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/ex3.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/factormodel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/fncychap.sty" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/graphmf.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/ml100kmore.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/multoutputs.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/no_name.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/python.ist" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/sphinx.sty" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/sphinxhowto.cls" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/sphinxmanual.cls" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/tabulary.sty" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/tensor_print.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/tree1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/tree_test.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/treedot.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/_build/latex/weightedloss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/config/svdplus.config.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/filename" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/hotindextest.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mbtest.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/test_loader.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/testfig.pdf" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/api.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/api.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/command_line.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/command_line.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/config.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/config.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/config_tutorial.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/config_tutorial.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/generic_model.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/generic_model.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/generic_model_tutorial.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/generic_model_tutorial.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/loader.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/loader.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/loader_tutorial.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/loader_tutorial.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/mf_tutorial.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/mf_tutorial.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/model_crafting.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/model_crafting.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/models.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/models.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/node_ops.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/node_ops.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/node_ops_tutorial.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/node_ops_tutorial.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/tutorial.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/tutorial.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/doctrees/tutorials.doctree" afterPath="$PROJECT_DIR$/docs/_build/doctrees/tutorials.doctree" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" afterPath="$PROJECT_DIR$/docs/_build/html/objects.inv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/antpics/dnn_concat.pdf" afterPath="$PROJECT_DIR$/test/antpics/dnn_concat.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/antk.iml" afterPath="$PROJECT_DIR$/.idea/antk.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk.egg-info/SOURCES.txt" afterPath="$PROJECT_DIR$/antk.egg-info/SOURCES.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/generic_model.py" afterPath="$PROJECT_DIR$/antk/core/generic_model.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/loader.py" afterPath="$PROJECT_DIR$/antk/core/loader.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/core/node_ops.py" afterPath="$PROJECT_DIR$/antk/core/node_ops.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/antk/lib/decorate.py" afterPath="$PROJECT_DIR$/antk/lib/decorate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" afterPath="$PROJECT_DIR$/docs/_build/html/.buildinfo" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/config.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/config.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/dnn_concat_model.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/dnn_concat_model.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/dsaddmodel.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/dsaddmodel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/dssm_model.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/dssm_model.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/generic_model.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/generic_model.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/index.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/loader.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/loader.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/mfmodel.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/mfmodel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/node_ops.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/node_ops.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/skipgram.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/skipgram.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_modules/tree_model.html" afterPath="$PROJECT_DIR$/docs/_build/html/_modules/tree_model.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_static/basic.css" afterPath="$PROJECT_DIR$/docs/_build/html/_static/basic.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" afterPath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" afterPath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/_static/websupport.js" afterPath="$PROJECT_DIR$/docs/_build/html/_static/websupport.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/api.html" afterPath="$PROJECT_DIR$/docs/_build/html/api.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/command_line.html" afterPath="$PROJECT_DIR$/docs/_build/html/command_line.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/config.html" afterPath="$PROJECT_DIR$/docs/_build/html/config.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/config_tutorial.html" afterPath="$PROJECT_DIR$/docs/_build/html/config_tutorial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/generic_model.html" afterPath="$PROJECT_DIR$/docs/_build/html/generic_model.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/generic_model_tutorial.html" afterPath="$PROJECT_DIR$/docs/_build/html/generic_model_tutorial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" afterPath="$PROJECT_DIR$/docs/_build/html/genindex.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/index.html" afterPath="$PROJECT_DIR$/docs/_build/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/loader.html" afterPath="$PROJECT_DIR$/docs/_build/html/loader.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/loader_tutorial.html" afterPath="$PROJECT_DIR$/docs/_build/html/loader_tutorial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/mf_tutorial.html" afterPath="$PROJECT_DIR$/docs/_build/html/mf_tutorial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/model_crafting.html" afterPath="$PROJECT_DIR$/docs/_build/html/model_crafting.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/models.html" afterPath="$PROJECT_DIR$/docs/_build/html/models.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/node_ops.html" afterPath="$PROJECT_DIR$/docs/_build/html/node_ops.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/node_ops_tutorial.html" afterPath="$PROJECT_DIR$/docs/_build/html/node_ops_tutorial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" afterPath="$PROJECT_DIR$/docs/_build/html/py-modindex.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/search.html" afterPath="$PROJECT_DIR$/docs/_build/html/search.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" afterPath="$PROJECT_DIR$/docs/_build/html/searchindex.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/tutorial.html" afterPath="$PROJECT_DIR$/docs/_build/html/tutorial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/_build/html/tutorials.html" afterPath="$PROJECT_DIR$/docs/_build/html/tutorials.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/loader.rst" afterPath="$PROJECT_DIR$/docs/loader.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/antpics/dnn_concat.dot" afterPath="$PROJECT_DIR$/test/antpics/dnn_concat.dot" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/config/dnn_concat_resnet.config" afterPath="$PROJECT_DIR$/test/config/dnn_concat_resnet.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/modelwrappers/dnn_concat.py" afterPath="$PROJECT_DIR$/test/modelwrappers/dnn_concat.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/testmodels.py" afterPath="$PROJECT_DIR$/test/testmodels.py" />
     </list>
@@ -32,108 +129,63 @@
     <favorites_list name="antk" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="testmodels.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/testmodels.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="16" column="103" selection-start-line="16" selection-start-column="103" selection-end-line="16" selection-end-column="103" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="node_ops.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/antk/core/node_ops.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-197.35715">
-                  <caret line="307" column="70" selection-start-line="307" selection-start-column="70" selection-end-line="307" selection-end-column="70" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="dnn_concat_model.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/antk/models/dnn_concat_model.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="dnn_concat_resnet.config" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/test/config/dnn_concat_resnet.config">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.14516129">
-                  <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="decorate.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/antk/lib/decorate.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="generic_model.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/antk/core/generic_model.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-51.857143">
-                  <caret line="338" column="33" selection-start-line="338" selection-start-column="33" selection-end-line="338" selection-end-column="33" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="tree_model.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/antk/models/tree_model.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="testmodels.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/test/testmodels.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="16" column="103" selection-start-line="16" selection-start-column="103" selection-end-line="16" selection-end-column="103" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="dnn_concat.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/test/modelwrappers/dnn_concat.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.06682028">
-                  <caret line="30" column="56" selection-start-line="30" selection-start-column="56" selection-end-line="31" selection-end-column="63" />
-                  <folding>
-                    <element signature="e#0#15#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="loader.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.49240506">
+              <caret line="158" column="44" selection-start-line="158" selection-start-column="44" selection-end-line="158" selection-end-column="44" />
+              <folding>
+                <marker date="1473007031873" expanded="true" signature="13063:13118" placeholder="import ..." />
+                <marker date="1473007031873" expanded="true" signature="26890:26940" placeholder="import ..." />
+                <marker date="1473007031873" expanded="true" signature="28070:28129" placeholder="import ..." />
+                <marker date="1473007031873" expanded="true" signature="28861:28911" placeholder="import ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loader.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/loader.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/antk/core/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="conf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/conf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="34" column="14" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="node_ops.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/antk/core/node_ops.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="702" column="64" selection-start-line="702" selection-start-column="64" selection-end-line="702" selection-end-column="64" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -148,21 +200,29 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/antk/core/loader.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/testmodels.py" />
         <option value="$PROJECT_DIR$/antk/core/resnet.py" />
         <option value="$PROJECT_DIR$/antk/core/generic_model.py" />
-        <option value="$PROJECT_DIR$/antk/core/node_ops.py" />
         <option value="$PROJECT_DIR$/test/config/dnn_concat_resnet.config" />
         <option value="$PROJECT_DIR$/antk/lib/decorate.py" />
+        <option value="$PROJECT_DIR$/test/config/dnn_concat_highwaynet.config" />
         <option value="$PROJECT_DIR$/test/testmodels.py" />
         <option value="$PROJECT_DIR$/test/modelwrappers/dnn_concat.py" />
+        <option value="$PROJECT_DIR$/antk/core/node_ops.py" />
+        <option value="$PROJECT_DIR$/test/test_loader.py" />
+        <option value="$PROJECT_DIR$/test/test_import_export_data.py" />
+        <option value="$PROJECT_DIR$/test/test_HotIndex.py" />
+        <option value="$PROJECT_DIR$/test/test_DataSet.py" />
+        <option value="$PROJECT_DIR$/docs/loader.rst" />
+        <option value="$PROJECT_DIR$/antk/core/loader_old.py" />
+        <option value="$PROJECT_DIR$/docs/conf.py" />
+        <option value="$PROJECT_DIR$/antk/core/loader.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1925" />
-    <option name="y" value="13" />
+    <option name="x" value="8" />
+    <option name="y" value="64" />
     <option name="width" value="1912" />
     <option name="height" value="1036" />
   </component>
@@ -271,6 +331,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="antk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="antk" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -332,6 +406,10 @@
         </subPane>
       </pane>
     </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -471,12 +549,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1925" y="13" width="1912" height="1036" extended-state="0" />
+    <frame x="8" y="64" width="1912" height="1036" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14505029" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19110641" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.025698325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -488,7 +567,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -508,7 +586,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -584,32 +664,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/mbtest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="44" selection-start-line="17" selection-start-column="44" selection-end-line="17" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/modelwrappers/dssm_restricted.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="52" column="45" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="603" column="68" selection-start-line="603" selection-start-column="68" selection-end-line="603" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -661,34 +719,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/config/dnn_concat.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3846154">
-          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/antk/models/tree_model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/antk/models/dnn_concat_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/antk/core/node_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-197.35715">
-          <caret line="307" column="70" selection-start-line="307" selection-start-column="70" selection-end-line="307" selection-end-column="70" />
           <folding />
         </state>
       </provider>
@@ -701,10 +735,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/config/svdplus.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/config/dnn_concat_resnet.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14516129">
+        <state vertical-scroll-proportion="0.08294931">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="25" selection-end-line="3" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/modelwrappers/dnn_concat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.140553">
+          <caret line="33" column="84" selection-start-line="33" selection-start-column="84" selection-end-line="33" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/config/dnn_concat_highwaynet.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/models/dnn_concat_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/modelwrappers/svdplus2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/modelwrappers/svdplus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/config/dnn_concat.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.062211983">
+          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -712,17 +804,89 @@
     <entry file="file://$PROJECT_DIR$/test/testmodels.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="103" selection-start-line="16" selection-start-column="103" selection-end-line="16" selection-end-column="103" />
+          <caret line="16" column="96" selection-start-line="16" selection-start-column="96" selection-end-line="16" selection-end-column="96" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/modelwrappers/dnn_concat.py">
+    <entry file="file://$PROJECT_DIR$/test/test_import_export_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06682028">
-          <caret line="30" column="56" selection-start-line="30" selection-start-column="56" selection-end-line="31" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/node_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="702" column="64" selection-start-line="702" selection-start-column="64" selection-end-line="702" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_HotIndex.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55266273">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/loader.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_DataSet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11392405">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/loader_old.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="988" column="0" selection-start-line="988" selection-start-column="0" selection-end-line="988" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="false" />
+            <marker date="1473004569013" expanded="true" signature="13239:13294" placeholder="import ..." />
+            <marker date="1473004569013" expanded="true" signature="27066:27116" placeholder="import ..." />
+            <marker date="1473004569013" expanded="true" signature="28246:28305" placeholder="import ..." />
+            <marker date="1473004569013" expanded="true" signature="29037:29087" placeholder="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="14" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/antk/core/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49240506">
+          <caret line="158" column="44" selection-start-line="158" selection-start-column="44" selection-end-line="158" selection-end-column="44" />
+          <folding>
+            <marker date="1473007031873" expanded="true" signature="13063:13118" placeholder="import ..." />
+            <marker date="1473007031873" expanded="true" signature="26890:26940" placeholder="import ..." />
+            <marker date="1473007031873" expanded="true" signature="28070:28129" placeholder="import ..." />
+            <marker date="1473007031873" expanded="true" signature="28861:28911" placeholder="import ..." />
           </folding>
         </state>
       </provider>

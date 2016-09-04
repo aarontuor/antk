@@ -9,13 +9,13 @@ def return_parser():
     parser.add_argument("config", metavar="CONFIG", type=str,
                         help="The config file for building the ant architecture.")
     parser.add_argument("-layers", metavar="LAYERS", nargs='+',
-                        type=int, default=[16,16,16,8,8,8],
+                        type=int, default=[16,16],
                         help="A list of hidden layer sizes.")
     parser.add_argument("-initrange", metavar="INITRANGE", type=float,
-                        default=1e-5,
+                        default=1e-6,
                         help="Range to initialize embedding vectors.")
     parser.add_argument("-act", metavar="ACTIVATION", type=str,
-                        default='tanhlecun',
+                        default='relu',
                         help="The hidden layer activation. May be 'tanh', 'sigmoid', 'tanhlecun', 'relu', 'relu6'.")
     parser.add_argument("-bn", metavar="BATCH_NORMALIZATION", type=bool,
                         default=True,
@@ -23,7 +23,7 @@ def return_parser():
     parser.add_argument("-kp", metavar="KEEP_PROB",
                         type=float, default="0.95",
                         help="The keep probability for drop out.")
-    parser.add_argument("-cs", metavar="CONCAT_SIZE", type=int, default=24,
+    parser.add_argument("-cs", metavar="CONCAT_SIZE", type=int, default=16,
                         help="Size of layer after concatenation operation")
     parser.add_argument("-uembed", metavar="UEMBED", type=int, default=32,
                         help="Size of user embeddings.")

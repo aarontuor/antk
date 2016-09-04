@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # print('================================tree===================================')
     # os.system('python modelwrappers/tree.py ' + args.datadir + ' config/tree.config')
     print('================================dnn_concat===================================')
-    os.system('python modelwrappers/dnn_concat.py ' + args.datadir + ' config/dnn_concat_resnet.config')
+    os.system('python modelwrappers/dnn_concat.py ' + args.datadir + ' config/dnn_concat.config')
     # print('================================mult_dnn_concat===================================')
     # os.system('python modelwrappers/dnn_concat.py ' + args.datadir + ' config/mult_dnn_concat.config')
     # print('================================dsadd===================================')

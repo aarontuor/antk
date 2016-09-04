@@ -373,17 +373,19 @@ def highway_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm'
                 hidden = linear(tensor_in, n_units, bias=not bn,
                                            distribution=distribution, initrange=initrange, l2=l2,
                                            name=name)
-                if bn:
-                    tensor_in = batch_normalize(tensor_in, name=name + '_bn')
-                    hidden = activation(hidden, name=name+'_activation')
+                # if bn:
+                #     tensor_in = batch_normalize(tensor_in, name=name + '_bn')
+                hidden = activation(hidden, name=name+'_activation')
             with tf.variable_scope('transform'):
                 transform = linear(tensor_in, n_units,
                                    bias_start=bias_start, bias=not bn,
                                    initrange=initrange, l2=l2, distribution=distribution,
                                    name=name + '_transform')
-                if bn:
-                    transform = batch_normalize(tensor_in, name=name + '_bn')
+                # if bn:
+                #     transform = batch_normalize(tensor_in, name=name + '_bn')
             tensor_in = hidden * transform + tensor_in * (1 - transform)
+            if bn:
+                tensor_in = batch_normalize(tensor_in, name=name + '_bn')
             tf.add_to_collection(name, tensor_in)
             if keep_prob:
                 tensor_in = dropout(tensor_in, keep_prob, name=name + '_dropouts')

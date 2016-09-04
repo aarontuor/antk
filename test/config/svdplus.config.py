@@ -1,5 +1,0 @@
-result ident()
--huser lookup(dataname='user', initrange=$initrange, l2=$lamb, shape=[None, $kfactors])
--hitem lookup(dataname='item', initrange=$initrange, l2=$lamb, shape=[None, $kfactors])
--ibias lookup(dataname='item', initrange=$initrange, l2=$lamb, shape=[None, 1])
--ubias lookup(dataname='user', initrange=$initrange, l2=$lamb, shape=[None, 1])
