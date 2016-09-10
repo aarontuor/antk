@@ -31,7 +31,27 @@ You will find complete documentation for ANTk at `the ANTk readthedocs page`_.
     :alt: pypi page
     :scale: 100%
     :target: https://pypi.python.org/pypi/antk/
+    
+.. _Install tensorflow: https://www.tensorflow.org/versions/r0.7/get_started/os_setup.html
+.. _Install graphviz: http://www.graphviz.org/
+
 
 Install
 -------
+
+A virtual environment is recommended for installation. Make sure that tensorflow is installed in your virtual environment
+and graphviz is installed on your system.
+
+`Install tensorflow`_
+
+`Install graphviz`_
+
+From the terminal:
+
+In a terminal:
+
+.. code-block:: bash
+
+    (venv)$ pip install antk
+
 
