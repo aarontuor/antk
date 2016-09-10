@@ -48,6 +48,11 @@
     :scale: 100%
     :target: https://pypi.python.org/pypi/antk/
 
+.. |doc| image:: _static/docs.gif
+    :alt: Documentation
+    :scale: 100%
+    :target: https://readthedocs.org/projects/antk/builds/
+
 About ANTk
 ==========
 
