@@ -36,7 +36,7 @@
 
 *Principal Authors* `Aaron Tuor`_ , `Brian Hutchinson`_
 
-|git| |pypi|
+|git| |pypi| |doc|
 
 .. |git| image:: _static/git_hub.gif
     :alt: Documentation
