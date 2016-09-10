@@ -2,7 +2,7 @@
 Welcome to Automated Neural Graph Toolkit
 =========================================
 
-|aaron| |docs| |pypi| |web|
+|aaron| |docs| |pypi| 
 
 Purpose
 -------
@@ -31,11 +31,6 @@ You will find complete documentation for ANTk at `the ANTk readthedocs page`_.
     :alt: pypi page
     :scale: 100%
     :target: https://pypi.python.org/pypi/antk/
-
-.. |web| image:: docs/_static/web_page.gif
-    :alt: ANTk web page
-    :scale: 100%
-    :target: sw.cs.wwu.edu/~tuora/antk.html
 
 Install
 -------
