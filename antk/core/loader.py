@@ -1,46 +1,72 @@
 """
-Implements a general purpose data loader for python non-sequential machine learning tasks. Several common data transformations are provided in this module, e.g., tfidf, whitening, etc.
+Proposed Extensions
+-------------------
+DataSet.split(scheme={devtraintest, crossvalidate, traintest} returns DataSets
+
+DataSets.join() returns DataSet (combines train or cross validation)
+
+DataSet + DataSet returns DataSet
+
+DataSets + DataSets returns DataSets
+
+DataSets constructor from list of DataSet objects
+
+DataSet for Online data
+
+DataSet for Sequence data
+
+Binary data formats for Streaming data
 
 Loading, Saving, and Testing
 ----------------------------
 :any:`save`
-:any:`export_data`
+
 :any:`load`
-:any:`import_data`
+
 :any:`is_one_hot`
+
 :any:`read_data_sets`
+
+:any:`untar`
+
+:any:`maybe_download`
 
 Classes
 -------
 :any:`DataSet`
+
 :any:`DataSets`
-:any:`HotIndex`
+
+:any:`IndexVector`
+
+:any:`IndexVector`
 
 Data Transforms
 ---------------
 :any:`center`
+
 :any:`l1normalize`
+
 :any:`l2normalize`
-:any:`pca_whiten`
+
 :any:`tfidf`
+
 :any:`toOnehot`
+
 :any:`toIndex`
+
 :any:`unit_variance`
 
 Exceptions
 ----------
 :any:`BadDirectoryStructureError`
+
 :any:`MatFormatError`
+
 :any:`SparseFormatError`
+
 :any:`UnsupportedFormatError`
 
-Proposed Extensions
--------------------
-DataSet.split(scheme={devtraintest, crossvalidate, traintest} returns DataSets
-DataSets.join() returns DataSet (combines train or cross validation)
-DataSet + DataSet returns DataSet
-DataSets + DataSets returns DataSets
-DataSets constructor from list of DataSet objects
 """
 
 import struct
@@ -54,6 +80,7 @@ import os.path
 import urllib
 import numbers
 import repr
+import antk.core
 
 slash = '/'
 if os.name == 'nt':
@@ -97,33 +124,56 @@ class SparseFormatError(Exception):
 
 class DataSet(object):
     """
-    General data structure for mini-batch gradient descent training involving non-sequential data.
+    Data structure for mini-batch gradient descent training involving non-sequential data.
 
-    
-    Parameters
-    ----------
-    features: dict
-        A dictionary of string label names to data matrices.
+    :param features: (dict) A dictionary of string label names to data matrices.
         Matrices may be of types :any:`IndexVector`, scipy sparse csr_matrix, or numpy array.
-    labels: dict
-        A dictionary of string label names to data matrices.
+    :param labels: (dict) A dictionary of string label names to data matrices.
         Matrices may be of types :any:`IndexVector`, scipy sparse csr_matrix, or numpy array.
-    mix: boolean
-        Whether or not to shuffle per epoch.
+    :param mix: (boolean) Whether or not to shuffle per epoch.
 
-    
-    Attributes
-    ----------
-    features
-    labels
-    index_in_epoch
-    num_examples
-    mix_after_epoch
-    
-    Methods
-    -------
-    reset_index_to_zero
-    
+    :examples:
+
+        >>> import numpy as np
+        >>> from antk.core.loader import DataSet
+        >>> d = DataSet({'id': np.eye(5)}, labels={'ones':np.ones((5, 2))})
+        >>> d #doctest: +NORMALIZE_WHITESPACE
+        antk.core.DataSet object with fields:
+        '_labels': {'ones': array([[ 1.,  1.],
+                                   [ 1.,  1.],
+                                   [ 1.,  1.],
+                                   [ 1.,  1.],
+                                   [ 1.,  1.]])}
+        'mix_after_epoch': False
+        '_num_examples': 5
+        '_index_in_epoch': 0
+        '_last_batch_size': 5
+        '_features': {'id': array([[ 1.,  0.,  0.,  0.,  0.],
+                                   [ 0.,  1.,  0.,  0.,  0.],
+                                   [ 0.,  0.,  1.,  0.,  0.],
+                                   [ 0.,  0.,  0.,  1.,  0.],
+                                   [ 0.,  0.,  0.,  0.,  1.]])}
+
+        >>> d.show() #doctest: +NORMALIZE_WHITESPACE
+        features:
+             id: (5, 5) <type 'numpy.ndarray'>
+        labels:
+             ones: (5, 2) <type 'numpy.ndarray'>
+
+        >>> d.next_batch(3) #doctest: +NORMALIZE_WHITESPACE
+        antk.core.DataSet object with fields:
+            '_labels': {'ones': array([[ 1.,  1.],
+                                       [ 1.,  1.],
+                                       [ 1.,  1.]])}
+            'mix_after_epoch': False
+            '_num_examples': 3
+            '_index_in_epoch': 0
+            '_last_batch_size': 3
+            '_features': {'id': array([[ 1.,  0.,  0.,  0.,  0.],
+                                       [ 0.,  1.,  0.,  0.,  0.],
+                                       [ 0.,  0.,  1.,  0.,  0.]])}
+
+
     """
 
     def __init__(self, features, labels=None, mix=False):
@@ -146,27 +196,29 @@ class DataSet(object):
     # ======================================================================================
     @property
     def features(self):
-        """A dictionary of feature matrices."""
+        """
+        :attribute: (dict) A dictionary with string keys and feature matrix values.
+        """
         return self._features
 
     @property
     def index_in_epoch(self):
-        '''The number of datapoints that have been trained on in a particular epoch.'''
+        """
+        :attribute: (int) The number of data points that have been trained on in a particular epoch.
+        """
         return self._index_in_epoch
 
     @property
     def labels(self):
-        '''A dictionary of label matrices'''
+        """
+        :attribute: (dict) A dictionary with string keys and label matrix values.
+        """
         return self._labels
 
     @property
     def num_examples(self):
         """
-
-        Returns
-        -------
-        int
-            Number of rows (data points) of the matrices in this :any:`DataSet`.
+        :attribute: (int) Number of rows (data points) of the matrices in this :any:`DataSet`.
         """
         return self._num_examples
 
@@ -175,97 +227,98 @@ class DataSet(object):
     # ======================================================================================
     def reset_index_to_zero(self):
         """
-        Sets **index_in_epoch** to 0.
+        :method: Sets :any:`index_in_epoch` to 0.
         """
-        """"""
         self._index_in_epoch = 0
 
     def next_batch(self, batch_size):
-        '''
+        """
+        :method:
         Return a sub DataSet of next batch-size examples.
             If no shuffling (mix=False):
-                If `batch_size`
-                is greater than the number of examples left in the epoch then a batch size DataSet wrapping back to
-                past beginning will be returned.
+                If `batch_size` is greater than the number of examples left in
+                the epoch then a batch size DataSet wrapping past beginning
+                (rows [index_in_epcoch:num_examples, 0::any:`num_examples`-:any:`index_in_epoch`]
+                will be returned.
             If shuffling enabled (mix=True):
-                If `batch_size` is greater than the number of examples left in the epoch, points will be shuffled and
-                batch_size DataSet is returned starting from index 0.
+                If `batch_size` is greater than the number of examples left in the epoch,
+                points will be shuffled and `batch_size` DataSet is returned starting from index 0.
 
-        :param batch_size: int
-        :return: A :any:`DataSet` object with the next `batch_size` examples.
-        '''
+        :param batch_size: (int) The number of rows in the matrices of the sub DataSet.
+        :return: :any:`DataSet`
+        """
         if batch_size != self._last_batch_size and self._index_in_epoch != 0:
             self.reset_index_to_zero()
         self._last_batch_size = batch_size
         assert batch_size <= self._num_examples
         start = self._index_in_epoch
         if self._index_in_epoch + batch_size > self._num_examples:
-
             if not self.mix_after_epoch:
                 self._index_in_epoch = (self._index_in_epoch + batch_size) % self._num_examples
                 end = self._index_in_epoch
                 newbatch = DataSet(self._next_batch_(self._features, start, end),
-                               self._next_batch_(self._labels, start, end),
-                               batch_size)
+                                   self._next_batch_(self._labels, start, end))
             else:
-                perm = np.arange(self._num_examples)
-                np.random.shuffle(perm)
-                self._shuffle_(perm, self._features)
-                self._shuffle_(perm, self._labels)
+                self.shuffle()
                 start = 0
                 end = batch_size
                 newbatch = DataSet(self._next_batch_(self._features, start, end),
-                               self._next_batch_(self._labels, start, end),
-                               batch_size)
+                                   self._next_batch_(self._labels, start, end))
                 self._index_in_epoch = batch_size
             return newbatch
         else:
             end = self._index_in_epoch + batch_size
             self._index_in_epoch = (batch_size + self._index_in_epoch) % self._num_examples
             if self._index_in_epoch == 0 and self.mix_after_epoch:
-                perm = np.arange(self._num_examples)
-                np.random.shuffle(perm)
-                self._shuffle_(perm, self._features)
-                self._shuffle_(perm, self._labels)
+                self.shuffle()
             return DataSet(self._next_batch_(self._features, start, end),
-                           self._next_batch_(self._labels, start, end),
-                           batch_size)
+                           self._next_batch_(self._labels, start, end))
 
     def show(self):
-        '''
-        Pretty printing of all the data (dimensions, keys, type) in the :any:`DataSet` object
-        '''
+        """
+        :method: Prints the data specs (dimensions, keys, type) in the :any:`DataSet` object
+        """
 
         print('features:')
         for name, feature, in self.features.iteritems():
-            if type(feature) is HotIndex:
+            if type(feature) is IndexVector:
                 print('\t %s: vec.shape: %s dim: %s %s' % (name, feature.vec.shape,
                                                            feature.dim, type(feature)))
             else:
                 print('\t %s: %s %s' % (name, feature.shape, type(feature)))
         print('labels:')
         for name, label in self.labels.iteritems():
-            if type(label) is HotIndex:
+            if type(label) is IndexVector:
                 print('\t %s: vec.shape: %s dim: %s %s' % (name, (label.vec.shape),
                                                            label.dim, type(label)))
             else:
                 print('\t %s: %s %s' % (name, label.shape, type(label)))
 
     def showmore(self):
-        '''
-        Print a sample of the first up to twenty rows of matrices in DataSet
-        '''
+        """
+        :method: Prints the data specs (dimensions, keys, type) in the :any:`DataSet` object,
+        along with a sample of up to the first twenty rows for matrices in DataSet.
+        """
 
         print('features:')
         for name, feature in self.features.iteritems():
-            print('\t %s: \nFirst twenty rows:\n%s\n' % (name, feature[1:min(20, feature.shape[0])]))
+            row = min(5, feature.shape[0])
+            print('\t %s: \nFirst %s rows:\n%s\n' % (name, row, feature[0:row]))
         print('labels:')
         for name, label in self.labels.iteritems():
-            print('\t %s: \nFirst twenty rows:\n%s\n' % (name, feature[1:min(20, feature.shape[0])]))
+            row = min(5, label.shape[0])
+            print('\t %s: \nFirst %s rows:\n%s\n' % (name, row, label[0:row]))
 
-    # ======================================================================================
-    # =============================PRIVATE METHODS===========================================
-    # ======================================================================================
+    def shuffle(self):
+        """
+        :method: The same random permutation is applied to the
+         rows of all the matrices in :any:`features` and :any:`labels` .
+        """
+        perm = np.arange(self._num_examples)
+        np.random.shuffle(perm)
+        self._shuffle_(perm, self._features)
+        self._shuffle_(perm, self._labels)
+
     def _shuffle_(self, order, datamap):
         '''
         :param order: A list of the indices for the row permutation
@@ -274,8 +327,8 @@ class DataSet(object):
         Shuffles the rows an individual matrix in the :any:`DataSet` object.'
         '''
         for matrix in datamap:
-            if type(datamap[matrix]) is HotIndex:
-                datamap[matrix] = HotIndex(datamap[matrix].vec[order], datamap[matrix].dim)
+            if type(datamap[matrix]) is IndexVector:
+                datamap[matrix] = IndexVector(datamap[matrix].vec[order], datamap[matrix].dim)
             else:
                 datamap[matrix] = datamap[matrix][order]
 
@@ -295,7 +348,7 @@ class DataSet(object):
             end = self._num_examples
             wrapdata = {}
             for matrix in datamap:
-                if type(datamap[matrix]) is HotIndex:
+                if type(datamap[matrix]) is IndexVector:
                     wrapdata[matrix] = datamap[matrix].vec[start2:end2]
                     batch_data_map[matrix] = datamap[matrix].vec[start:end]
                 else:
@@ -307,20 +360,84 @@ class DataSet(object):
                     batch_data_map[matrix] = np.concatenate([batch_data_map[matrix], wrapdata[matrix]], axis=0)
         else:
             for matrix in datamap:
-                if type(datamap[matrix]) is HotIndex:
+                if type(datamap[matrix]) is IndexVector:
                     batch_data_map[matrix] = datamap[matrix].vec[start:end]
                 else:
                     batch_data_map[matrix] = datamap[matrix][start:end]
         return batch_data_map
 
 class DataSets(object):
-    '''
-    A record of DataSet objects with a display function.
-    '''
+    """
+    A record of :any:`DataSet` objects.
 
-    def __init__(self, datasets_map, mix=False):
-        for k, v in datasets_map.items():
-            setattr(self, k, DataSet(v['features'], v['labels'], mix=mix))
+    :param datasets_map: (dict) A dictionary with string keys and `DataSet` objects as values.
+    :param mix: (boolean) Whether or not to enable shuffling for mini-batching.
+
+    :attributes: (:any:`DataSet`) There is an attribute for each key value pair in
+    **datasets_map** argument.
+
+    :examples:
+
+        >>> import numpy as np
+        >>> from antk.core.loader import DataSets
+        >>> from antk.core.loader import DataSet
+        >>> d = DataSets({'train': DataSet({'id': np.eye(5)}, labels={'one': np.ones((5,6))}),
+        ...               'dev': DataSet({'id': 5*np.eye(2)}, labels={'one': 5*np.ones((2,6))})})
+        >>> d.show() #doctest: +SKIP
+        dev:
+        features:
+             id: (2, 2) <type 'numpy.ndarray'>
+        labels:
+             one: (2, 6) <type 'numpy.ndarray'>
+        train:
+        features:
+             id: (5, 5) <type 'numpy.ndarray'>
+        labels:
+             one: (5, 6) <type 'numpy.ndarray'>
+        >>> d.showmore() #doctest: +SKIP
+        dev:
+        features:
+             id:
+        First 2 rows:
+        [[ 5.  0.]
+         [ 0.  5.]]
+        <BLANKLINE>
+        labels:
+             one:
+        First 2 rows:
+        [[ 5.  5.  5.  5.  5.  5.]
+         [ 5.  5.  5.  5.  5.  5.]]
+        <BLANKLINE>
+        train:
+        features:
+             id:
+        First 5 rows:
+        [[ 1.  0.  0.  0.  0.]
+         [ 0.  1.  0.  0.  0.]
+         [ 0.  0.  1.  0.  0.]
+         [ 0.  0.  0.  1.  0.]
+         [ 0.  0.  0.  0.  1.]]
+        <BLANKLINE>
+        labels:
+             one:
+        First 5 rows:
+        [[ 1.  1.  1.  1.  1.  1.]
+         [ 1.  1.  1.  1.  1.  1.]
+         [ 1.  1.  1.  1.  1.  1.]
+         [ 1.  1.  1.  1.  1.  1.]
+         [ 1.  1.  1.  1.  1.  1.]]
+         <BLANKLINE>
+    """
+
+    def __init__(self, datasets_map={}, mix=False):
+        if not datasets_map:
+            pass
+        elif isinstance(next(iter(datasets_map.values())), antk.core.loader.DataSet):
+            for k, v in datasets_map.iteritems():
+                setattr(self, k, v)
+        else:
+            for k, v in datasets_map.iteritems():
+                setattr(self, k, DataSet(v['features'], v['labels'], mix=mix))
 
     def __repr__(self):
         attrs = vars(self)
@@ -328,7 +445,7 @@ class DataSets(object):
 
     def show(self):
         """
-        Pretty print data attributes.
+        :method: Pretty print data attributes.
         """
         datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show' and not s == 'showmore']
         for dataset in datasets:
@@ -337,7 +454,7 @@ class DataSets(object):
 
     def showmore(self):
         """
-        Pretty print data attributes, and data.
+        :method: Pretty print data attributes, and data.
         """
         datasets = [s for s in dir(self) if not s.startswith('__') and not s == 'show' and not s == 'showmore']
         for dataset in datasets:
@@ -350,53 +467,51 @@ class IndexVector(object):
     """
     Index vector representation of one hot matrix.
 
-    Parameters
-    ----------
-    matrix: scipy.sparse.csr_matrix or numpy array
-            A one hot matrix or vector of *on* indices of a one hot matrix.
-            If **matrix** is a vector of indices and no dimension argument is supplied
-            then dimension is set to the maximum index value + 1.
+    :param matrix: (scipy.sparse.csr_matrix or numpy array)
+        A one hot matrix or vector of *on* indices of a one hot matrix.
+        If **matrix** is a vector of indices and no dimension argument is supplied
+        then **dimension** is set to the maximum index value + 1.
+    :param dimension: (int) The number of columns in the one hot matrix to be represented.
 
-    Notes
-    -----
-    IndexVector objects follow the python sequence protocol, so slicing,
-    indexing and iteration behave as you might expect.
-    Slices of an IndexVector return another IndexVector.
-    Indexing returns an integer. Iteration will loop over all the elements
-    in the **vec** attribute.
+    .. note::
+        IndexVector objects implement the python sequence protocol, so slicing,
+        indexing and iteration behave as you might expect.
+        Slices of an IndexVector return another IndexVector.
+        Indexing returns an integer. Iteration will loop over all the elements
+        in the :any:`vec` attribute.
 
-    Examples
-    --------
-    >>> import numpy as np
-    >>> from antk.core import loader
-    >>> xhot = np.array([[1,0,0], [1,0,0], [0,1,0], [0,0,1]])
-    >>> xindex = loader.IndexVector(xhot)
-    >>> xindex.vec
-    array([0, 0, 1, 2])
-    >>> xindex.dim
-    3
-    >>> xindex.hot() #doctest: +NORMALIZE_WHITESPACE
-    <4x3 sparse matrix of type '<type 'numpy.float64'>'
-        with 4 stored elements in Compressed Sparse Row format>
-	>>> xindex.hot().toarray() #doctest: +NORMALIZE_WHITESPACE
-	array([[ 1.,  0.,  0.],
-           [ 1.,  0.,  0.],
-           [ 0.,  1.,  0.],
-           [ 0.,  0.,  1.]])
-    >>> xindex.shape
-    (4, 3)
-    >>> xindex
-    <class 'antk.core.loader.IndexVector'>(shape=(4, 3))
-    vec=[0, 0, 1, 2]
-    dim=3
-    >>> xindex[0]
-    0
-    >>> xindex[1:3]
-    <class 'antk.core.loader.IndexVector'>(shape=(2, 3))
-    vec=[0, 1]
-    dim=3
-    >>> [index+2 for index in xindex]
-    [2, 2, 3, 4]
+    :examples:
+
+        >>> import numpy as np
+        >>> from antk.core import loader
+        >>> xhot = np.array([[1,0,0], [1,0,0], [0,1,0], [0,0,1]])
+        >>> xindex = loader.IndexVector(xhot)
+        >>> xindex.vec
+        array([0, 0, 1, 2])
+        >>> xindex.dim
+        3
+        >>> xindex.hot() #doctest: +NORMALIZE_WHITESPACE
+        <4x3 sparse matrix of type '<type 'numpy.float64'>'
+            with 4 stored elements in Compressed Sparse Row format>
+        >>> xindex.hot().toarray() #doctest: +NORMALIZE_WHITESPACE
+        array([[ 1.,  0.,  0.],
+               [ 1.,  0.,  0.],
+               [ 0.,  1.,  0.],
+               [ 0.,  0.,  1.]])
+        >>> xindex.shape
+        (4, 3)
+        >>> xindex
+        <class 'antk.core.loader.IndexVector'>(shape=(4, 3))
+        vec=[0, 0, 1, 2]
+        dim=3
+        >>> xindex[0]
+        0
+        >>> xindex[1:3]
+        <class 'antk.core.loader.IndexVector'>(shape=(2, 3))
+        vec=[0, 1]
+        dim=3
+        >>> [index+2 for index in xindex]
+        [2, 2, 3, 4]
     """
     def __init__(self, matrix, dimension=None):
         if is_one_hot(matrix):
@@ -438,42 +553,51 @@ class IndexVector(object):
 
     @property
     def dim(self):
-        '''The feature dimension (number of columns) of the one hot matrix.'''
+        """
+        :attribute: (int) The feature dimension (number of columns) of the one hot matrix.
+        """
         return self._dim
 
     @property
     def vec(self):
-        '''The vector of hot indices.'''
+        """
+        :attribute: (numpy 1d array) The vector of hot indices.
+        """
         return self._vec
 
     @property
     def shape(self):
-        '''The shape of the one hot matrix encoded.'''
+        """
+        :attribute: (tuple) The shape of the one hot matrix encoded.
+        """
         return (self.vec.shape[0], self.dim)
 
     def hot(self):
         """
+        :method:
         :return: A one hot scipy sparse csr_matrix
         """
         return toOnehot(self)
 
 class HotIndex(IndexVector):
-    """Same class as IndexVector. This is the legacy name of the class."""
+    """
+    Same data structure as :any:`IndexVector`. This is the legacy name.
+    """
     pass
 # ===================================================================================
 # ====================== I/0 ========================================================
 # ===================================================================================
 
 def load(filename):
-    '''
+    """
     Calls :any:`import_data`.
     Decides how to load data into python matrices by file extension.
     Raises :any:`UnsupportedFormatError` if extension is not one of the supported
     extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).
 
-    :param filename: A file of an accepted format representing a matrix.
-    :return: A numpy matrix, scipy sparse csr_matrix, or any:`HotIndex`.
-    '''
+    :param filename: (str) A file of an accepted format representing a matrix.
+    :return: A numpy matrix, scipy sparse csr_matrix, or any:`IndexVector`.
+    """
     return import_data(filename)
 
 def import_data(filename):
@@ -482,8 +606,8 @@ def import_data(filename):
     Raises :any:`UnsupportedFormatError` if extension is not one of the supported
     extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).
 
-    :param filename: A file of an accepted format representing a matrix.
-    :return: A numpy matrix, scipy sparse csr_matrix, or any:`HotIndex`.
+    :param filename: (str) A file of an accepted format representing a matrix.
+    :return: A numpy matrix, scipy sparse csr_matrix, or any:`IndexVector`.
     '''
     extension = filename.split(slash)[-1].split('.')[-1].strip()
     if extension == 'mat':
@@ -513,34 +637,35 @@ def import_data(filename):
                                        'mat, sparse, binary, sparsetxt, densetxt, index')
 
 def save(filename, data):
-    '''
+    """
     Calls :any`export_data`.
     Decides how to save data by file extension.
     Raises :any:`UnsupportedFormatError` if extension is not one of the supported
     extensions (mat, sparse, binary, dense, index).
     Data contained in .mat files should be saved in a matrix named *data*.
 
-    :param filename: A file of an accepted format representing a matrix.
-    :param data: A numpy array, scipy sparse matrix, or :any:`HotIndex` object.
-    '''
+    :param filename: (str) A filename with extension of an
+    accepted format for representing a matrix.
+    :param data: numpy array, scipy sparse matrix, or :any:`IndexVector` object.
+    """
     export_data(filename, data)
 
 def export_data(filename, data):
-    '''
+    """
     Decides how to save data by file extension.
     Raises :any:`UnsupportedFormatError` if extension is not one of the supported
     extensions (mat, sparse, binary, dense, index).
     Data contained in .mat files should be saved in a matrix named *data*.
 
     :param filename: A file of an accepted format representing a matrix.
-    :param data: A numpy array, scipy sparse matrix, or :any:`HotIndex` object.
-    '''
+    :param data: A numpy array, scipy sparse matrix, or :any:`IndexVector` object.
+    """
     extension = filename.split(slash)[-1].split('.')[-1].strip()
     if extension == 'mat':
         scipy.io.savemat(filename, {'data': data})
     elif extension == 'index':
-        if not isinstance(data, HotIndex):
-            raise UnsupportedFormatError('Only HotIndex objects may be saved in .index format.')
+        if not isinstance(data, IndexVector):
+            raise UnsupportedFormatError('Only IndexVector objects may be saved in .index format.')
         _imatsave(filename, data)
     elif extension == 'sparse':
         if not sps.issparse(data):
@@ -570,8 +695,8 @@ def _write_int64(file_obj, num):
     """
     Writes an 8 byte integer to a file in binary format. From David Palzer.
 
-    :param file_obj: the open file object to write to
-    :param num: the integer to write, will be converted to a long int
+    :param file_obj: The open file object to write to.
+    :param num: The integer to write, will be converted to a long int.
     """
     file_obj.write(struct.pack('q', long(num)))
 
@@ -590,8 +715,8 @@ def _matload(filename):
     """
     Reads in a dense matrix from binary (dense) file filename. From `David Palzer`_.
 
-    :param filename: file from which to read.
-    :return: the matrix which has been read.
+    :param filename: (str) file from which to read.
+    :return: The matrix which has been read.
     """
     f = open(filename, 'r')
     m = _read_int64(f)
@@ -661,9 +786,9 @@ def _smatsave(filename, t):
 
 def _imatload(filename):
     """
-    Reads in a :any:`HotIndex` matrix from file
-    :param filename: the file from which to read where a :any:`HotIndex` object was stored.
-    :return: A :any:`HotIndex` object.
+    Reads in a :any:`IndexVector` matrix from file
+    :param filename: the file from which to read where a :any:`IndexVector` object was stored.
+    :return: A :any:`IndexVector` object.
     """
     f = open(filename, 'r')
     vec_length = _read_int64(f)
@@ -671,7 +796,7 @@ def _imatload(filename):
     vec = np.fromfile(f, 'd', vec_length)
     f.close()
     vec = vec.astype(int) - 1
-    return HotIndex(vec, dim)
+    return IndexVector(vec, dim)
 
 
 def _imatsave(filename, index_vec):
@@ -679,7 +804,7 @@ def _imatsave(filename, index_vec):
     Saves the input matrix to the input file in sparse format
 
     :param filename: Filename to save to.
-    :param index_vec: A :any:`HotIndex` object.
+    :param index_vec: A :any:`IndexVector` object.
     """
     f = open(filename, 'wb')
     vector = index_vec.vec
@@ -691,12 +816,12 @@ def _imatsave(filename, index_vec):
 
 
 def makedirs(datadirectory, sub_directory_list=('train', 'dev', 'test')):
-    '''
+    """
     :param datadirectory: Name of the directory you want to create containing the subdirectory folders.
      If the directory already exists it will be populated with the subdirectory folders.
     :param sub_directory_list: The list of subdirectories you want to create
     :return: void
-    '''
+    """
 
     if not datadirectory.endswith(slash):
         datadirectory += slash
@@ -706,14 +831,70 @@ def makedirs(datadirectory, sub_directory_list=('train', 'dev', 'test')):
 
 
 def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix=False):
-    '''
-    :param directory: Root directory containing data to load.
-    :param folders: The subfolders of *directory* to read data from by default there are train, dev, and test folders. If you want others you have to make an explicit list.
-    :param hashlist: If you provide a hashlist these files and only these files will be added to your :any:`DataSet` objects.
+    """
+    :param directory: (str) Root directory containing data to load.
+    :param folders: (dict) The subfolders of *directory* to read data from.
+        By default there are train, dev, and test folders.
+        If you want others you have to make an explicit list.
+    :param hashlist: (dict) If you provide a hashlist these files and
+        only these files will be added to your :any:`DataSet` objects.
         It you do not provide a hashlist then anything with
         the privileged prefixes labels_ or features_ will be loaded.
+    :param mix: (boolean) Whether to shuffle during mini-batching.
     :return: A :any:`DataSets` object.
-    '''
+
+    :examples:
+
+        >>> import antk.core.loader as loader
+        >>> import numpy as np
+        >>> loader.makedirs('/tmp/test_data/')
+        >>> loader.save('/tmp/test_data/test/features_id.dense', np.eye(5))
+        >>> loader.save('/tmp/test_data/test/features_ones.dense', np.ones((5, 2)))
+        >>> loader.save('/tmp/test_data/test/labels_id.dense', np.eye(5))
+        >>> loader.save('/tmp/test_data/dev/features_id.dense', np.eye(5))
+        >>> loader.save('/tmp/test_data/dev/features_ones.dense', np.ones((5, 2)))
+        >>> loader.save('/tmp/test_data/dev/labels_id.dense', np.eye(5))
+        >>> loader.save('/tmp/test_data/train/features_id.dense', np.eye(5))
+        >>> loader.save('/tmp/test_data/train/features_ones.dense', np.ones((5, 2)))
+        >>> loader.save('/tmp/test_data/train/labels_id.dense', np.eye(5))
+        >>> loader.read_data_sets('/tmp/test_data').show() #doctest: +SKIP
+        reading train...
+        reading dev...
+        reading test...
+        dev:
+        features:
+             ones: (5, 2) <type 'numpy.ndarray'>
+             id: (5, 5) <type 'numpy.ndarray'>
+        labels:
+             id: (5, 5) <type 'numpy.ndarray'>
+        test:
+        features:
+             ones: (5, 2) <type 'numpy.ndarray'>
+             id: (5, 5) <type 'numpy.ndarray'>
+        labels:
+             id: (5, 5) <type 'numpy.ndarray'>
+        train:
+        features:
+             ones: (5, 2) <type 'numpy.ndarray'>
+             id: (5, 5) <type 'numpy.ndarray'>
+        labels:
+             id: (5, 5) <type 'numpy.ndarray'>
+
+
+        >>> loader.read_data_sets('/tmp/test_data',
+        ...                       folders=['train', 'dev'],
+        ...                       hashlist=['ones']).show() #doctest: +SKIP
+        reading train...
+        reading dev...
+        dev:
+        features:
+             ones: (5, 2) <type 'numpy.ndarray'>
+        labels:
+        train:
+        features:
+             ones: (5, 2) <type 'numpy.ndarray'>
+        labels:
+    """
 
     if not directory.endswith(slash):
         directory += slash
@@ -721,7 +902,7 @@ def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix
 
     datasets_map = {}
     for folder in folders:  # iterates over keys
-        dataset_map = {'features': {}, 'labels': {}, 'num_examples': 0}
+        dataset_map = {'features': {}, 'labels': {}}
         print('reading ' + folder + '...')
         if folder not in dir_files:
             raise BadDirectoryStructureError('Need ' + folder + ' folder in ' + directory + ' directory.')
@@ -733,8 +914,6 @@ def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix
                 descriptor = (filename.split('.')[0]).split(prefix_)[-1]
                 if (not hashlist) or (descriptor in hashlist):
                     dataset_map[prefix][descriptor] = import_data(directory + folder + slash + filename)
-                    if prefix == 'labels':
-                        dataset_map['num_examples'] = dataset_map[prefix][descriptor].shape[0]
         datasets_map[folder] = dataset_map
     return DataSets(datasets_map, mix=mix)
 
@@ -744,23 +923,22 @@ def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix
 # ===================================================================================
 def toOnehot(X, dim=None):
     '''
-    :param X: Vector of indices or :any:`HotIndex` object
-    :param dim: Dimension of indexing
+    :param X: (numpy array) Vector of indices or :any:`IndexVector` object
+    :param dim: (int) Dimension of indexing
     :return: A sparse csr_matrix of one hots.
 
-        Examples
-        --------
-        >>> import np
+    :examples:
+        >>> import numpy as np
         >>> from antk.core import loader
         >>> x = np.array([0, 1, 2, 3])
         >>> loader.toOnehot(x) #doctest: +ELLIPSIS
-        <4x4 sparse matrix of type '<type 'np.float64'>'...
+        <4x4 sparse matrix of type '<type 'numpy.float64'>'...
         >>> loader.toOnehot(x).toarray()
         array([[ 1.,  0.,  0.,  0.],
                [ 0.,  1.,  0.,  0.],
                [ 0.,  0.,  1.,  0.],
                [ 0.,  0.,  0.,  1.]])
-        >>> x = loader.HotIndex(x, dimension=8)
+        >>> x = loader.IndexVector(x, dimension=8)
         >>> loader.toOnehot(x).toarray()
         array([[ 1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
                [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.],
@@ -783,8 +961,7 @@ def is_one_hot(A):
     :param A: A 2-d numpy array or scipy sparse matrix
     :return: True if matrix is a sparse matrix of one hot vectors, False otherwise
 
-        Examples
-        --------
+    :examples:
         >>> import numpy as np
         >>> from antk.core import loader
         >>> x = np.eye(3)
@@ -812,13 +989,11 @@ def is_one_hot(A):
 
 def toIndex(A):
     '''
-    :param A: A matrix of one hot row vectors.
+    :param A: (numpy array or scipy.sparse.csr_matrix) A matrix of one hot row vectors.
     :return: The hot indices.
 
-        Examples
-        --------
-
-        >>> import np
+    :examples:
+        >>> import numpy as np
         >>> from antk.core import loader
         >>> x = np.array([[1,0,0], [0,0,1], [1,0,0]])
         >>> loader.toIndex(x)
@@ -836,45 +1011,30 @@ def toIndex(A):
 def center(X, axis=None):
     """
 
-    :param X: A matrix to center about the mean(over columns axis=0, over rows axis=1, over all entries axis=None)
+    :param X: (numpy array or scipy.sparse.csr_matrix) A matrix to center about the
+        mean(over columns axis=0, over rows axis=1, over all entries axis=None)
     :return: A matrix with entries centered along the specified axis.
     """
     if sps.issparse(X):
         X = X.todense()
-        return sps.csr_matrix(X - np.mean(X, axis=axis))
+        return X - np.mean(X, axis=axis)
     else:
+        if axis == 1:
+            return X - np.transpose(np.array([X.mean(axis=1).tolist()] * X.shape[1]))
         return X - np.mean(X, axis=axis)
 
 
 def unit_variance(X, axis=None):
     """
 
-    :param X: A matrix to transfrom to have unit variance (over columns axis=0, over rows axis=1, over all entries axis=None)
+    :param X: (numpy array or scipy.sparse.csr_matrix) A matrix to transform to have
+        unit variance (over columns axis=0, over rows axis=1, over all entries axis=None)
+    :param axis: The axis to perform the transform.
     :return: A matrix with unit variance along the specified axis.
     """
-    if sps.isspparse(X):
-        X = X.todense()
-        return sps.csr_matrix(X / np.std(X, axis=axis))
-    else:
-        return X / np.std(X, axis=axis)
-
-def pca_whiten(X):
-    """
-    Returns matrix with PCA whitening transform applied.
-    This transform assumes that data points are rows of matrix.
-
-    :param X: Numpy array, scipy sparse matrix
-    :param axis: Axis to whiten over.
-    :return:
-    """
     if sps.issparse(X):
-        return sps.csr_matrix(pca_whiten(X.todense()))
-    else:
-        X -= np.mean(X, axis=0)
-        cov = np.dot(X.T, X)/X.shape[0]
-        U, S, V = np.linalg.svd(cov)
-        Xrot = np.dot(X, U)
-        return Xrot/np.sqrt(S + 1e-5)
+        X = X.todense()
+    return X / np.std(X, axis=axis)
 
 # ===================================================
 # Normalizations for tfidf or whatever
@@ -887,13 +1047,13 @@ def l2normalize(X, axis=1):
     axis=0 normalizes each column of X by norm of said column. :math:`l2normalize(X)_{ij} = \\frac{X_{ij}}{\sqrt{\sum_k
     X_{kj}^2}}`
 
-    axis=None normalizes entries of X  by norm of X. :math:`l2normalize(X)_{ij} = \\frac{X_{ij}}{\sqrt{\sum_k \sum_p
-    X_{kp}^2}}`
-
     :param X: A scipy sparse csr_matrix or numpy array.
     :param axis: The dimension to normalize over.
     :return: A normalized matrix.
+    :raise: ValueError
     """
+    if axis is None:
+        raise ValueError('axis must be 0 or 1. Normalization is over rows or columns.')
     if sps.issparse(X):
         X = X.toarray()
     normalized_matrix = X/np.linalg.norm(X, ord=2, axis=axis, keepdims=True)
@@ -908,14 +1068,13 @@ def l1normalize(X, axis=1):
     axis=0 normalizes each column of X by norm of said column. :math:`l1normalize(X)_{ij} = \\frac{X_{ij}}{\sum_k
     |X_{kj}|}`
 
-    axis=None normalizes entries of X  by norm of X. :math:`l1normalize(X)_{ij} = \\frac{X_{ij}}{\sum_k \sum_p
-    |X_{kp}|}`
-
-
     :param X: A scipy sparse csr_matrix or numpy array.
     :param axis: The dimension to normalize over.
     :return: A normalized matrix.
+    :raise: ValueError
     """
+    if axis is None:
+        raise ValueError('axis must be 0 or 1. Normalization is over rows or columns.')
     if sps.issparse(X):
         X = X.toarray()
     normalized_matrix = X/np.linalg.norm(X, ord=1, axis=axis, keepdims=True)
@@ -930,13 +1089,13 @@ def maxnormalize(X, axis=1):
     axis=0 normalizes each column of X by norm of said column. :math:`maxnormalize(X)_{ij} = \\frac{X_{ij}}{max(X_{
     :j})}`
 
-    axis=None normalizes entries of X  norm of X. :math:`maxnormalize(X)_{ij} = \\frac{X_{ij}}{max(X)}`
-
-
     :param X: A scipy sparse csr_matrix or numpy array.
     :param axis: The dimension to normalize over.
     :return: A normalized matrix.
+    :raise: ValueError
     """
+    if axis is None:
+        raise ValueError('Axis must be 0 or 1. Normalization is over rows or columns.')
     if sps.issparse(X):
         X = X.toarray()
     normalized_matrix = X/np.linalg.norm(X, ord=np.inf, axis=axis, keepdims=True)
@@ -944,17 +1103,21 @@ def maxnormalize(X, axis=1):
         normalized_matrix = sps.csr_matrix(normalized_matrix)
     return normalized_matrix
 
-NORM = {'l2': l2normalize,
-         'count': l1normalize,
-         'max': maxnormalize}
+
 
 
 def tfidf(X, norm='l2'):
     """
-    :param X: A document-term matrix.
-    :param norm: Normalization strategy: 'l2row': normalizes the scores of rows by length of rows after basic tfidf (each document vector is a unit vector), 'count': normalizes the scores of rows by the the total word count of a document. 'max' normalizes the scores of rows by the maximum count for a single word in a document.
+    :param X: (numpy array or scipy.sparse.csr_matrix) A document-term matrix with term counts.
+    :param norm: Normalization strategy: `l2row`: normalizes the scores of rows by
+    length of rows after basic tfidf (each document vector is a unit vector),
+    `count`: normalizes the scores of rows by the the total word count of a document.
+    `max` normalizes the scores of rows by the maximum count for a single word in a document.
     :return: Returns tfidf of document-term matrix X with optional normalization.
     """
+    NORM = {'l2': l2normalize,
+            'count': l1normalize,
+            'max': maxnormalize}
     X = sps.csr_matrix(X)
     idf = np.log(X.shape[0]/X.sign().sum(0))
     # make a diagonal matrix of idf values to matrix multiply with tf.
@@ -969,15 +1132,12 @@ def tfidf(X, norm='l2'):
         # no normalization
         return sps.csr_matrix(X.dot(IDF))
 
-# ========================================================
-# ==================MISC==================================
-# ========================================================
 def untar(fname):
     """
     Untar and ungzip a file in the current directory.
-    :param fname: Name of the .tar.gz file
+    :param fname: (str) Name of the .tar.gz file
     """
-    if (fname.endswith("tar.gz")):
+    if fname.endswith("tar.gz"):
         tar = tarfile.open(fname)
         tar.extractall()
         tar.close()
@@ -985,9 +1145,11 @@ def untar(fname):
     else:
         print("Not a tar.gz file: '%s '" % fname)
 
+
 def maybe_download(filename, directory, source_url):
     """
-    Download the data from source url, unless it's already here. From https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py
+    Download the data from source url, unless it's already here.
+    From https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py
 
     :param filename: string, name of the file in the directory.
     :param directory: string, path to working directory.

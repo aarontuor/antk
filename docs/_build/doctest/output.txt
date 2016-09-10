@@ -1,0 +1,17 @@
+Results of doctest builder run on 2016-09-08 11:18:57
+=====================================================
+
+Document: loader
+----------------
+1 items passed all tests:
+  56 tests in default
+56 tests in 1 items.
+56 passed and 0 failed.
+Test passed.
+
+Doctest summary
+===============
+   56 tests
+    0 failures in tests
+    0 failures in setup code
+    0 failures in cleanup code

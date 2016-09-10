@@ -59,14 +59,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -79,14 +76,14 @@
             
   <div class="section" id="part-3-crafting-a-new-model">
 <h1>Part 3: Crafting a new model<a class="headerlink" href="#part-3-crafting-a-new-model" title="Permalink to this headline">¶</a></h1>
-<p>So far we have been using functions in our config files that are defined in the <a class="reference internal" href="node_ops.html"><em>node_ops</em></a> module. In the model we
+<p>So far we have been using functions in our config files that are defined in the <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a> module. In the model we
 have defined, the <strong>concat</strong> nodes are passed directly to <strong>dnn</strong> nodes with no intervening non-linearity. We can introduce
 non-linear transformations at these points by directly calling tensorflow non-linear transforms in the config file.</p>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <p class="last">Introduce tensorflow non-linear transforms in tree.config</p>
 </div>
-<p>We also have the ablility to introduce new node functions which are not defined by tensorflow or <a class="reference internal" href="node_ops.html"><em>node_ops</em></a>.
+<p>We also have the ablility to introduce new node functions which are not defined by tensorflow or <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a>.
 One thing we might try is to replace our <strong>dnn</strong> nodes with <strong>highway_dnn</strong> nodes that we need to define. Here is a first
 approximation of defining a new <strong>highway_dnn</strong> node:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">node_ops</span>
@@ -233,7 +230,7 @@ functionality you may want to employ the toolkit for.</p>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Aaron Tuor.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
 </html>

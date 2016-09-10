@@ -81,14 +81,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -104,9 +101,9 @@
 <div class="section" id="datatest-py">
 <h2>datatest.py<a class="headerlink" href="#datatest-py" title="Permalink to this headline">¶</a></h2>
 <p>Tool for displaying data using <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">loader.read_data_sets</span></code></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>usage: datatest [-h] [-hashlist HASHLIST [HASHLIST ...]]
-                [-cold | -subfolders SUBFOLDERS [SUBFOLDERS ...]]
-                datadirectory
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">datatest</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">hashlist</span> <span class="n">HASHLIST</span> <span class="p">[</span><span class="n">HASHLIST</span> <span class="o">...</span><span class="p">]]</span>
+                <span class="p">[</span><span class="o">-</span><span class="n">cold</span> <span class="o">|</span> <span class="o">-</span><span class="n">subfolders</span> <span class="n">SUBFOLDERS</span> <span class="p">[</span><span class="n">SUBFOLDERS</span> <span class="o">...</span><span class="p">]]</span>
+                <span class="n">datadirectory</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -144,7 +141,7 @@
 <div class="section" id="normalize-py">
 <h2>normalize.py<a class="headerlink" href="#normalize-py" title="Permalink to this headline">¶</a></h2>
 <p>Given the path to a file, Capitalization and punctuation is removed, except for infix apostrophes, e.g. &#8220;hasn&#8217;t&#8221;, &#8220;David&#8217;s&#8221;. The normalized text is saved with &#8220;_norm&#8221; appended to the file name before the extension. The normalized text is saved in the same directory as the original text. Beginning and end of sentence tokens are not provided by this normalization script.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>usage: normalize [-h] filepath
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">normalize</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">filepath</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -166,7 +163,7 @@
 <h1>Movie Lens Processing<a class="headerlink" href="#movie-lens-processing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="generatetermdoc-py">
 <h2>generateTermDoc.py<a class="headerlink" href="#generatetermdoc-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span>usage: generateTermDoc [-h] datapath dictionary descriptions doc_term_file
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">generateTermDoc</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">dictionary</span> <span class="n">descriptions</span> <span class="n">doc_term_file</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -200,7 +197,7 @@ A file storing a <a class="reference internal" href="loader.html#loader.HotIndex
 <p>	features_item_year.mat: A file storing a numpy array of movie year releases.</p>
 <p>	features_item_genre.mat: A file storing a scipy sparse csr_matrix of one hot encodings for movie genre.</p>
 </p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>usage: ml100k_item_process [-h] datapath outpath
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ml100k_item_process</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">outpath</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -223,7 +220,7 @@ A file storing a <a class="reference internal" href="loader.html#loader.HotIndex
 <div class="section" id="ml100k-user-process-py">
 <h2>ml100k_user_process.py<a class="headerlink" href="#ml100k-user-process-py" title="Permalink to this headline">¶</a></h2>
 <p>Tool to process Movielens 100k user Metadata.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>usage: ml100k_user_process [-h] datapath outpath
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ml100k_user_process</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">outpath</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -270,7 +267,7 @@ A file storing a <a class="reference internal" href="loader.html#loader.HotIndex
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Aaron Tuor.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
 </html>

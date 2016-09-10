@@ -23,13 +23,13 @@ def get_x():
     return DataSet({'toe': scipy.linalg.toeplitz([1, 0, 0, 0], [1, 2, 3, 0, 0, 0]), #4X6
              'id': np.eye(4)},
             labels={'toe': scipy.linalg.toeplitz([1, 0, 0, 0], [1, 2, 3, 0, 0, 0]), #4X6
-                    'id': np.eye(4)}, num_examples=4) #4X4
+                    'id': np.eye(4)}) #4X4
 
 def get_y():
     return DataSet({'toe': scipy.linalg.toeplitz([1, 0, 0, 0], [1, 2, 3, 0, 0, 0]), #4X6
              'id': np.eye(4)},
             labels={'toe': scipy.linalg.toeplitz([1, 0, 0, 0], [1, 2, 3, 0, 0, 0]), #4X6
-                    'id': np.eye(4)}, num_examples=4, mix=True) #4X4
+                    'id': np.eye(4)}, mix=True) #4X4
 
 def test_init1():
     x = get_x()
