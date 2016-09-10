@@ -1,0 +1,10 @@
+setup.py
+sphinx_argparse.egg-info/PKG-INFO
+sphinx_argparse.egg-info/SOURCES.txt
+sphinx_argparse.egg-info/dependency_links.txt
+sphinx_argparse.egg-info/requires.txt
+sphinx_argparse.egg-info/top_level.txt
+sphinxarg/__init__.py
+sphinxarg/ext.py
+sphinxarg/parser.py
+test/test_parser.py
