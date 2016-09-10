@@ -1,109 +1,155 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Command Line Scripts &mdash; antk 0.3.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.3.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="antk 0.3.0 documentation" href="index.html" />
-    <link rel="prev" title="All in One Tutorial via Matrix Factorization" href="mf_tutorial.html" /> 
-  </head>
-  <body role="document">
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Command Line Scripts &mdash; antk 1.0 documentation</title>
+  
 
-<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
-<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antk 1.0 documentation" href="index.html"/>
+        <link rel="prev" title="All in One Tutorial via Matrix Factorization" href="mf_tutorial.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> antk
+          
+
+          
+            
+            <img src="_static/antlogo_cut_shrunk2.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
 
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="mf_tutorial.html" title="All in One Tutorial via Matrix Factorization"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">home</a>|&nbsp;</li>
-        <li><a href="search.html">search</a>|&nbsp;</li>
- 
-      </ul>
-    </div>
+          
+        </div>
 
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Command Line Scripts</a><ul>
-<li><a class="reference internal" href="#datatest-py">datatest.py</a></li>
-<li><a class="reference internal" href="#normalize-py">normalize.py</a></li>
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="api.html">API: ANT modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Command Line Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#datatest-py">datatest.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#normalize-py">normalize.py</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#movie-lens-processing">Movie Lens Processing</a><ul>
-<li><a class="reference internal" href="#generatetermdoc-py">generateTermDoc.py</a></li>
-<li><a class="reference internal" href="#ml100k-item-process-py">ml100k_item_process.py</a></li>
-<li><a class="reference internal" href="#ml100k-user-process-py">ml100k_user_process.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#movie-lens-processing">Movie Lens Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generatetermdoc-py">generateTermDoc.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ml100k-item-process-py">ml100k_item_process.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ml100k-user-process-py">ml100k_user_process.py</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="mf_tutorial.html"
-                        title="previous chapter">All in One Tutorial via Matrix Factorization</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/command_line.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+            
+          
         </div>
       </div>
+    </nav>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">antk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Command Line Scripts</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/command_line.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="command-line-scripts">
 <h1>Command Line Scripts<a class="headerlink" href="#command-line-scripts" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="datatest-py">
 <h2>datatest.py<a class="headerlink" href="#datatest-py" title="Permalink to this headline">¶</a></h2>
 <p>Tool for displaying data using <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">loader.read_data_sets</span></code></a>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">datatest</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">hashlist</span> <span class="n">HASHLIST</span> <span class="p">[</span><span class="n">HASHLIST</span> <span class="o">...</span><span class="p">]]</span>
-                <span class="p">[</span><span class="o">-</span><span class="n">cold</span> <span class="o">|</span> <span class="o">-</span><span class="n">subfolders</span> <span class="n">SUBFOLDERS</span> <span class="p">[</span><span class="n">SUBFOLDERS</span> <span class="o">...</span><span class="p">]]</span>
-                <span class="n">datadirectory</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>usage: datatest [-h] [-hashlist HASHLIST [HASHLIST ...]]
+                [-cold | -subfolders SUBFOLDERS [SUBFOLDERS ...]]
+                datadirectory
 </pre></div>
 </div>
 <dl class="docutils">
@@ -141,7 +187,7 @@
 <div class="section" id="normalize-py">
 <h2>normalize.py<a class="headerlink" href="#normalize-py" title="Permalink to this headline">¶</a></h2>
 <p>Given the path to a file, Capitalization and punctuation is removed, except for infix apostrophes, e.g. &#8220;hasn&#8217;t&#8221;, &#8220;David&#8217;s&#8221;. The normalized text is saved with &#8220;_norm&#8221; appended to the file name before the extension. The normalized text is saved in the same directory as the original text. Beginning and end of sentence tokens are not provided by this normalization script.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">normalize</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">filepath</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>usage: normalize [-h] filepath
 </pre></div>
 </div>
 <dl class="docutils">
@@ -163,7 +209,7 @@
 <h1>Movie Lens Processing<a class="headerlink" href="#movie-lens-processing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="generatetermdoc-py">
 <h2>generateTermDoc.py<a class="headerlink" href="#generatetermdoc-py" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">generateTermDoc</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">dictionary</span> <span class="n">descriptions</span> <span class="n">doc_term_file</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>usage: generateTermDoc [-h] datapath dictionary descriptions doc_term_file
 </pre></div>
 </div>
 <dl class="docutils">
@@ -197,7 +243,7 @@ A file storing a <a class="reference internal" href="loader.html#loader.HotIndex
 <p>	features_item_year.mat: A file storing a numpy array of movie year releases.</p>
 <p>	features_item_genre.mat: A file storing a scipy sparse csr_matrix of one hot encodings for movie genre.</p>
 </p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ml100k_item_process</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">outpath</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>usage: ml100k_item_process [-h] datapath outpath
 </pre></div>
 </div>
 <dl class="docutils">
@@ -220,7 +266,7 @@ A file storing a <a class="reference internal" href="loader.html#loader.HotIndex
 <div class="section" id="ml100k-user-process-py">
 <h2>ml100k_user_process.py<a class="headerlink" href="#ml100k-user-process-py" title="Permalink to this headline">¶</a></h2>
 <p>Tool to process Movielens 100k user Metadata.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">ml100k_user_process</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="n">datapath</span> <span class="n">outpath</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>usage: ml100k_user_process [-h] datapath outpath
 </pre></div>
 </div>
 <dl class="docutils">
@@ -243,31 +289,70 @@ A file storing a <a class="reference internal" href="loader.html#loader.HotIndex
 </div>
 
 
+           </div>
           </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="mf_tutorial.html" class="btn btn-neutral" title="All in One Tutorial via Matrix Factorization" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Aaron Tuor.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="mf_tutorial.html" title="All in One Tutorial via Matrix Factorization"
-             >previous</a> |</li>
-        <li><a href="index.html">home</a>|&nbsp;</li>
-        <li><a href="search.html">search</a>|&nbsp;</li>
- 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2016, Aaron Tuor.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
-    </div>
-  </body>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>

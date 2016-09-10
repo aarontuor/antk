@@ -36,6 +36,18 @@
 
 *Principal Authors* `Aaron Tuor`_ , `Brian Hutchinson`_
 
+|git| |pypi|
+
+.. |git| image:: _static/git_hub.gif
+    :alt: Documentation
+    :scale: 100%
+    :target: https://github.com/aarontuor/antk
+
+.. |pypi| image:: _static/pypi_page.gif
+    :alt: pypi page
+    :scale: 100%
+    :target: https://pypi.python.org/pypi/antk/
+
 About ANTk
 ==========
 

@@ -145,8 +145,8 @@ Now in an interpreter:
 
 .. code-block:: python
 
-    >>>from antk.core import config
-    >>>config.testGraph('test.config')
+    >>> from antk.core import config
+    >>> config.testGraph('test.config')
 
 This image should display:
 

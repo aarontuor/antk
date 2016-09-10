@@ -1,109 +1,159 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>loader &mdash; antk 0.3.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.3.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="antk 0.3.0 documentation" href="index.html" />
-    <link rel="up" title="API: ANT modules" href="api.html" />
-    <link rel="next" title="Loader Tutorial" href="loader_tutorial.html" />
-    <link rel="prev" title="API: ANT modules" href="api.html" /> 
-  </head>
-  <body role="document">
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>loader &mdash; antk 1.0 documentation</title>
+  
 
-<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
-<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="antk 1.0 documentation" href="index.html"/>
+        <link rel="up" title="API: ANT modules" href="api.html"/>
+        <link rel="next" title="Loader Tutorial" href="loader_tutorial.html"/>
+        <link rel="prev" title="API: ANT modules" href="api.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> antk
+          
+
+          
+            
+            <img src="_static/antlogo_cut_shrunk2.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
 
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="loader_tutorial.html" title="Loader Tutorial"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="api.html" title="API: ANT modules"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">home</a>|&nbsp;</li>
-        <li><a href="search.html">search</a>|&nbsp;</li>
+          
+        </div>
 
-          <li class="nav-item nav-item-1"><a href="api.html" accesskey="U">API: ANT modules</a> &raquo;</li> 
-      </ul>
-    </div>
-
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">loader</a><ul>
-<li><a class="reference internal" href="#module-loader">API</a><ul>
-<li><a class="reference internal" href="#proposed-extensions">Proposed Extensions</a></li>
-<li><a class="reference internal" href="#loading-saving-and-testing">Loading, Saving, and Testing</a></li>
-<li><a class="reference internal" href="#classes">Classes</a></li>
-<li><a class="reference internal" href="#data-transforms">Data Transforms</a></li>
-<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API: ANT modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">loader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="loader_tutorial.html">Loader Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-loader">API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#proposed-extensions">Proposed Extensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loading-saving-and-testing">Loading, Saving, and Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-transforms">Data Transforms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exceptions">Exceptions</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node_ops.html">node_ops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generic_model.html">generic_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command Line Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html#movie-lens-processing">Movie Lens Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="api.html"
-                        title="previous chapter">API: ANT modules</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="loader_tutorial.html"
-                        title="next chapter">Loader Tutorial</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/loader.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+            
+          
         </div>
       </div>
+    </nav>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">antk</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="api.html">API: ANT modules</a> &raquo;</li>
+      
+    <li>loader</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/loader.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="loader">
 <h1>loader<a class="headerlink" href="#loader" title="Permalink to this headline">¶</a></h1>
@@ -159,7 +209,6 @@
 <p><a class="reference internal" href="#loader.center" title="loader.center"><code class="xref any py py-func docutils literal"><span class="pre">center</span></code></a></p>
 <p><a class="reference internal" href="#loader.l1normalize" title="loader.l1normalize"><code class="xref any py py-func docutils literal"><span class="pre">l1normalize</span></code></a></p>
 <p><a class="reference internal" href="#loader.l2normalize" title="loader.l2normalize"><code class="xref any py py-func docutils literal"><span class="pre">l2normalize</span></code></a></p>
-<p><a class="reference internal" href="#loader.pca_whiten" title="loader.pca_whiten"><code class="xref any py py-func docutils literal"><span class="pre">pca_whiten</span></code></a></p>
 <p><a class="reference internal" href="#loader.tfidf" title="loader.tfidf"><code class="xref any py py-func docutils literal"><span class="pre">tfidf</span></code></a></p>
 <p><a class="reference internal" href="#loader.toOnehot" title="loader.toOnehot"><code class="xref any py py-func docutils literal"><span class="pre">toOnehot</span></code></a></p>
 <p><a class="reference internal" href="#loader.toIndex" title="loader.toIndex"><code class="xref any py py-func docutils literal"><span class="pre">toIndex</span></code></a></p>
@@ -196,8 +245,8 @@ Matrices may be of types <a class="reference internal" href="#loader.IndexVector
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSet</span>
+<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="kn">import</span> <span class="n">DataSet</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ones&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> 
 <span class="go">antk.core.DataSet object with fields:</span>
@@ -217,14 +266,14 @@ Matrices may be of types <a class="reference internal" href="#loader.IndexVector
 <span class="go">                           [ 0.,  0.,  0.,  0.,  1.]])}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
 <span class="go">features:</span>
 <span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
 <span class="go">labels:</span>
 <span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
 <span class="go">antk.core.DataSet object with fields:</span>
 <span class="go">    &#39;_labels&#39;: {&#39;ones&#39;: array([[ 1.,  1.],</span>
 <span class="go">                               [ 1.,  1.],</span>
@@ -411,9 +460,9 @@ rows of all the matrices in <a class="reference internal" href="#loader.DataSet.
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSet</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="kn">import</span> <span class="n">DataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="kn">import</span> <span class="n">DataSet</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">DataSets</span><span class="p">({</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))}),</span>
 <span class="gp">... </span>              <span class="s1">&#39;dev&#39;</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">))})})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
@@ -530,8 +579,8 @@ in the <a class="reference internal" href="#loader.IndexVector.vec" title="loade
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xhot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">IndexVector</span><span class="p">(</span><span class="n">xhot</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span><span class="o">.</span><span class="n">vec</span>
@@ -711,8 +760,8 @@ extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if matrix is a sparse matrix of one hot vectors, False otherwise</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">is_one_hot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">True</span>
@@ -739,8 +788,6 @@ extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 <dd><p>axis=1 normalizes each row of X by norm of said row. <span class="math">\(l1normalize(X)_{ij} = \frac{X_{ij}}{\sum_k |X_{ik}|}\)</span></p>
 <p>axis=0 normalizes each column of X by norm of said column. <span class="math">\(l1normalize(X)_{ij} = \frac{X_{ij}}{\sum_k
 |X_{kj}|}\)</span></p>
-<p>axis=None normalizes entries of X  by norm of X. <span class="math">\(l1normalize(X)_{ij} = \frac{X_{ij}}{\sum_k \sum_p
-|X_{kp}|}\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -751,7 +798,10 @@ extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A normalized matrix.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A normalized matrix.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ValueError</p>
 </td>
 </tr>
 </tbody>
@@ -765,8 +815,6 @@ extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 ik}^2}}\)</span></p>
 <p>axis=0 normalizes each column of X by norm of said column. <span class="math">\(l2normalize(X)_{ij} = \frac{X_{ij}}{\sqrt{\sum_k
 X_{kj}^2}}\)</span></p>
-<p>axis=None normalizes entries of X  by norm of X. <span class="math">\(l2normalize(X)_{ij} = \frac{X_{ij}}{\sqrt{\sum_k \sum_p
-X_{kp}^2}}\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -777,7 +825,10 @@ X_{kp}^2}}\)</span></p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A normalized matrix.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A normalized matrix.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ValueError</p>
 </td>
 </tr>
 </tbody>
@@ -830,7 +881,6 @@ If the directory already exists it will be populated with the subdirectory folde
 <dd><p>axis=1 normalizes each row of X by norm of said row. <span class="math">\(maxnormalize(X)_{ij} = \frac{X_{ij}}{max(X_{i:})}\)</span></p>
 <p>axis=0 normalizes each column of X by norm of said column. <span class="math">\(maxnormalize(X)_{ij} = \frac{X_{ij}}{max(X_{
 :j})}\)</span></p>
-<p>axis=None normalizes entries of X  norm of X. <span class="math">\(maxnormalize(X)_{ij} = \frac{X_{ij}}{max(X)}\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -841,7 +891,10 @@ If the directory already exists it will be populated with the subdirectory folde
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A normalized matrix.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A normalized matrix.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ValueError</p>
 </td>
 </tr>
 </tbody>
@@ -872,28 +925,6 @@ From <a class="reference external" href="https://github.com/tensorflow/tensorflo
 </dd></dl>
 
 <dl class="function">
-<dt id="loader.pca_whiten">
-<code class="descclassname">loader.</code><code class="descname">pca_whiten</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#pca_whiten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.pca_whiten" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns matrix with PCA whitening transform applied.
-This transform assumes that data points are rows of matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> &#8211; Numpy array, scipy sparse matrix</li>
-<li><strong>axis</strong> &#8211; Axis to whiten over.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="loader.read_data_sets">
 <code class="descclassname">loader.</code><code class="descname">read_data_sets</code><span class="sig-paren">(</span><em>directory</em>, <em>folders=('train'</em>, <em>'dev'</em>, <em>'test')</em>, <em>hashlist=()</em>, <em>mix=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#read_data_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.read_data_sets" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -909,14 +940,15 @@ If you want others you have to make an explicit list.</li>
 only these files will be added to your <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> objects.
 It you do not provide a hashlist then anything with
 the privileged prefixes <a href="#id4"><span class="problematic" id="id5">labels_</span></a> or <a href="#id6"><span class="problematic" id="id7">features_</span></a> will be loaded.</li>
+<li><strong>mix</strong> &#8211; (boolean) Whether to shuffle during mini-batching.</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A <a class="reference internal" href="#loader.DataSets" title="loader.DataSets"><code class="xref any py py-class docutils literal"><span class="pre">DataSets</span></code></a> object.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">antk.core.loader</span> <span class="k">as</span> <span class="nn">loader</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">antk.core.loader</span> <span class="kn">as</span> <span class="nn">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/features_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/features_ones.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
@@ -951,7 +983,7 @@ the privileged prefixes <a href="#id4"><span class="problematic" id="id5">labels
 <span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data&#39;</span><span class="p">,</span>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data&#39;</span><span class="p">,</span>
 <span class="gp">... </span>                      <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">],</span>
 <span class="gp">... </span>                      <span class="n">hashlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ones&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
 <span class="go">reading train...</span>
@@ -1000,7 +1032,7 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A document-term matrix.</li>
+<li><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A document-term matrix with term counts.</li>
 <li><strong>norm</strong> &#8211; Normalization strategy: <cite>l2row</cite>: normalizes the scores of rows by</li>
 </ul>
 </td>
@@ -1026,8 +1058,8 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The hot indices.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toIndex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">array([0, 2, 0])</span>
@@ -1055,8 +1087,8 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A sparse csr_matrix of one hots.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toOnehot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
 <span class="go">&lt;4x4 sparse matrix of type &#39;&lt;type &#39;numpy.float64&#39;&gt;&#39;...</span>
@@ -1086,10 +1118,15 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A matrix to transform to have
-unit variance (over columns axis=0, over rows axis=1, over all entries axis=None)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A matrix to transform to have
+unit variance (over columns axis=0, over rows axis=1, over all entries axis=None)</li>
+<li><strong>axis</strong> &#8211; The axis to perform the transform.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A matrix with unit variance along the specified axis.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A matrix with unit variance along the specified axis.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1107,35 +1144,72 @@ unit variance (over columns axis=0, over rows axis=1, over all entries axis=None
 </div>
 
 
+           </div>
           </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="loader_tutorial.html" class="btn btn-neutral float-right" title="Loader Tutorial" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="api.html" class="btn btn-neutral" title="API: ANT modules" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Aaron Tuor.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="loader_tutorial.html" title="Loader Tutorial"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="api.html" title="API: ANT modules"
-             >previous</a> |</li>
-        <li><a href="index.html">home</a>|&nbsp;</li>
-        <li><a href="search.html">search</a>|&nbsp;</li>
 
-          <li class="nav-item nav-item-1"><a href="api.html" >API: ANT modules</a> &raquo;</li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &copy; Copyright 2016, Aaron Tuor.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
-    </div>
-  </body>
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>
