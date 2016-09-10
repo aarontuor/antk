@@ -1,4 +1,0 @@
-digraph test_graph {
-	dotproduct;
-	dotproduct -> {huser,hitem,ibias,ubias} [dir=back];
-}
