@@ -18,7 +18,7 @@ setup(name='antk',
       license='none',
       packages=find_packages(),
       zip_safe=False,
-      install_requires=['scipy', 'numpy'],
+      install_requires=['scipy', 'numpy', 'tensorflow'],
       classifiers=[
         'Programming Language :: Python',
         'Operating System :: Unix',
