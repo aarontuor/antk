@@ -40,6 +40,11 @@ Platform
 
 ANTk is compatible with linux 64 bit operating systems.
 
+Python Distribution
+-------------------
+
+ANTk is written in python 2. Most functionality should be forwards compatible.
+
 Install
 -------
 
