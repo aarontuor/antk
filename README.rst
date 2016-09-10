@@ -35,6 +35,10 @@ You will find complete documentation for ANTk at `the ANTk readthedocs page`_.
 .. _Install tensorflow: https://www.tensorflow.org/versions/r0.7/get_started/os_setup.html
 .. _Install graphviz: http://www.graphviz.org/
 
+Platform
+--------
+
+ANTk is compatible with linux 64 bit operating systems.
 
 Install
 -------
