@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>antk.antk.models package &mdash; antk 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="antk 0.3.0 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: center; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/antlogo.png" border="0" alt="ant logo"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">antk.antk.models package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#antk-antk-models-dnn-concat-model-module">antk.antk.models.dnn_concat_model module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-dsaddmodel-module">antk.antk.models.dsaddmodel module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-dssm-model-module">antk.antk.models.dssm_model module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-dssm-restricted-model-module">antk.antk.models.dssm_restricted_model module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-mfmodel-module">antk.antk.models.mfmodel module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-skipgram-module">antk.antk.models.skipgram module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-svdplus-model-module">antk.antk.models.svdplus_model module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-svdplus-model2-module">antk.antk.models.svdplus_model2 module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-tensor-factor-model-module">antk.antk.models.tensor_factor_model module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-tensor-factor-model2-module">antk.antk.models.tensor_factor_model2 module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-tensorfactor-module">antk.antk.models.tensorfactor module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-tree-mf-model-module">antk.antk.models.tree_mf_model module</a></li>
+<li><a class="reference internal" href="#antk-antk-models-tree-model-module">antk.antk.models.tree_model module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/antk.antk.models.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="antk-antk-models-package">
+<h1>antk.antk.models package<a class="headerlink" href="#antk-antk-models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-dnn-concat-model-module">
+<h2>antk.antk.models.dnn_concat_model module<a class="headerlink" href="#antk-antk-models-dnn-concat-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-dsaddmodel-module">
+<h2>antk.antk.models.dsaddmodel module<a class="headerlink" href="#antk-antk-models-dsaddmodel-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-dssm-model-module">
+<h2>antk.antk.models.dssm_model module<a class="headerlink" href="#antk-antk-models-dssm-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-dssm-restricted-model-module">
+<h2>antk.antk.models.dssm_restricted_model module<a class="headerlink" href="#antk-antk-models-dssm-restricted-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-mfmodel-module">
+<h2>antk.antk.models.mfmodel module<a class="headerlink" href="#antk-antk-models-mfmodel-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-skipgram-module">
+<h2>antk.antk.models.skipgram module<a class="headerlink" href="#antk-antk-models-skipgram-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-svdplus-model-module">
+<h2>antk.antk.models.svdplus_model module<a class="headerlink" href="#antk-antk-models-svdplus-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-svdplus-model2-module">
+<h2>antk.antk.models.svdplus_model2 module<a class="headerlink" href="#antk-antk-models-svdplus-model2-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-tensor-factor-model-module">
+<h2>antk.antk.models.tensor_factor_model module<a class="headerlink" href="#antk-antk-models-tensor-factor-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-tensor-factor-model2-module">
+<h2>antk.antk.models.tensor_factor_model2 module<a class="headerlink" href="#antk-antk-models-tensor-factor-model2-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-tensorfactor-module">
+<h2>antk.antk.models.tensorfactor module<a class="headerlink" href="#antk-antk-models-tensorfactor-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-tree-mf-model-module">
+<h2>antk.antk.models.tree_mf_model module<a class="headerlink" href="#antk-antk-models-tree-mf-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="antk-antk-models-tree-model-module">
+<h2>antk.antk.models.tree_model module<a class="headerlink" href="#antk-antk-models-tree-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">home</a>|&nbsp;</li>
+        <li><a href="search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, Aaron Tuor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
+    </div>
+  </body>
+</html>

@@ -84,14 +84,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -132,7 +129,7 @@ demonstration of the functionality of the toolkit without having to tackle a mor
 The original MovieLens 100k dataset is located at <a class="reference external" href="http://grouplens.org/datasets/movielens/">http://grouplens.org/datasets/movielens/</a> .</p>
 <dl class="docutils">
 <dt>To start let&#8217;s import the modules we need, retrieve our prepared data,</dt>
-<dd>and use the <a class="reference internal" href="loader.html"><em>loader</em></a> module&#8217;s <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a> function to load our data:</dd>
+<dd>and use the <a class="reference internal" href="loader.html"><span class="doc">loader</span></a> module&#8217;s <a class="reference internal" href="loader.html#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a> function to load our data:</dd>
 </dl>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">config</span>
@@ -261,7 +258,7 @@ our config as below and we can eliminate the four extra lines in the definition 
 </pre></div>
 </div>
 <p>Also, we have a function for RMSE, and we can evaluate the mean absolute error using
-the <strong>save_tensors</strong> argument to the <a class="reference internal" href="generic_model.html"><em>generic_model</em></a> constructor. Our code now looks like this:</p>
+the <strong>save_tensors</strong> argument to the <a class="reference internal" href="generic_model.html"><span class="doc">generic_model</span></a> constructor. Our code now looks like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">ant</span><span class="o">.</span><span class="n">tensor_out</span>
 <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Target&#39;</span><span class="p">)</span>
 <span class="n">ant</span><span class="o">.</span><span class="n">placeholderdict</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_</span> <span class="c1"># put the new placeholder in the graph for training</span>
@@ -424,7 +421,7 @@ We can see what the model will look like without actually building the graph wit
 </div>
 <p>All our other features besides time are categorical and so use lookups. I think I normalized time during data processing but
 it couldn&#8217;t hurt to check. If you think it is a good idea you can whiten these data inputs to have zero mean and unit variance
-with some convenience functions from the <a class="reference internal" href="loader.html"><em>loader</em></a> module. Now we should build our graph. Notice that we have omitted the
+with some convenience functions from the <a class="reference internal" href="loader.html"><span class="doc">loader</span></a> module. Now we should build our graph. Notice that we have omitted the
 l2 variable in the config file. We are using dropout to regularize our output as an alternative, since this is a standard regularization
 technique for deep neural networks.</p>
 <p>Remember we need a python dictionary of numpy matrices whose keys match the names of placeholder and lookup operations that will
@@ -512,7 +509,7 @@ from the <a class="reference internal" href="generic_model.html#generic_model.Mo
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Aaron Tuor.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
 </html>

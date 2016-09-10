@@ -53,62 +53,8 @@ Implements a general purpose data loader for python non-sequential machine learn
 
    loader_tutorial.rst
 
-Loading, Saving, and Testing
-============================
-
-:any:`save`
-
-:any:`export_data`
-
-:any:`load`
-
-:any:`import_data`
-
-:any:`is_one_hot`
-
-:any:`read_data_sets`
-
-Classes
-=======
-
-:any:`DataSet`
-
-:any:`DataSets`
-
-:any:`HotIndex`
-
-Data Transforms
-===============
-
-:any:`center`
-
-:any:`l1normalize`
-
-:any:`l2normalize`
-
-:any:`pca_whiten`
-
-:any:`tfidf`
-
-:any:`toOnehot`
-
-:any:`toIndex`
-
-:any:`unit_variance`
-
-Exceptions
-==========
-
-:any:`Bad_directory_structure_error`
-
-:any:`Mat_format_error`
-
-:any:`Sparse_format_error`
-
-:any:`Unsupported_format_error`
-
 API
-======
+====
 
 .. automodule:: loader
    :members:

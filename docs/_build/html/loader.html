@@ -62,11 +62,14 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">loader</a><ul>
+<li><a class="reference internal" href="#module-loader">API</a><ul>
+<li><a class="reference internal" href="#proposed-extensions">Proposed Extensions</a></li>
 <li><a class="reference internal" href="#loading-saving-and-testing">Loading, Saving, and Testing</a></li>
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#data-transforms">Data Transforms</a></li>
 <li><a class="reference internal" href="#exceptions">Exceptions</a></li>
-<li><a class="reference internal" href="#module-loader">API</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -87,14 +90,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -125,23 +125,37 @@
 </li>
 </ul>
 </div>
+<div class="section" id="module-loader">
+<span id="api"></span><h2>API<a class="headerlink" href="#module-loader" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="proposed-extensions">
+<h3>Proposed Extensions<a class="headerlink" href="#proposed-extensions" title="Permalink to this headline">¶</a></h3>
+<p>DataSet.split(scheme={devtraintest, crossvalidate, traintest} returns DataSets</p>
+<p>DataSets.join() returns DataSet (combines train or cross validation)</p>
+<p>DataSet + DataSet returns DataSet</p>
+<p>DataSets + DataSets returns DataSets</p>
+<p>DataSets constructor from list of DataSet objects</p>
+<p>DataSet for Online data</p>
+<p>DataSet for Sequence data</p>
+<p>Binary data formats for Streaming data</p>
+</div>
 <div class="section" id="loading-saving-and-testing">
-<h2>Loading, Saving, and Testing<a class="headerlink" href="#loading-saving-and-testing" title="Permalink to this headline">¶</a></h2>
+<h3>Loading, Saving, and Testing<a class="headerlink" href="#loading-saving-and-testing" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="#loader.save" title="loader.save"><code class="xref any py py-func docutils literal"><span class="pre">save</span></code></a></p>
-<p><a class="reference internal" href="#loader.export_data" title="loader.export_data"><code class="xref any py py-func docutils literal"><span class="pre">export_data</span></code></a></p>
 <p><a class="reference internal" href="#loader.load" title="loader.load"><code class="xref any py py-func docutils literal"><span class="pre">load</span></code></a></p>
-<p><a class="reference internal" href="#loader.import_data" title="loader.import_data"><code class="xref any py py-func docutils literal"><span class="pre">import_data</span></code></a></p>
 <p><a class="reference internal" href="#loader.is_one_hot" title="loader.is_one_hot"><code class="xref any py py-func docutils literal"><span class="pre">is_one_hot</span></code></a></p>
 <p><a class="reference internal" href="#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a></p>
+<p><a class="reference internal" href="#loader.untar" title="loader.untar"><code class="xref any py py-func docutils literal"><span class="pre">untar</span></code></a></p>
+<p><a class="reference internal" href="#loader.maybe_download" title="loader.maybe_download"><code class="xref any py py-func docutils literal"><span class="pre">maybe_download</span></code></a></p>
 </div>
 <div class="section" id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a></p>
 <p><a class="reference internal" href="#loader.DataSets" title="loader.DataSets"><code class="xref any py py-class docutils literal"><span class="pre">DataSets</span></code></a></p>
-<p><a class="reference internal" href="#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a></p>
+<p><a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a></p>
+<p><a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a></p>
 </div>
 <div class="section" id="data-transforms">
-<h2>Data Transforms<a class="headerlink" href="#data-transforms" title="Permalink to this headline">¶</a></h2>
+<h3>Data Transforms<a class="headerlink" href="#data-transforms" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="#loader.center" title="loader.center"><code class="xref any py py-func docutils literal"><span class="pre">center</span></code></a></p>
 <p><a class="reference internal" href="#loader.l1normalize" title="loader.l1normalize"><code class="xref any py py-func docutils literal"><span class="pre">l1normalize</span></code></a></p>
 <p><a class="reference internal" href="#loader.l2normalize" title="loader.l2normalize"><code class="xref any py py-func docutils literal"><span class="pre">l2normalize</span></code></a></p>
@@ -152,69 +166,116 @@
 <p><a class="reference internal" href="#loader.unit_variance" title="loader.unit_variance"><code class="xref any py py-func docutils literal"><span class="pre">unit_variance</span></code></a></p>
 </div>
 <div class="section" id="exceptions">
-<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="#loader.Bad_directory_structure_error" title="loader.Bad_directory_structure_error"><code class="xref any py py-exc docutils literal"><span class="pre">Bad_directory_structure_error</span></code></a></p>
-<p><a class="reference internal" href="#loader.Mat_format_error" title="loader.Mat_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Mat_format_error</span></code></a></p>
-<p><a class="reference internal" href="#loader.Sparse_format_error" title="loader.Sparse_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Sparse_format_error</span></code></a></p>
-<p><a class="reference internal" href="#loader.Unsupported_format_error" title="loader.Unsupported_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Unsupported_format_error</span></code></a></p>
-</div>
-<div class="section" id="module-loader">
-<span id="api"></span><h2>API<a class="headerlink" href="#module-loader" title="Permalink to this headline">¶</a></h2>
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="#loader.BadDirectoryStructureError" title="loader.BadDirectoryStructureError"><code class="xref any py py-exc docutils literal"><span class="pre">BadDirectoryStructureError</span></code></a></p>
+<p><a class="reference internal" href="#loader.MatFormatError" title="loader.MatFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">MatFormatError</span></code></a></p>
+<p><a class="reference internal" href="#loader.SparseFormatError" title="loader.SparseFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">SparseFormatError</span></code></a></p>
+<p><a class="reference internal" href="#loader.UnsupportedFormatError" title="loader.UnsupportedFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">UnsupportedFormatError</span></code></a></p>
 <dl class="exception">
-<dt id="loader.Bad_directory_structure_error">
-<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">Bad_directory_structure_error</code><a class="reference internal" href="_modules/loader.html#Bad_directory_structure_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.Bad_directory_structure_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Raised when a data directory specified, does not contain a subfolder specified in the <em>folders</em> argument to <a class="reference internal" href="#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a>.</p>
+<dt id="loader.BadDirectoryStructureError">
+<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">BadDirectoryStructureError</code><a class="reference internal" href="_modules/loader.html#BadDirectoryStructureError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.BadDirectoryStructureError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when a data directory specified, does not contain
+a subfolder specified in the <em>folders</em> argument to 
+<a class="reference internal" href="#loader.read_data_sets" title="loader.read_data_sets"><code class="xref any py py-func docutils literal"><span class="pre">read_data_sets</span></code></a>.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="loader.DataSet">
-<em class="property">class </em><code class="descclassname">loader.</code><code class="descname">DataSet</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em>, <em>num_examples=None</em>, <em>mix=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet" title="Permalink to this definition">¶</a></dt>
-<dd><p>General data structure for mini-batch gradient descent training involving non-sequential data.</p>
+<em class="property">class </em><code class="descclassname">loader.</code><code class="descname">DataSet</code><span class="sig-paren">(</span><em>features</em>, <em>labels=None</em>, <em>mix=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data structure for mini-batch gradient descent training involving non-sequential data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>features</strong> &#8211; A dictionary of string label names to data matrices. Matrices may be <a class="reference internal" href="#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>, scipy sparse csr_matrix, or numpy arrays.</li>
-<li><strong>labels</strong> &#8211; A dictionary of string label names to data matrices. Matrices may be <a class="reference internal" href="#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>, scipy sparse csr_matrix, or numpy arrays.</li>
-<li><strong>num_examples</strong> &#8211; How many data points.</li>
-<li><strong>mix</strong> &#8211; Whether or not to shuffle per epoch.</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>features</strong> &#8211; (dict) A dictionary of string label names to data matrices.
+Matrices may be of types <a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a>, scipy sparse csr_matrix, or numpy array.</li>
+<li><strong>labels</strong> &#8211; (dict) A dictionary of string label names to data matrices.
+Matrices may be of types <a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a>, scipy sparse csr_matrix, or numpy array.</li>
+<li><strong>mix</strong> &#8211; (boolean) Whether or not to shuffle per epoch.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ones&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> 
+<span class="go">antk.core.DataSet object with fields:</span>
+<span class="go">&#39;_labels&#39;: {&#39;ones&#39;: array([[ 1.,  1.],</span>
+<span class="go">                           [ 1.,  1.],</span>
+<span class="go">                           [ 1.,  1.],</span>
+<span class="go">                           [ 1.,  1.],</span>
+<span class="go">                           [ 1.,  1.]])}</span>
+<span class="go">&#39;mix_after_epoch&#39;: False</span>
+<span class="go">&#39;_num_examples&#39;: 5</span>
+<span class="go">&#39;_index_in_epoch&#39;: 0</span>
+<span class="go">&#39;_last_batch_size&#39;: 5</span>
+<span class="go">&#39;_features&#39;: {&#39;id&#39;: array([[ 1.,  0.,  0.,  0.,  0.],</span>
+<span class="go">                           [ 0.,  1.,  0.,  0.,  0.],</span>
+<span class="go">                           [ 0.,  0.,  1.,  0.,  0.],</span>
+<span class="go">                           [ 0.,  0.,  0.,  1.,  0.],</span>
+<span class="go">                           [ 0.,  0.,  0.,  0.,  1.]])}</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+<span class="go">features:</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
+<span class="go">antk.core.DataSet object with fields:</span>
+<span class="go">    &#39;_labels&#39;: {&#39;ones&#39;: array([[ 1.,  1.],</span>
+<span class="go">                               [ 1.,  1.],</span>
+<span class="go">                               [ 1.,  1.]])}</span>
+<span class="go">    &#39;mix_after_epoch&#39;: False</span>
+<span class="go">    &#39;_num_examples&#39;: 3</span>
+<span class="go">    &#39;_index_in_epoch&#39;: 0</span>
+<span class="go">    &#39;_last_batch_size&#39;: 3</span>
+<span class="go">    &#39;_features&#39;: {&#39;id&#39;: array([[ 1.,  0.,  0.,  0.,  0.],</span>
+<span class="go">                               [ 0.,  1.,  0.,  0.,  0.],</span>
+<span class="go">                               [ 0.,  0.,  1.,  0.,  0.]])}</span>
+</pre></div>
+</div>
 </td>
 </tr>
 </tbody>
 </table>
-<p>features
-index_in_epoch
-labels
-num_examples</p>
 <dl class="attribute">
 <dt id="loader.DataSet.features">
 <code class="descname">features</code><a class="headerlink" href="#loader.DataSet.features" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dictionary of feature matrices.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(dict) A dictionary with string keys and feature matrix values.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="loader.DataSet.index_in_epoch">
 <code class="descname">index_in_epoch</code><a class="headerlink" href="#loader.DataSet.index_in_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>The number of datapoints that have been trained on in a particular epoch.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(int) The number of data points that have been trained on in a particular epoch.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="loader.DataSet.labels">
 <code class="descname">labels</code><a class="headerlink" href="#loader.DataSet.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dictionary of label matrices</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="loader.DataSet.mix_after_epoch">
-<code class="descname">mix_after_epoch</code><span class="sig-paren">(</span><em>mix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet.mix_after_epoch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet.mix_after_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether or not to shuffle after training for an epoch.</p>
-<table class="docutils field-list" frame="void" rules="none">
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mix</strong> &#8211; True or False</td>
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(dict) A dictionary with string keys and label matrix values.</td>
 </tr>
 </tbody>
 </table>
@@ -223,16 +284,25 @@ num_examples</p>
 <dl class="method">
 <dt id="loader.DataSet.next_batch">
 <code class="descname">next_batch</code><span class="sig-paren">(</span><em>batch_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet.next_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet.next_batch" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
 <dt>Return a sub DataSet of next batch-size examples.</dt>
 <dd><dl class="first last docutils">
-<dt>If shuffling enabled:</dt>
-<dd>If <cite>batch_size</cite>
-is greater than the number of examples left in the epoch then a batch size DataSet wrapping back to
-beginning will be returned.</dd>
-<dt>If shuffling turned off:</dt>
-<dd>If <cite>batch_size</cite> is greater than the number of examples left in the epoch, points will be shuffled and
-batch_size DataSet is returned starting from index 0.</dd>
+<dt>If no shuffling (mix=False):</dt>
+<dd>If <cite>batch_size</cite> is greater than the number of examples left in
+the epoch then a batch size DataSet wrapping past beginning
+(rows [index_in_epcoch:num_examples, 0:<a class="reference internal" href="#loader.DataSet.num_examples" title="loader.DataSet.num_examples"><code class="xref any py py-attr docutils literal"><span class="pre">num_examples</span></code></a>-<a class="reference internal" href="#loader.DataSet.index_in_epoch" title="loader.DataSet.index_in_epoch"><code class="xref any py py-attr docutils literal"><span class="pre">index_in_epoch</span></code></a>]
+will be returned.</dd>
+<dt>If shuffling enabled (mix=True):</dt>
+<dd>If <cite>batch_size</cite> is greater than the number of examples left in the epoch,
+points will be shuffled and <cite>batch_size</cite> DataSet is returned starting from index 0.</dd>
 </dl>
 </dd>
 </dl>
@@ -240,9 +310,9 @@ batch_size DataSet is returned starting from index 0.</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_size</strong> &#8211; int</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>batch_size</strong> &#8211; (int) The number of rows in the matrices of the sub DataSet.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> object with the next <cite>batch_size</cite> examples.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -251,37 +321,174 @@ batch_size DataSet is returned starting from index 0.</dd>
 <dl class="attribute">
 <dt id="loader.DataSet.num_examples">
 <code class="descname">num_examples</code><a class="headerlink" href="#loader.DataSet.num_examples" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of rows (data points) of the matrices in this <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a>.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(int) Number of rows (data points) of the matrices in this <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="loader.DataSet.reset_index_to_zero">
+<code class="descname">reset_index_to_zero</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet.reset_index_to_zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet.reset_index_to_zero" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body">Sets <a class="reference internal" href="#loader.DataSet.index_in_epoch" title="loader.DataSet.index_in_epoch"><code class="xref any py py-attr docutils literal"><span class="pre">index_in_epoch</span></code></a> to 0.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="loader.DataSet.show">
 <code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty printing of all the data (dimensions, keys, type) in the <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> object</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body">Prints the data specs (dimensions, keys, type) in the <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> object</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="loader.DataSet.showmore">
 <code class="descname">showmore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet.showmore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet.showmore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print a sample of the first up to twenty rows of matrices in DataSet</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body">Prints the data specs (dimensions, keys, type) in the <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> object,</td>
+</tr>
+</tbody>
+</table>
+<p>along with a sample of up to the first twenty rows for matrices in DataSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="loader.DataSet.shuffle">
+<code class="descname">shuffle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSet.shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSet.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body">The same random permutation is applied to the
+rows of all the matrices in <a class="reference internal" href="#loader.DataSet.features" title="loader.DataSet.features"><code class="xref any py py-attr docutils literal"><span class="pre">features</span></code></a> and <a class="reference internal" href="#loader.DataSet.labels" title="loader.DataSet.labels"><code class="xref any py py-attr docutils literal"><span class="pre">labels</span></code></a> .</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="loader.DataSets">
-<em class="property">class </em><code class="descclassname">loader.</code><code class="descname">DataSets</code><span class="sig-paren">(</span><em>datasets_map</em>, <em>mix=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSets" title="Permalink to this definition">¶</a></dt>
-<dd><p>A record of DataSet objects with a display function.</p>
+<em class="property">class </em><code class="descclassname">loader.</code><code class="descname">DataSets</code><span class="sig-paren">(</span><em>datasets_map={}</em>, <em>mix=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSets" title="Permalink to this definition">¶</a></dt>
+<dd><p>A record of <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>datasets_map</strong> &#8211; (dict) A dictionary with string keys and <cite>DataSet</cite> objects as values.</li>
+<li><strong>mix</strong> &#8211; (boolean) Whether or not to enable shuffling for mini-batching.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Attributes:</th><td class="field-body"><p class="first last">(<a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a>) There is an attribute for each key value pair in</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>datasets_map</strong> argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">DataSets</span><span class="p">({</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))}),</span>
+<span class="gp">... </span>              <span class="s1">&#39;dev&#39;</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">))})})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+<span class="go">dev:</span>
+<span class="go">features:</span>
+<span class="go">     id: (2, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">     one: (2, 6) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">train:</span>
+<span class="go">features:</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">     one: (5, 6) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">showmore</span><span class="p">()</span> 
+<span class="go">dev:</span>
+<span class="go">features:</span>
+<span class="go">     id:</span>
+<span class="go">First 2 rows:</span>
+<span class="go">[[ 5.  0.]</span>
+<span class="go"> [ 0.  5.]]</span>
+
+<span class="go">labels:</span>
+<span class="go">     one:</span>
+<span class="go">First 2 rows:</span>
+<span class="go">[[ 5.  5.  5.  5.  5.  5.]</span>
+<span class="go"> [ 5.  5.  5.  5.  5.  5.]]</span>
+
+<span class="go">train:</span>
+<span class="go">features:</span>
+<span class="go">     id:</span>
+<span class="go">First 5 rows:</span>
+<span class="go">[[ 1.  0.  0.  0.  0.]</span>
+<span class="go"> [ 0.  1.  0.  0.  0.]</span>
+<span class="go"> [ 0.  0.  1.  0.  0.]</span>
+<span class="go"> [ 0.  0.  0.  1.  0.]</span>
+<span class="go"> [ 0.  0.  0.  0.  1.]]</span>
+
+<span class="go">labels:</span>
+<span class="go">     one:</span>
+<span class="go">First 5 rows:</span>
+<span class="go">[[ 1.  1.  1.  1.  1.  1.]</span>
+<span class="go"> [ 1.  1.  1.  1.  1.  1.]</span>
+<span class="go"> [ 1.  1.  1.  1.  1.  1.]</span>
+<span class="go"> [ 1.  1.  1.  1.  1.  1.]</span>
+<span class="go"> [ 1.  1.  1.  1.  1.  1.]]</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="loader.DataSets.show">
 <code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSets.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSets.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print data attributes.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body">Pretty print data attributes.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="loader.DataSets.showmore">
 <code class="descname">showmore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#DataSets.showmore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.DataSets.showmore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print data attributes, and data.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body">Pretty print data attributes, and data.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -289,27 +496,43 @@ batch_size DataSet is returned starting from index 0.</dd>
 <dl class="class">
 <dt id="loader.HotIndex">
 <em class="property">class </em><code class="descclassname">loader.</code><code class="descname">HotIndex</code><span class="sig-paren">(</span><em>matrix</em>, <em>dimension=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#HotIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.HotIndex" title="Permalink to this definition">¶</a></dt>
-<dd><p>Same class as IndexVector. This is the legacy name of the class.</p>
+<dd><p>Same data structure as <a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a>. This is the legacy name.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="loader.IndexVector">
 <em class="property">class </em><code class="descclassname">loader.</code><code class="descname">IndexVector</code><span class="sig-paren">(</span><em>matrix</em>, <em>dimension=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#IndexVector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.IndexVector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Index vector representation of one hot matrix.</p>
-<dl class="docutils">
-<dt>matrix: scipy.sparse.csr_matrix or numpy array</dt>
-<dd>A one hot matrix or vector of <em>on</em> indices of a one hot matrix.
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>matrix</strong> &#8211; (scipy.sparse.csr_matrix or numpy array)
+A one hot matrix or vector of <em>on</em> indices of a one hot matrix.
 If <strong>matrix</strong> is a vector of indices and no dimension argument is supplied
-then dimension is set to the maximum index value + 1.</dd>
-</dl>
-<p>IndexVector objects follow the python sequence protocol, so slicing,
+then <strong>dimension</strong> is set to the maximum index value + 1.</li>
+<li><strong>dimension</strong> &#8211; (int) The number of columns in the one hot matrix to be represented.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">IndexVector objects implement the python sequence protocol, so slicing,
 indexing and iteration behave as you might expect.
 Slices of an IndexVector return another IndexVector.
 Indexing returns an integer. Iteration will loop over all the elements
-in the <strong>vec</strong> attribute.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">xhot</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+in the <a class="reference internal" href="#loader.IndexVector.vec" title="loader.IndexVector.vec"><code class="xref any py py-attr docutils literal"><span class="pre">vec</span></code></a> attribute.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xhot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">IndexVector</span><span class="p">(</span><span class="n">xhot</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span><span class="o">.</span><span class="n">vec</span>
 <span class="go">array([0, 0, 1, 2])</span>
@@ -318,8 +541,8 @@ in the <strong>vec</strong> attribute.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span><span class="o">.</span><span class="n">hot</span><span class="p">()</span> 
 <span class="go">&lt;4x3 sparse matrix of type &#39;&lt;type &#39;numpy.float64&#39;&gt;&#39;</span>
 <span class="go">    with 4 stored elements in Compressed Sparse Row format&gt;</span>
-<span class="go">    &gt;&gt;&gt; xindex.hot().toarray() </span>
-<span class="go">    array([[ 1.,  0.,  0.],</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span><span class="o">.</span><span class="n">hot</span><span class="p">()</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> 
+<span class="go">array([[ 1.,  0.,  0.],</span>
 <span class="go">       [ 1.,  0.,  0.],</span>
 <span class="go">       [ 0.,  1.,  0.],</span>
 <span class="go">       [ 0.,  0.,  1.]])</span>
@@ -339,10 +562,21 @@ in the <strong>vec</strong> attribute.</p>
 <span class="go">[2, 2, 3, 4]</span>
 </pre></div>
 </div>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="loader.IndexVector.dim">
 <code class="descname">dim</code><a class="headerlink" href="#loader.IndexVector.dim" title="Permalink to this definition">¶</a></dt>
-<dd><p>The feature dimension (number of columns) of the one hot matrix.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(int) The feature dimension (number of columns) of the one hot matrix.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -352,7 +586,9 @@ in the <strong>vec</strong> attribute.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A one hot scipy sparse csr_matrix</td>
+<tr class="field-odd field"><th class="field-name">Method:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A one hot scipy sparse csr_matrix</td>
 </tr>
 </tbody>
 </table>
@@ -361,35 +597,50 @@ in the <strong>vec</strong> attribute.</p>
 <dl class="attribute">
 <dt id="loader.IndexVector.shape">
 <code class="descname">shape</code><a class="headerlink" href="#loader.IndexVector.shape" title="Permalink to this definition">¶</a></dt>
-<dd><p>The shape of the one hot matrix encoded.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(tuple) The shape of the one hot matrix encoded.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="loader.IndexVector.vec">
 <code class="descname">vec</code><a class="headerlink" href="#loader.IndexVector.vec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The vector of hot indices.</p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attribute:</th><td class="field-body">(numpy 1d array) The vector of hot indices.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="exception">
-<dt id="loader.Mat_format_error">
-<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">Mat_format_error</code><a class="reference internal" href="_modules/loader.html#Mat_format_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.Mat_format_error" title="Permalink to this definition">¶</a></dt>
+<dt id="loader.MatFormatError">
+<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">MatFormatError</code><a class="reference internal" href="_modules/loader.html#MatFormatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.MatFormatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised if the .mat file being read does not contain a
 variable named <em>data</em>.</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="loader.Sparse_format_error">
-<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">Sparse_format_error</code><a class="reference internal" href="_modules/loader.html#Sparse_format_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.Sparse_format_error" title="Permalink to this definition">¶</a></dt>
+<dt id="loader.SparseFormatError">
+<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">SparseFormatError</code><a class="reference internal" href="_modules/loader.html#SparseFormatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.SparseFormatError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raised when reading a plain text file with .sparsetxt
 extension and there are not three entries per line.</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="loader.Unsupported_format_error">
-<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">Unsupported_format_error</code><a class="reference internal" href="_modules/loader.html#Unsupported_format_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.Unsupported_format_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Raised when a file is requested to be loaded or saved without one of the supported file extensions.</p>
+<dt id="loader.UnsupportedFormatError">
+<em class="property">exception </em><code class="descclassname">loader.</code><code class="descname">UnsupportedFormatError</code><a class="reference internal" href="_modules/loader.html#UnsupportedFormatError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.UnsupportedFormatError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when a file is requested to be loaded or saved without one
+of the supported file extensions.</p>
 </dd></dl>
 
 <dl class="function">
@@ -399,7 +650,8 @@ extension and there are not three entries per line.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> &#8211; A matrix to center about the mean(over columns axis=0, over rows axis=1, over all entries axis=None)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A matrix to center about the
+mean(over columns axis=0, over rows axis=1, over all entries axis=None)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A matrix with entries centered along the specified axis.</td>
 </tr>
@@ -411,7 +663,7 @@ extension and there are not three entries per line.</p>
 <dt id="loader.export_data">
 <code class="descclassname">loader.</code><code class="descname">export_data</code><span class="sig-paren">(</span><em>filename</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#export_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.export_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decides how to save data by file extension.
-Raises <a class="reference internal" href="#loader.Unsupported_format_error" title="loader.Unsupported_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Unsupported_format_error</span></code></a> if extension is not one of the supported
+Raises <a class="reference internal" href="#loader.UnsupportedFormatError" title="loader.UnsupportedFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">UnsupportedFormatError</span></code></a> if extension is not one of the supported
 extensions (mat, sparse, binary, dense, index).
 Data contained in .mat files should be saved in a matrix named <em>data</em>.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -420,7 +672,7 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filename</strong> &#8211; A file of an accepted format representing a matrix.</li>
-<li><strong>data</strong> &#8211; A numpy array, scipy sparse matrix, or <a class="reference internal" href="#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a> object.</li>
+<li><strong>data</strong> &#8211; A numpy array, scipy sparse matrix, or <a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a> object.</li>
 </ul>
 </td>
 </tr>
@@ -432,15 +684,15 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <dt id="loader.import_data">
 <code class="descclassname">loader.</code><code class="descname">import_data</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#import_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.import_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decides how to load data into python matrices by file extension.
-Raises <a class="reference internal" href="#loader.Unsupported_format_error" title="loader.Unsupported_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Unsupported_format_error</span></code></a> if extension is not one of the supported
+Raises <a class="reference internal" href="#loader.UnsupportedFormatError" title="loader.UnsupportedFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">UnsupportedFormatError</span></code></a> if extension is not one of the supported
 extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; A file of an accepted format representing a matrix.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; (str) A file of an accepted format representing a matrix.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A numpy matrix, scipy sparse csr_matrix, or any:<cite>HotIndex</cite>.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A numpy matrix, scipy sparse csr_matrix, or any:<cite>IndexVector</cite>.</td>
 </tr>
 </tbody>
 </table>
@@ -453,17 +705,21 @@ extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>A</strong> &#8211; A 2-d numpy array or scipy sparse matrix</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A</strong> &#8211; A 2-d numpy array or scipy sparse matrix</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if matrix is a sparse matrix of one hot vectors, False otherwise<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if matrix is a sparse matrix of one hot vectors, False otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">is_one_hot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">*=</span> <span class="mi">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">is_one_hot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">is_one_hot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
@@ -533,15 +789,15 @@ X_{kp}^2}}\)</span></p>
 <code class="descclassname">loader.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls <a class="reference internal" href="#loader.import_data" title="loader.import_data"><code class="xref any py py-func docutils literal"><span class="pre">import_data</span></code></a>.
 Decides how to load data into python matrices by file extension.
-Raises <a class="reference internal" href="#loader.Unsupported_format_error" title="loader.Unsupported_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Unsupported_format_error</span></code></a> if extension is not one of the supported
+Raises <a class="reference internal" href="#loader.UnsupportedFormatError" title="loader.UnsupportedFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">UnsupportedFormatError</span></code></a> if extension is not one of the supported
 extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; A file of an accepted format representing a matrix.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; (str) A file of an accepted format representing a matrix.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A numpy matrix, scipy sparse csr_matrix, or any:<cite>HotIndex</cite>.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A numpy matrix, scipy sparse csr_matrix, or any:<cite>IndexVector</cite>.</td>
 </tr>
 </tbody>
 </table>
@@ -595,7 +851,8 @@ If the directory already exists it will be populated with the subdirectory folde
 <dl class="function">
 <dt id="loader.maybe_download">
 <code class="descclassname">loader.</code><code class="descname">maybe_download</code><span class="sig-paren">(</span><em>filename</em>, <em>directory</em>, <em>source_url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#maybe_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.maybe_download" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download the data from source url, unless it&#8217;s already here. From <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py</a></p>
+<dd><p>Download the data from source url, unless it&#8217;s already here.
+From <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/learn/python/learn/datasets/base.py</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -644,15 +901,71 @@ This transform assumes that data points are rows of matrix.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>directory</strong> &#8211; Root directory containing data to load.</li>
-<li><strong>folders</strong> &#8211; The subfolders of <em>directory</em> to read data from by default there are train, dev, and test folders. If you want others you have to make an explicit list.</li>
-<li><strong>hashlist</strong> &#8211; If you provide a hashlist these files and only these files will be added to your <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> objects.
+<li><strong>directory</strong> &#8211; (str) Root directory containing data to load.</li>
+<li><strong>folders</strong> &#8211; (dict) The subfolders of <em>directory</em> to read data from.
+By default there are train, dev, and test folders.
+If you want others you have to make an explicit list.</li>
+<li><strong>hashlist</strong> &#8211; (dict) If you provide a hashlist these files and
+only these files will be added to your <a class="reference internal" href="#loader.DataSet" title="loader.DataSet"><code class="xref any py py-class docutils literal"><span class="pre">DataSet</span></code></a> objects.
 It you do not provide a hashlist then anything with
 the privileged prefixes <a href="#id4"><span class="problematic" id="id5">labels_</span></a> or <a href="#id6"><span class="problematic" id="id7">features_</span></a> will be loaded.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A <a class="reference internal" href="#loader.DataSets" title="loader.DataSets"><code class="xref any py py-class docutils literal"><span class="pre">DataSets</span></code></a> object.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A <a class="reference internal" href="#loader.DataSets" title="loader.DataSets"><code class="xref any py py-class docutils literal"><span class="pre">DataSets</span></code></a> object.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">antk.core.loader</span> <span class="k">as</span> <span class="nn">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/features_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/features_ones.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/labels_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/dev/features_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/dev/features_ones.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/dev/labels_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/train/features_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/train/features_ones.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/train/labels_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+<span class="go">reading train...</span>
+<span class="go">reading dev...</span>
+<span class="go">reading test...</span>
+<span class="go">dev:</span>
+<span class="go">features:</span>
+<span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">test:</span>
+<span class="go">features:</span>
+<span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">train:</span>
+<span class="go">features:</span>
+<span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                      <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                      <span class="n">hashlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ones&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+<span class="go">reading train...</span>
+<span class="go">reading dev...</span>
+<span class="go">dev:</span>
+<span class="go">features:</span>
+<span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+<span class="go">train:</span>
+<span class="go">features:</span>
+<span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
+<span class="go">labels:</span>
+</pre></div>
+</div>
 </td>
 </tr>
 </tbody>
@@ -664,21 +977,19 @@ the privileged prefixes <a href="#id4"><span class="problematic" id="id5">labels
 <code class="descclassname">loader.</code><code class="descname">save</code><span class="sig-paren">(</span><em>filename</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls :any`export_data`.
 Decides how to save data by file extension.
-Raises <a class="reference internal" href="#loader.Unsupported_format_error" title="loader.Unsupported_format_error"><code class="xref any py py-exc docutils literal"><span class="pre">Unsupported_format_error</span></code></a> if extension is not one of the supported
+Raises <a class="reference internal" href="#loader.UnsupportedFormatError" title="loader.UnsupportedFormatError"><code class="xref any py py-exc docutils literal"><span class="pre">UnsupportedFormatError</span></code></a> if extension is not one of the supported
 extensions (mat, sparse, binary, dense, index).
 Data contained in .mat files should be saved in a matrix named <em>data</em>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>filename</strong> &#8211; A file of an accepted format representing a matrix.</li>
-<li><strong>data</strong> &#8211; A numpy array, scipy sparse matrix, or <a class="reference internal" href="#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a> object.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; (str) A filename with extension of an</td>
 </tr>
 </tbody>
 </table>
+<p>accepted format for representing a matrix.
+:param data: numpy array, scipy sparse matrix, or <a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a> object.</p>
 </dd></dl>
 
 <dl class="function">
@@ -688,17 +999,18 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> &#8211; A document-term matrix.</li>
-<li><strong>norm</strong> &#8211; Normalization strategy: &#8216;l2row&#8217;: normalizes the scores of rows by length of rows after basic tfidf (each document vector is a unit vector), &#8216;count&#8217;: normalizes the scores of rows by the the total word count of a document. &#8216;max&#8217; normalizes the scores of rows by the maximum count for a single word in a document.</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A document-term matrix.</li>
+<li><strong>norm</strong> &#8211; Normalization strategy: <cite>l2row</cite>: normalizes the scores of rows by</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Returns tfidf of document-term matrix X with optional normalization.</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p>length of rows after basic tfidf (each document vector is a unit vector),
+<cite>count</cite>: normalizes the scores of rows by the the total word count of a document.
+<cite>max</cite> normalizes the scores of rows by the maximum count for a single word in a document.
+:return: Returns tfidf of document-term matrix X with optional normalization.</p>
 </dd></dl>
 
 <dl class="function">
@@ -708,11 +1020,15 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>A</strong> &#8211; A matrix of one hot row vectors.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A matrix of one hot row vectors.</p>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The hot indices.<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The hot indices.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toIndex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">array([0, 2, 0])</span>
 </pre></div>
@@ -731,15 +1047,17 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>X</strong> &#8211; Vector of indices or <a class="reference internal" href="#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a> object</li>
-<li><strong>dim</strong> &#8211; Dimension of indexing</li>
+<li><strong>X</strong> &#8211; (numpy array) Vector of indices or <a class="reference internal" href="#loader.IndexVector" title="loader.IndexVector"><code class="xref any py py-class docutils literal"><span class="pre">IndexVector</span></code></a> object</li>
+<li><strong>dim</strong> &#8211; (int) Dimension of indexing</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A sparse csr_matrix of one hots.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A sparse csr_matrix of one hots.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toOnehot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
 <span class="go">&lt;4x4 sparse matrix of type &#39;&lt;type &#39;numpy.float64&#39;&gt;&#39;...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toOnehot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
@@ -747,7 +1065,7 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <span class="go">       [ 0.,  1.,  0.,  0.],</span>
 <span class="go">       [ 0.,  0.,  1.,  0.],</span>
 <span class="go">       [ 0.,  0.,  0.,  1.]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">HotIndex</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">IndexVector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toOnehot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 <span class="go">array([[ 1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],</span>
 <span class="go">       [ 0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.],</span>
@@ -755,7 +1073,6 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <span class="go">       [ 0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.]])</span>
 </pre></div>
 </div>
-</p>
 </td>
 </tr>
 </tbody>
@@ -769,7 +1086,8 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> &#8211; A matrix to transfrom to have unit variance (over columns axis=0, over rows axis=1, over all entries axis=None)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> &#8211; (numpy array or scipy.sparse.csr_matrix) A matrix to transform to have
+unit variance (over columns axis=0, over rows axis=1, over all entries axis=None)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A matrix with unit variance along the specified axis.</td>
 </tr>
@@ -781,9 +1099,10 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <dt id="loader.untar">
 <code class="descclassname">loader.</code><code class="descname">untar</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/loader.html#untar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#loader.untar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Untar and ungzip a file in the current directory.
-:param fname: Name of the .tar.gz file</p>
+:param fname: (str) Name of the .tar.gz file</p>
 </dd></dl>
 
+</div>
 </div>
 </div>
 
@@ -816,7 +1135,7 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2016, Aaron Tuor.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.5.
     </div>
   </body>
 </html>

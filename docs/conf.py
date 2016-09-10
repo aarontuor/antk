@@ -32,10 +32,10 @@ extensions = [
               'sphinx.ext.autodoc',
               'sphinx.ext.doctest',
               'sphinx.ext.inheritance_diagram',
-              'numpydoc',
               'sphinxarg.ext',
               'sphinx.ext.todo',
               'sphinx.ext.viewcode']
+
 
 [extensions]
 todo_include_todos=True

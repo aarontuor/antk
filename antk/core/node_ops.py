@@ -555,7 +555,8 @@ def nmode_tensor_multiply(tensors, mode, leave_flattened=False,
         return product
 
 @node_op
-def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='binary_tensor_combine'):
+def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0,
+                          distribution='tnorm', name='binary_tensor_combine'):
     '''
     For performing tensor multiplications with batches of data points against an order 3
     weight tensor.
@@ -572,7 +573,7 @@ def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='
     mat2shape = mat2.get_shape().as_list()
     if mat1shape[0] != mat2shape[0]:
         raise ValueError("Number of rows must match for matrices being combined.")
-    t = weights('tnorm', [mat1.get_shape().as_list()[1],
+    t = weights(distribution, [mat1.get_shape().as_list()[1],
                                     mat2.get_shape().as_list()[1],
                                     output_dim],  dtype=mat1.dtype, l2=l2)
     tf.add_to_collection(name+'_weights', t)
@@ -581,7 +582,8 @@ def binary_tensor_combine(tensors, output_dim=10, initrange=1e-5, l2=0.0, name='
     return tf.squeeze(tf.batch_matmul(mat2, prod), [1])
 
 @node_op
-def ternary_tensor_combine(tensors, initrange=1e-5, l2=0.0,name='ternary_tensor_combine'):
+def ternary_tensor_combine(tensors, initrange=1e-5, distribution='tnorm',
+                           l2=0.0, name='ternary_tensor_combine'):
     '''
     For performing tensor multiplications with batches of data points against an order 3
     weight tensor.
