@@ -2,7 +2,7 @@
 Welcome to Automated Neural Graph Toolkit
 =========================================
 
-|build-status| |docs|
+|aaron| |docs| |pypi| |web|
 
 Purpose
 -------
@@ -17,15 +17,25 @@ You will find complete documentation for ANTk at `the ANTk readthedocs page`_.
 .. _the ANTk readthedocs page: http://antk.readthedocs.io/en/latest/
 
 
-.. |build-status| image:: https://img.shields.io/travis/rtfd/readthedocs.org.svg?style=flat
-    :alt: build status
+.. |aaron| image:: docs/_static/snakelogo.png
+    :alt: Aaron's web page
     :scale: 100%
-    :target: https://travis-ci.org/rtfd/readthedocs.org
+    :target: https://sw.cs.wwu.edu/~tuora/aarontuor/index.html
 
-.. |docs| image:: https://readthedocs.org/projects/docs/badge/?version=latest
-    :alt: Documentation Status
+.. |docs| image:: docs/_static/docs-latest-birghtgreen.svg
+    :alt: Documentation
     :scale: 100%
-    :target: https://docs.readthedocs.io/en/latest/?badge=latest
+    :target: http://antk.readthedocs.io/en/latest
+    
+.. |pypi| image:: docs/_static/pypi_page.gif
+    :alt: pypi page
+    :scale: 100%
+    :target: https://pypi.python.org/pypi/antk/
+
+.. |web| image:: docs/_static/web_page.gif
+    :alt: ANTk web page
+    :scale: 100%
+    :target: sw.cs.wwu.edu/~tuora/antk.html
 
 Install
 -------
