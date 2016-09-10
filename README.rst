@@ -48,9 +48,7 @@ and graphviz is installed on your system.
 
 From the terminal:
 
-In a terminal:
-
-.. code-block:: bash
+.. code-block:: 
 
     (venv)$ pip install antk
 
