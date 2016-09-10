@@ -7,7 +7,7 @@ Welcome to Automated Neural Graph Toolkit
 Purpose
 -------
 
-Automated Neural Graph Toolkit. high level machine learning toolkit built on top of Google's Tensorflow to facilitate rapid prototyping of Neural Network models which may consist of multiple models chained together.
+Automated Neural Graph Toolkit is an extension library for Google's Tensorflow. It is designed to facilitate rapid prototyping of Neural Network models which may consist of multiple models chained together. Multiple input streams and and or multiple output predictions are well supported.
 
 Documentation for ANTk
 ----------------------
