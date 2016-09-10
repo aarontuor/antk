@@ -22,7 +22,7 @@ You will find complete documentation for ANTk at `the ANTk readthedocs page`_.
     :scale: 100%
     :target: https://sw.cs.wwu.edu/~tuora/aarontuor/index.html
 
-.. |docs| image:: docs/_static/docs-latest-brighttgreen.svg
+.. |docs| image:: docs/_static/docs-latest-brightgreen.svg
     :alt: Documentation
     :scale: 100%
     :target: http://antk.readthedocs.io/en/latest
