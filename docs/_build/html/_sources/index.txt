@@ -51,10 +51,11 @@
 About ANTk
 ==========
 
-The Automated Neural-graph toolkit is a high level machine learning toolkit built on top of Google's Tensorflow_ to
-facilitate rapid prototyping of Neural Network models which may consist of multiple models chained together. This includes
+The Automated Neural-graph toolkit is a machine learning toolkit written using Google's Tensorflow_ to
+facilitate rapid prototyping of Neural Network and other machine learning models which may consist of multiple models chained together. This includes
 models which have multiple input and/or multiple output streams.
 
+ANTk functions and classes are designed to conveniently work in tandem with native tensorflow code.
 ANTk will be most useful to people who have gone through some of the basic tensorflow tutorials, have some machine learning
 background, and wish to take advantage
 of some of tensorflow's more advanced features. The code itself is consistent, well-formatted, well-documented, and abstracted
@@ -64,44 +65,33 @@ months of machine learning research conducted in tensorflow, by Hutch Research b
 The kernel of the toolkit is comprised of 4 independent, but
 complementary modules:
 
-   **loader:**
+   :any:`loader`
       Implements a general purpose data loader for python non-sequential machine learning tasks.
       Contains functions for common data pre-processing tasks.
 
-   **config:**
-      Facilitates the generation of complex tensorflow models, built from
-      compositions of tensorflow functions.
-
-   **node_ops:**
+   :any:`node_ops`
       Contains functions taking a tensor or structured list of tensors and returning a tensor or structured list of tensors.
       The functions are commonly used compositions of tensorflow functions which operate on tensors.
 
-   **generic_model:**
+   :any:`generic_model`
       A general purpose model builder equipped with generic train, and predict functions which takes parameters for
       optimization strategy, mini-batch, etc...
 
-**Motivation:**
-
-   Working at a high level of abstraction is important for the rapid
-   development of machine learning models. Many successful state of the art models chain together or create an ensemble of several
-   complex models. To facilitate the need for building models whose components are models we have
-   developed a highly modularized set of utilities.
-
-   While this high level of abstraction is often attractive for development, when working with a highly abstracted machine learning toolkit it
-   is often difficult to assess details of implementation and the underlying math behind a packaged model. To address this concern
-   we have made the toolkit implementation and underlying math as transparent as possible. There are links to source code, and relevant scientific papers
-   in the API and we have taken pains to illuminate the workings of complex code with well formatted mathematical equations. Also,
-   we have taken care to allow easy access to tensor objects created by high level operations such as deep neural networks.
+   :any:`config`
+       Facilitates the generation of complex tensorflow models, built from
+       compositions of Tensorflow and ANTk operations.
 
 **Design methodology:**
 
    ANTK was designed to be highly modular, and allow for a high level of abstraction with a great degree of transparency to
-   the underlying implementation. We hope that this design can eliminate the reproduction of coding efforts without sacrificing important
-   knowledge about implementation that may effect the overall performance of a model.
+   the underlying implementation. To this end, There are links to source code, and relevant scientific papers
+   in the API. Also, the toolkit provides a mechanism for easy access to tensor objects created by high level operations such as deep neural networks.
+
+   The toolkit design allows the benefits of prepackaged functions for several varieties of neural nets with parameters for regularization and normalization strategies, as well as a general purpose highly configurable trainer to eliminate boilerplate tensorflow code, all without sacrificing the ability to use powerful lower level tensorflow operations.
 
 Dependencies
 ===============
-Tensorflow, scipy, numpy, sklearn, graphviz.
+Tensorflow, scipy, numpy, matplotlib, graphviz.
 
 
 `Install tensorflow`_
@@ -117,14 +107,7 @@ In a terminal:
 
 .. code-block:: bash
 
-    (venv)$ mkdir antk
-    (venv)$ cd antk
-    (venv)$ git init
-    Initialized empty Git repository in /home/tuora/garbage/.git/
-    (venv)$ git remote add origin https://github.com/aarontuor/antk.git
-    (venv)$ git pull origin master
-    ...
-    (venv)$ python setup.py develop
+    (venv)$ pip install antk
 
 Documentation
 =============
