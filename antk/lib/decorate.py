@@ -36,8 +36,7 @@ def node_op(func):
         if defaults:
             keyword_args = merge_dict(defaults, keyword_args)
         if 'name' in keyword_args:
-            with tf.variable_scope(keyword_args['name']):
-                tensor_out = func(*args, **kwargs)
+            tensor_out = func(*args, **kwargs)
 
             def node_repr(tensor_node):
                 return 'Tensor("%s", shape=%s, dtype=%r)' % (tensor_node.name,
@@ -75,11 +74,11 @@ def tanhlecun(tensor_in, name='tanhlecun'):
     return 1.7159*tf.nn.tanh((2.0/3.0) * tensor_in)
 
 
-sigmoid = act(tf.nn.sigmoid)
-tanh = act(tf.nn.tanh)
-relu = act(tf.nn.relu)
-relu6 = act(tf.nn.relu6)
-softplus = act(tf.nn.softplus)
+sigmoid = tf.nn.sigmoid
+tanh = tf.nn.tanh
+relu = tf.nn.relu
+relu6 = tf.nn.relu6
+softplus = tf.nn.softplus
 
 ACTIVATION = {'sigmoid': sigmoid,
               'tanh': tanh,

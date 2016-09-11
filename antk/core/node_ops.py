@@ -293,7 +293,7 @@ def convolutional_net(in_progress=None):
 @neural_net
 def residual_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm',
         initrange=1.0, l2=0.0, bn=False, keep_prob=None, fan_scaling=False,
-        skiplayers=3, name='dnn'):
+        skiplayers=3, name='residual_dnn'):
     """
     Creates residual neural network with shortcut connections.
         `Deep Residual Learning for Image Recognition`_
@@ -392,7 +392,7 @@ def highway_dnn(tensor_in, hidden_units, activation='tanh', distribution='tnorm'
     return tensor_in
 
 @node_op
-def dropout(tensor_in, prob, name=None):
+def dropout(tensor_in, prob, name='Dropout'):
     """
     Adds dropout node. Adapted from skflow `dropout_ops.py`_ .
         `Dropout A Simple Way to Prevent Neural Networks from Overfitting`_
