@@ -223,7 +223,7 @@ def mult_log_reg(tensor_in, numclasses=None, data=None, dtype=tf.float32,
     return tensor_out
 
 @node_op
-def concat(tensors, output_dim, name='concat'):
+def scale_and_add(tensors, output_dim, name='scale_and_add'):
     """
     Matrix multiplies each tensor_ in *tensors* by its own weight matrix and adds together the results.
 
