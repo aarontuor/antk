@@ -20,6 +20,7 @@ def fan_scale(initrange, activation, tensor_in):
         initrange *= numpy.sqrt(2.0/float(tensor_in.get_shape().as_list()[1]))
     else:
         initrange *= (1.0/numpy.sqrt(float(tensor_in.get_shape().as_list()[1])))
+    return initrange
 
 
 
@@ -167,7 +168,7 @@ def lookup(dataname=None,  data=None,  indices=None, distribution='uniform',
     :return: tf.nn.embedding_lookup(wghts, indices), wghts, indices
     """
 
-    if type(data) is loader.HotIndex:
+    if type(data) is loader.IndexVector:
         if makeplace:
             indices = tf.placeholder(tf.int32, [None], name=dataname)
         wghts = weights(distribution, [data.dim, shape[1]], initrange=initrange, l2=l2, name=name+'_weights')

@@ -45,6 +45,8 @@
 node_ops
 *******************
 
+
+
 The :any:`node_ops` module consists of a collection of mid to high level functions which take a `tensor`_ or structured list of tensors, perform a sequence of tensorflow operations, and return a tensor or structured list of tensors. All node_ops functions conform to
 the following specifications.
 
@@ -284,8 +286,19 @@ Dropout is automatically 'turned' off during evaluation when used in conjuction 
 :any:`dropout`
 
 API
-=========
+====
 
 .. automodule:: node_ops
    :members:
    :undoc-members:
+
+   .. autofunction:: placeholder(dtype, shape=None, data=None, name='placeholder')
+   .. autofunction:: weights(distribution, shape, dtype=tf.float32, initrange=1e-5,
+            seed=None, l2=0.0, name='weights')
+   .. autofunction:: cosine(operands, name='cosine')
+   .. autofunction:: x_dot_y(operands, name='x_dot_y')
+   .. autofunction:: lookup(dataname=None,  data=None,  indices=None, distribution='uniform', initrange=0.1, l2=0.0, shape=None, makeplace=True, name='lookup')
+   .. autofunction:: embedding(tensors, name='embedding')
+   .. autofunction:: mult_log_reg(tensor_in, numclasses=None, data=None, dtype=tf.float32, initrange=1e-10, seed=None, l2=0.0, name='log_reg')
+
+

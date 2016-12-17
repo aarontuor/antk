@@ -3,7 +3,7 @@ from antk.core import config
 from antk.core import generic_model
 
 def dnn_concat(data, configfile,
-            layers=[16, 8],
+            layers=[16, 8, 8],
             activation='tanhlecun',
             initrange=1e-3,
             bn=True,

@@ -4,6 +4,13 @@ import inspect
 import collections
 import numpy
 
+def required():
+    def wrapper(f):
+        def wrap(self, *args, **kwargs):
+            return f(self, *args, **kwargs)
+        return wrap
+    return wrapper
+
 def flatten(container):
     for i in container:
         if isinstance(i, (list,tuple)):
@@ -56,7 +63,7 @@ def node_op(func):
     return new_function
 
 def act(func):
-    func = node_op(func)
+    #func = node_op(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
         tensor_out = func(*args, **kwargs)
@@ -98,7 +105,7 @@ def ph_rep(ph):
     return 'Placeholder("%s", shape=%s, dtype=%r)' % (ph.name, ph.get_shape().as_list(), ph.dtype)
 
 def pholder(func):
-    func = node_op(func)
+    #func = node_op(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
         tensor_out = func(*args, **kwargs)
@@ -110,7 +117,7 @@ def pholder(func):
     return new_function
 
 def variable(func):
-    func = node_op(func)
+    #func = node_op(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
         tensor_out = func(*args, **kwargs)
@@ -142,7 +149,7 @@ def loss_function(func):
 
 def neural_net(func):
     defaults = get_default_args(func)
-    func = node_op(func)
+    #func = node_op(func)
     @functools.wraps(func)
     def new_function(*args, **kwargs):
         if 'activation' not in defaults:
