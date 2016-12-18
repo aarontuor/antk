@@ -162,7 +162,7 @@
 <span class="sd">    :param supplement: A dictionary of numpy input matrices with keys corresponding to placeholders in placeholderdict, where the row size of the matrices do not correspond to the number of datapoints. For use with input data intended for `embedding_lookup`_.</span>
 <span class="sd">    :param dropouts: Dropout tensors in graph.</span>
 <span class="sd">    :param dropout_flag: Whether to use Dropout probabilities for feed forward.</span>
-<span class="sd">    :return: A feed dictionary with keys of placeholder tensors and values of numpy matrices, paired by key</span>
+<span class="sd">    :return: A feed dictionary with keys of placeholder tensors and values of numpy matrices</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ph</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="n">datadict</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>

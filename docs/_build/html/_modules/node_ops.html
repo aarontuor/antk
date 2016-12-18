@@ -155,7 +155,8 @@
     <span class="k">if</span> <span class="n">activation</span> <span class="o">==</span> <span class="n">relu</span><span class="p">:</span>
         <span class="n">initrange</span> <span class="o">*=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">tensor_in</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">]))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">initrange</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">tensor_in</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">])))</span></div>
+        <span class="n">initrange</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">tensor_in</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">as_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">initrange</span></div>
 
 
 
@@ -303,7 +304,7 @@
 <span class="sd">    :return: tf.nn.embedding_lookup(wghts, indices), wghts, indices</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">loader</span><span class="o">.</span><span class="n">HotIndex</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">is</span> <span class="n">loader</span><span class="o">.</span><span class="n">IndexVector</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">makeplace</span><span class="p">:</span>
             <span class="n">indices</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">dataname</span><span class="p">)</span>
         <span class="n">wghts</span> <span class="o">=</span> <span class="n">weights</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span> <span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">initrange</span><span class="o">=</span><span class="n">initrange</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="n">l2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_weights&#39;</span><span class="p">)</span>
@@ -429,7 +430,7 @@
 <span class="nd">@neural_net</span>
 <div class="viewcode-block" id="residual_dnn"><a class="viewcode-back" href="../node_ops.html#node_ops.residual_dnn">[docs]</a><span class="k">def</span> <span class="nf">residual_dnn</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">hidden_units</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;tnorm&#39;</span><span class="p">,</span>
         <span class="n">initrange</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">bn</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">keep_prob</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fan_scaling</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-        <span class="n">skiplayers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dnn&#39;</span><span class="p">):</span>
+        <span class="n">skiplayers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;residual_dnn&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates residual neural network with shortcut connections.</span>
 <span class="sd">        `Deep Residual Learning for Image Recognition`_</span>
@@ -528,7 +529,7 @@
     <span class="k">return</span> <span class="n">tensor_in</span></div>
 
 <span class="nd">@node_op</span>
-<div class="viewcode-block" id="dropout"><a class="viewcode-back" href="../node_ops.html#node_ops.dropout">[docs]</a><span class="k">def</span> <span class="nf">dropout</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="dropout"><a class="viewcode-back" href="../node_ops.html#node_ops.dropout">[docs]</a><span class="k">def</span> <span class="nf">dropout</span><span class="p">(</span><span class="n">tensor_in</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Dropout&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds dropout node. Adapted from skflow `dropout_ops.py`_ .</span>
 <span class="sd">        `Dropout A Simple Way to Prevent Neural Networks from Overfitting`_</span>

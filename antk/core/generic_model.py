@@ -26,7 +26,7 @@ def get_feed_list(batch, placeholderdict, supplement=None, train=1, debug=False)
     :param supplement: A dictionary of numpy input matrices with keys corresponding to placeholders in placeholderdict, where the row size of the matrices do not correspond to the number of datapoints. For use with input data intended for `embedding_lookup`_.
     :param dropouts: Dropout tensors in graph.
     :param dropout_flag: Whether to use Dropout probabilities for feed forward.
-    :return: A feed dictionary with keys of placeholder tensors and values of numpy matrices, paired by key
+    :return: A feed dictionary with keys of placeholder tensors and values of numpy matrices
     """
     ph, dt = [], []
     datadict = batch.features.copy()

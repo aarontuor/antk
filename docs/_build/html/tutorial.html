@@ -186,7 +186,7 @@ which is a useful feature for debugging.</p>
 <p>For this data there are 5000 ratings in dev and test, and 70745 ratings in train.
 Notice that the data type of <em>item</em> and <em>user</em> above is <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>. This is a data structure for storing
 one hot vectors, with a field for a vector of indices into a one hot matrix and the column size of the one hot matrix.
-This will be important as we intend to use the <a class="reference internal" href="node_ops.html#node_ops.lookup" title="node_ops.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a> function, which takes <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>
+This will be important as we intend to use the <a class="reference internal" href="config.html#config.lookup" title="config.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a> function, which takes <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>
 objects for its <em>data</em> argument, makes a placeholder associated with this data and uses the <a class="reference internal" href="loader.html#loader.IndexVector.dim" title="loader.IndexVector.dim"><code class="xref any py py-attr docutils literal"><span class="pre">dim</span></code></a> attribute of the <a class="reference internal" href="loader.html#loader.HotIndex" title="loader.HotIndex"><code class="xref any py py-class docutils literal"><span class="pre">HotIndex</span></code></a>
 data to create a <strong>tf.Variable</strong> tensor with the correct dimension. The output is an <strong>embedding_lookup</strong> using the placeholder
 and variable tensors created.</p>
@@ -229,7 +229,7 @@ in the same place as the picture and be named <strong>no_name.dot</strong> unles
 <img alt="_images/no_name.png" class="align-center" src="_images/no_name.png" />
 <p>Shown in the graph picture above the <a class="reference internal" href="node_ops.html#node_ops.x_dot_y" title="node_ops.x_dot_y"><code class="xref any py py-func docutils literal"><span class="pre">x_dot_y</span></code></a> function takes a list of tensors as its first argument.
 The first two tensors are matrices whose rows are dot producted resulting in a vector containing a scalar for each row.
-The second two tensors are optional biases. For this model, giving a user and item bias helps a great deal. When <a class="reference internal" href="node_ops.html#node_ops.lookup" title="node_ops.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a>
+The second two tensors are optional biases. For this model, giving a user and item bias helps a great deal. When <a class="reference internal" href="config.html#config.lookup" title="config.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a>
 is called more than once in a config file using the same <em>data</em> argument the previously made placeholder tensor is used,
 so here <em>ibias</em> depends on the same placeholder as <em>hbias</em> and <em>ubias</em> depends on the same placeholder as <em>huser</em>, which
 is what we want.</p>
@@ -393,7 +393,7 @@ approximation of defining a new <strong>highway_dnn</strong> node:</p>
 </pre></div>
 </div>
 <p>This looks okay for a first approximation. However we would like to initialize the bias for the transform gate to some
-negative value, so we have to set the optional <em>bias_start=0</em> parameter in the call to <a class="reference internal" href="node_ops.html#node_ops.linear" title="node_ops.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a> for the transform gate to
+negative value, so we have to set the optional <em>bias_start=0</em> parameter in the call to <a class="reference internal" href="config.html#config.linear" title="config.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a> for the transform gate to
 a value we would like.</p>
 <div class="admonition-todo admonition" id="index-6">
 <p class="first admonition-title">Todo</p>

@@ -1,0 +1,5 @@
+out linear(1, True)
+-h1 dnn($layers, activation='tanhlecun', bn=True, keep_prob=.95)
+--x concat(24)
+---huser lookup(dataname='user', initrange=$initrange, shape=[None, $embed])
+---hitem lookup(dataname='item', initrange=$initrange, shape=[None, $embed])

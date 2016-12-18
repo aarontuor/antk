@@ -10,8 +10,8 @@ setup(name='antk',
                   'common deep learning tasks and rapid development of innovative'
                   'models. Developed at Hutch Research, Western Washington University.'
                   'Support for multiple input and output neural network graphs. '
-                  'Great visualizations and extensively documented interface. '
-                  'Great tool for exploring tensorflow functionality and deep learning fundamentals.',
+                  'Model visualizations and extensively documented interface. '
+                  'Explore tensorflow functionality and deep learning fundamentals.',
       url='http://aarontuor.xyz',
       author='Aaron Tuor',
       author_email='tuora@students.wwu.edu',
@@ -26,12 +26,10 @@ setup(name='antk',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Mathematics',
-        'Topic :: Text Processing :: Linguistic'
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Software Development :: Libraries',
-        'Documentation :: Sphinx'],
+        'Topic :: Software Development :: Libraries'],
     keywords=[
         'Deep Learning',
         'Neural Networks',
