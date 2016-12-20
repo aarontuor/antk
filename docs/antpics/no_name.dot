@@ -1,0 +1,4 @@
+digraph no_name {
+	pred;
+	pred -> {pixels} [dir=back];
+}

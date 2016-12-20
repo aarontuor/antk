@@ -1,0 +1,5 @@
+digraph test_graph {
+	pred;
+	pred -> {network} [dir=back];
+	network -> {pixels} [dir=back];
+}

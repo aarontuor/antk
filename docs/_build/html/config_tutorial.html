@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="antk 1.0 documentation" href="index.html"/>
         <link rel="up" title="config" href="config.html"/>
         <link rel="next" title="node_ops" href="node_ops.html"/>
@@ -89,7 +92,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API: ANT modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="loader.html">loader</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="config.html">config</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="">Config Tutorial</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Config Tutorial</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#terms">Terms</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#graph-markers">Graph Markers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#node-names">Node Names</a></li>
@@ -147,7 +150,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/config_tutorial.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/config_tutorial.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -351,7 +354,7 @@ The syntax for a node function call in a .config is the same as calling the func
 but omitting the first tensor input argument and the name argument. The tensor input is derived from the graph. A node&#8217;s
 tensor input is a list of the output of it&#8217;s &#8216;child&#8217; nodes&#8217; (nodes with edges directed to this node) function calls. If
 a node has inorder = 1 then its input is a single tensor as opposed to a list of tensors of length 1.</p>
-<p>Any node functions defined in <a class="reference internal" href="node_ops.html"><em>node_ops</em></a> may be used in a graph, as well as any tensorflow functions which satisfy the
+<p>Any node functions defined in <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a> may be used in a graph, as well as any tensorflow functions which satisfy the
 definition of a node function. For tensorflow node function calls &#8216;tensorflow&#8217; is abbreviated to &#8216;tf&#8217;.
 User defined node functions may be used in the graph when specified by the optional
 arguments <em>function_map</em>, and <em>imports</em>, to the <a class="reference internal" href="config.html#config.AntGraph" title="config.AntGraph"><code class="xref any py py-class docutils literal"><span class="pre">AntGraph</span></code></a> constructor.</p>

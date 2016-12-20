@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="antk 1.0 documentation" href="index.html"/>
         <link rel="up" title="API: ANT modules" href="api.html"/>
         <link rel="next" title="Loader Tutorial" href="loader_tutorial.html"/>
@@ -87,7 +90,7 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API: ANT modules</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">loader</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">loader</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="loader_tutorial.html">Loader Tutorial</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-loader">API</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#proposed-extensions">Proposed Extensions</a></li>
@@ -145,7 +148,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/loader.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/loader.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -245,8 +248,8 @@ Matrices may be of types <a class="reference internal" href="#loader.IndexVector
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="kn">import</span> <span class="n">DataSet</span>
+<tr class="field-even field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSet</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;ones&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> 
 <span class="go">antk.core.DataSet object with fields:</span>
@@ -266,14 +269,14 @@ Matrices may be of types <a class="reference internal" href="#loader.IndexVector
 <span class="go">                           [ 0.,  0.,  0.,  0.,  1.]])}</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
 <span class="go">features:</span>
 <span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
 <span class="go">labels:</span>
 <span class="go">     ones: (5, 2) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> 
 <span class="go">antk.core.DataSet object with fields:</span>
 <span class="go">    &#39;_labels&#39;: {&#39;ones&#39;: array([[ 1.,  1.],</span>
 <span class="go">                               [ 1.,  1.],</span>
@@ -460,9 +463,9 @@ rows of all the matrices in <a class="reference internal" href="#loader.DataSet.
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="kn">import</span> <span class="n">DataSets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="kn">import</span> <span class="n">DataSet</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core.loader</span> <span class="k">import</span> <span class="n">DataSet</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">DataSets</span><span class="p">({</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))}),</span>
 <span class="gp">... </span>              <span class="s1">&#39;dev&#39;</span><span class="p">:</span> <span class="n">DataSet</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)},</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;one&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">))})})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
@@ -579,8 +582,8 @@ in the <a class="reference internal" href="#loader.IndexVector.vec" title="loade
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xhot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">IndexVector</span><span class="p">(</span><span class="n">xhot</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xindex</span><span class="o">.</span><span class="n">vec</span>
@@ -760,8 +763,8 @@ extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if matrix is a sparse matrix of one hot vectors, False otherwise</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">is_one_hot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">True</span>
@@ -947,8 +950,8 @@ the privileged prefixes <a href="#id4"><span class="problematic" id="id5">labels
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A <a class="reference internal" href="#loader.DataSets" title="loader.DataSets"><code class="xref any py py-class docutils literal"><span class="pre">DataSets</span></code></a> object.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">antk.core.loader</span> <span class="kn">as</span> <span class="nn">loader</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">antk.core.loader</span> <span class="k">as</span> <span class="nn">loader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/features_id.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data/test/features_ones.dense&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
@@ -983,7 +986,7 @@ the privileged prefixes <a href="#id4"><span class="problematic" id="id5">labels
 <span class="go">     id: (5, 5) &lt;type &#39;numpy.ndarray&#39;&gt;</span>
 </pre></div>
 </div>
-<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data&#39;</span><span class="p">,</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s1">&#39;/tmp/test_data&#39;</span><span class="p">,</span>
 <span class="gp">... </span>                      <span class="n">folders</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">],</span>
 <span class="gp">... </span>                      <span class="n">hashlist</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ones&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
 <span class="go">reading train...</span>
@@ -1058,8 +1061,8 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The hot indices.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toIndex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">array([0, 2, 0])</span>
@@ -1087,8 +1090,8 @@ Data contained in .mat files should be saved in a matrix named <em>data</em>.</p
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A sparse csr_matrix of one hots.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">loader</span>
+<tr class="field-odd field"><th class="field-name">Examples:</th><td class="field-body"><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">loader</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="o">.</span><span class="n">toOnehot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
 <span class="go">&lt;4x4 sparse matrix of type &#39;&lt;type &#39;numpy.float64&#39;&gt;&#39;...</span>

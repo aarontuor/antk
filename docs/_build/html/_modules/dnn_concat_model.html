@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="antk 1.0 documentation" href="../index.html"/>
         <link rel="up" title="Module code" href="index.html"/> 
 
@@ -134,21 +137,21 @@
            <div itemprop="articleBody">
             
   <h1>Source code for dnn_concat_model</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">config</span>
-<span class="kn">from</span> <span class="nn">antk.core</span> <span class="kn">import</span> <span class="n">generic_model</span>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">antk.core</span> <span class="k">import</span> <span class="n">generic_model</span>
 
 <div class="viewcode-block" id="dnn_concat"><a class="viewcode-back" href="../models.html#dnn_concat_model.dnn_concat">[docs]</a><span class="k">def</span> <span class="nf">dnn_concat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span>
             <span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
             <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanhlecun&#39;</span><span class="p">,</span>
-            <span class="n">initrange</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-            <span class="n">bn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">initrange</span><span class="o">=</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">bn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">keep_prob</span><span class="o">=.</span><span class="mi">95</span><span class="p">,</span>
             <span class="n">concat_size</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
             <span class="n">uembed</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
             <span class="n">iembed</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-            <span class="n">learnrate</span><span class="o">=.</span><span class="mo">00001</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">learnrate</span><span class="o">=.</span><span class="mi">00001</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
             <span class="n">maxbadcount</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
             <span class="n">mb</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
@@ -170,7 +173,7 @@
                                                    <span class="p">})</span>
 
     <span class="n">y</span> <span class="o">=</span> <span class="n">ant</span><span class="o">.</span><span class="n">tensor_out</span>
-    <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Target&#39;</span><span class="p">)</span>
+    <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Target&#39;</span><span class="p">)</span>
     <span class="n">ant</span><span class="o">.</span><span class="n">placeholderdict</span><span class="p">[</span><span class="s1">&#39;ratings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_</span>  <span class="c1"># put the new placeholder in the graph for training</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s1">&#39;objective&#39;</span><span class="p">):</span>
         <span class="n">objective</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
@@ -186,9 +189,9 @@
                                     <span class="n">evaluate</span><span class="o">=</span><span class="n">dev_rmse</span><span class="p">,</span>
                                     <span class="n">predictions</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
                                     <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;dnn_concat&#39;</span><span class="p">,</span>
-                                    <span class="n">make_histograms</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                    <span class="n">save</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                    <span class="n">tensorboard</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                                    <span class="n">make_histograms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="n">tensorboard</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">dev</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">dev</span><span class="p">,</span> <span class="n">eval_schedule</span><span class="o">=</span><span class="n">eval_rate</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">model</span></div>
 </pre></div>

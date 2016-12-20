@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="antk 1.0 documentation" href="index.html"/> 
 
   
@@ -122,7 +125,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/model_crafting.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/model_crafting.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -134,14 +137,14 @@
             
   <div class="section" id="part-3-crafting-a-new-model">
 <h1>Part 3: Crafting a new model<a class="headerlink" href="#part-3-crafting-a-new-model" title="Permalink to this headline">¶</a></h1>
-<p>So far we have been using functions in our config files that are defined in the <a class="reference internal" href="node_ops.html"><em>node_ops</em></a> module. In the model we
+<p>So far we have been using functions in our config files that are defined in the <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a> module. In the model we
 have defined, the <strong>concat</strong> nodes are passed directly to <strong>dnn</strong> nodes with no intervening non-linearity. We can introduce
 non-linear transformations at these points by directly calling tensorflow non-linear transforms in the config file.</p>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
 <p class="last">Introduce tensorflow non-linear transforms in tree.config</p>
 </div>
-<p>We also have the ablility to introduce new node functions which are not defined by tensorflow or <a class="reference internal" href="node_ops.html"><em>node_ops</em></a>.
+<p>We also have the ablility to introduce new node functions which are not defined by tensorflow or <a class="reference internal" href="node_ops.html"><span class="doc">node_ops</span></a>.
 One thing we might try is to replace our <strong>dnn</strong> nodes with <strong>highway_dnn</strong> nodes that we need to define. Here is a first
 approximation of defining a new <strong>highway_dnn</strong> node:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">node_ops</span>
@@ -162,7 +165,7 @@ approximation of defining a new <strong>highway_dnn</strong> node:</p>
 </pre></div>
 </div>
 <p>This looks okay for a first approximation. However we would like to initialize the bias for the transform gate to some
-negative value, so we have to set the optional <em>bias_start=0</em> parameter in the call to <a class="reference internal" href="config.html#config.linear" title="config.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a> for the transform gate to
+negative value, so we have to set the optional <em>bias_start=0</em> parameter in the call to <a class="reference internal" href="node_ops.html#node_ops.linear" title="node_ops.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a> for the transform gate to
 a value we would like.</p>
 <div class="admonition-todo admonition" id="index-1">
 <p class="first admonition-title">Todo</p>

@@ -26,6 +26,7 @@ antk/models/dsaddmodel.py
 antk/models/dssm_model.py
 antk/models/dssm_restricted_model.py
 antk/models/mfmodel.py
+antk/models/res_concat.py
 antk/models/skipgram.py
 antk/models/svdplus_model.py
 antk/models/svdplus_model2.py

@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="antk 1.0 documentation" href="../index.html"/>
         <link rel="up" title="Module code" href="index.html"/> 
 
@@ -206,11 +209,11 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">struct</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy.io</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="kn">as</span> <span class="nn">sps</span>
-<span class="kn">from</span> <span class="nn">antk.lib</span> <span class="kn">import</span> <span class="n">termcolor</span> <span class="k">as</span> <span class="n">tc</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sps</span>
+<span class="kn">from</span> <span class="nn">antk.lib</span> <span class="k">import</span> <span class="n">termcolor</span> <span class="k">as</span> <span class="n">tc</span>
 <span class="kn">import</span> <span class="nn">tarfile</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">urllib</span>
@@ -312,7 +315,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mix</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_features</span> <span class="o">=</span> <span class="n">features</span>  <span class="c1"># hashmap of feature matrices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_examples</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="n">features</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">labels</span><span class="p">:</span>
@@ -415,20 +418,20 @@
 <span class="sd">        :method: Prints the data specs (dimensions, keys, type) in the :any:`DataSet` object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;features:&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;features:&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="ow">is</span> <span class="n">IndexVector</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: vec.shape: </span><span class="si">%s</span><span class="s1"> dim: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: vec.shape: </span><span class="si">%s</span><span class="s1"> dim: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
                                                            <span class="n">feature</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;labels:&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;labels:&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="ow">is</span> <span class="n">IndexVector</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: vec.shape: </span><span class="si">%s</span><span class="s1"> dim: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: vec.shape: </span><span class="si">%s</span><span class="s1"> dim: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">vec</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
                                                            <span class="n">label</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span></div>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="DataSet.showmore"><a class="viewcode-back" href="../loader.html#loader.DataSet.showmore">[docs]</a>    <span class="k">def</span> <span class="nf">showmore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -436,14 +439,14 @@
 <span class="sd">        along with a sample of up to the first twenty rows for matrices in DataSet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;features:&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;features:&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">row</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="se">\n</span><span class="s1">First </span><span class="si">%s</span><span class="s1"> rows:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">feature</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">row</span><span class="p">]))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;labels:&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="se">\n</span><span class="s1">First </span><span class="si">%s</span><span class="s1"> rows:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">feature</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">row</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;labels:&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="n">row</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="se">\n</span><span class="s1">First </span><span class="si">%s</span><span class="s1"> rows:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">row</span><span class="p">]))</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1"> </span><span class="si">%s</span><span class="s1">: </span><span class="se">\n</span><span class="s1">First </span><span class="si">%s</span><span class="s1"> rows:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">row</span><span class="p">]))</span></div>
 
 <div class="viewcode-block" id="DataSet.shuffle"><a class="viewcode-back" href="../loader.html#loader.DataSet.shuffle">[docs]</a>    <span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -468,14 +471,14 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">datamap</span><span class="p">[</span><span class="n">matrix</span><span class="p">]</span> <span class="o">=</span> <span class="n">datamap</span><span class="p">[</span><span class="n">matrix</span><span class="p">][</span><span class="n">order</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_next_batch_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datamap</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_next_batch_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datamap</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        :param datamap: A hash map of matrices</span>
 <span class="sd">        :param start: starting row</span>
 <span class="sd">        :param end: ending row</span>
 <span class="sd">        :return: A hash map of slices of matrices from row start to row end</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_examples</span>
         <span class="n">batch_data_map</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">end</span> <span class="o">&lt;=</span> <span class="n">start</span><span class="p">:</span>
@@ -565,7 +568,7 @@
 <span class="sd">         &lt;BLANKLINE&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets_map</span><span class="o">=</span><span class="p">{},</span> <span class="n">mix</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets_map</span><span class="o">=</span><span class="p">{},</span> <span class="n">mix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">datasets_map</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">datasets_map</span><span class="o">.</span><span class="n">values</span><span class="p">())),</span> <span class="n">antk</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">DataSet</span><span class="p">):</span>
@@ -585,7 +588,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;show&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;showmore&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
-            <span class="k">print</span> <span class="n">tc</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">dataset</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="n">tc</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">dataset</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DataSets.showmore"><a class="viewcode-back" href="../loader.html#loader.DataSets.showmore">[docs]</a>    <span class="k">def</span> <span class="nf">showmore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -594,7 +597,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;show&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;showmore&#39;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
-            <span class="k">print</span> <span class="n">tc</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">dataset</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="n">tc</span><span class="o">.</span><span class="n">colored</span><span class="p">(</span><span class="n">dataset</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
             <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">showmore</span><span class="p">()</span></div></div>
 
 
@@ -649,7 +652,7 @@
 <span class="sd">        &gt;&gt;&gt; [index+2 for index in xindex]</span>
 <span class="sd">        [2, 2, 3, 4]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">dimension</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">is_one_hot</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dim</span> <span class="o">=</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_vec</span> <span class="o">=</span> <span class="n">toIndex</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -657,7 +660,7 @@
             <span class="k">if</span> <span class="n">matrix</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Indices must be integers.&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dim</span> <span class="o">=</span> <span class="n">dimension</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_dim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
@@ -720,6 +723,7 @@
 <span class="sd">    Same data structure as :any:`IndexVector`. This is the legacy name.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
+
 <span class="c1"># ===================================================================================</span>
 <span class="c1"># ====================== I/0 ========================================================</span>
 <span class="c1"># ===================================================================================</span>
@@ -834,7 +838,7 @@
 <span class="sd">    :param file_obj: The open file object to write to.</span>
 <span class="sd">    :param num: The integer to write, will be converted to a long int.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">file_obj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="nb">long</span><span class="p">(</span><span class="n">num</span><span class="p">)))</span>
+    <span class="n">file_obj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">long</span><span class="p">(</span><span class="n">num</span><span class="p">)))</span>
 
 
 <span class="k">def</span> <span class="nf">_read_int64</span><span class="p">(</span><span class="n">file_obj</span><span class="p">):</span>
@@ -875,7 +879,7 @@
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
     <span class="n">_write_int64</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">_write_int64</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s1">&#39;FORTRAN&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s1">&#39;FORTRAN&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
@@ -905,7 +909,7 @@
 <span class="sd">    :param filename:</span>
 <span class="sd">    :param t:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">copy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
     <span class="n">_write_int64</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">_write_int64</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -915,7 +919,7 @@
     <span class="n">ti</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">idxs</span><span class="p">,</span> <span class="n">ti</span><span class="p">))</span>
     <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">indices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">indices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
@@ -947,7 +951,7 @@
     <span class="n">vector</span> <span class="o">=</span> <span class="n">vector</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">_write_int64</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">vector</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">_write_int64</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">index_vec</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
-    <span class="n">vector</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">vector</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">tofile</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
@@ -966,7 +970,7 @@
         <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;mkdir &#39;</span> <span class="o">+</span> <span class="n">datadirectory</span> <span class="o">+</span> <span class="n">sub</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="read_data_sets"><a class="viewcode-back" href="../loader.html#loader.read_data_sets">[docs]</a><span class="k">def</span> <span class="nf">read_data_sets</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">),</span> <span class="n">hashlist</span><span class="o">=</span><span class="p">(),</span> <span class="n">mix</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="read_data_sets"><a class="viewcode-back" href="../loader.html#loader.read_data_sets">[docs]</a><span class="k">def</span> <span class="nf">read_data_sets</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">folders</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">),</span> <span class="n">hashlist</span><span class="o">=</span><span class="p">(),</span> <span class="n">mix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param directory: (str) Root directory containing data to load.</span>
 <span class="sd">    :param folders: (dict) The subfolders of *directory* to read data from.</span>
@@ -1039,7 +1043,7 @@
     <span class="n">datasets_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">:</span>  <span class="c1"># iterates over keys</span>
         <span class="n">dataset_map</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;features&#39;</span><span class="p">:</span> <span class="p">{},</span> <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="p">{}}</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;reading &#39;</span> <span class="o">+</span> <span class="n">folder</span> <span class="o">+</span> <span class="s1">&#39;...&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;reading &#39;</span> <span class="o">+</span> <span class="n">folder</span> <span class="o">+</span> <span class="s1">&#39;...&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">folder</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dir_files</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">BadDirectoryStructureError</span><span class="p">(</span><span class="s1">&#39;Need &#39;</span> <span class="o">+</span> <span class="n">folder</span> <span class="o">+</span> <span class="s1">&#39; folder in &#39;</span> <span class="o">+</span> <span class="n">directory</span> <span class="o">+</span> <span class="s1">&#39; directory.&#39;</span><span class="p">)</span>
         <span class="n">file_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">folder</span><span class="p">)</span>
@@ -1057,7 +1061,7 @@
 <span class="c1"># ===================================================================================</span>
 <span class="c1"># ====================== DATA MANIPULATION===========================================</span>
 <span class="c1"># ===================================================================================</span>
-<div class="viewcode-block" id="toOnehot"><a class="viewcode-back" href="../loader.html#loader.toOnehot">[docs]</a><span class="k">def</span> <span class="nf">toOnehot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="toOnehot"><a class="viewcode-back" href="../loader.html#loader.toOnehot">[docs]</a><span class="k">def</span> <span class="nf">toOnehot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    :param X: (numpy array) Vector of indices or :any:`IndexVector` object</span>
 <span class="sd">    :param dim: (int) Dimension of indexing</span>
@@ -1087,7 +1091,7 @@
         <span class="n">dim</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dim</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">vec</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">dim</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">dim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(([</span><span class="mf">1.0</span><span class="p">]</span><span class="o">*</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dim</span><span class="p">))</span></div>
 
@@ -1144,7 +1148,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Argument to function must be a one hot matrix.&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="center"><a class="viewcode-back" href="../loader.html#loader.center">[docs]</a><span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="center"><a class="viewcode-back" href="../loader.html#loader.center">[docs]</a><span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    :param X: (numpy array or scipy.sparse.csr_matrix) A matrix to center about the</span>
@@ -1160,7 +1164,7 @@
         <span class="k">return</span> <span class="n">X</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="unit_variance"><a class="viewcode-back" href="../loader.html#loader.unit_variance">[docs]</a><span class="k">def</span> <span class="nf">unit_variance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="unit_variance"><a class="viewcode-back" href="../loader.html#loader.unit_variance">[docs]</a><span class="k">def</span> <span class="nf">unit_variance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    :param X: (numpy array or scipy.sparse.csr_matrix) A matrix to transform to have</span>
@@ -1188,11 +1192,11 @@
 <span class="sd">    :return: A normalized matrix.</span>
 <span class="sd">    :raise: ValueError</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;axis must be 0 or 1. Normalization is over rows or columns.&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sps</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-    <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sps</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">normalized_matrix</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">normalized_matrix</span></div>
@@ -1209,11 +1213,11 @@
 <span class="sd">    :return: A normalized matrix.</span>
 <span class="sd">    :raise: ValueError</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;axis must be 0 or 1. Normalization is over rows or columns.&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sps</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-    <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sps</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">normalized_matrix</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">normalized_matrix</span></div>
@@ -1230,11 +1234,11 @@
 <span class="sd">    :return: A normalized matrix.</span>
 <span class="sd">    :raise: ValueError</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Axis must be 0 or 1. Normalization is over rows or columns.&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sps</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-    <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">X</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">sps</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">normalized_matrix</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">normalized_matrix</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">normalized_matrix</span></div>
@@ -1277,9 +1281,9 @@
         <span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
         <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">()</span>
         <span class="n">tar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Extracted &quot;</span> <span class="o">+</span> <span class="n">fname</span> <span class="o">+</span> <span class="s2">&quot; in Current Directory&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracted &quot;</span> <span class="o">+</span> <span class="n">fname</span> <span class="o">+</span> <span class="s2">&quot; in Current Directory&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Not a tar.gz file: &#39;</span><span class="si">%s</span><span class="s2"> &#39;&quot;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not a tar.gz file: &#39;</span><span class="si">%s</span><span class="s2"> &#39;&quot;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="maybe_download"><a class="viewcode-back" href="../loader.html#loader.maybe_download">[docs]</a><span class="k">def</span> <span class="nf">maybe_download</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">source_url</span><span class="p">):</span>

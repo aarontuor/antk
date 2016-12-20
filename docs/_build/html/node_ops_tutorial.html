@@ -30,6 +30,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="antk 1.0 documentation" href="index.html"/>
         <link rel="up" title="Tutorials" href="tutorials.html"/>
         <link rel="next" title="Generic Model Tutorial" href="generic_model_tutorial.html"/>
@@ -90,7 +93,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="config_tutorial.html">Config Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="loader_tutorial.html">Loader Tutorial</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Node Ops Tutorial</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Node Ops Tutorial</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#weights-and-placeholders">Weights and Placeholders</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#loss-functions-and-evaluation-metrics">Loss Functions and Evaluation Metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-activations">Custom Activations</a></li>
@@ -144,7 +147,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/node_ops_tutorial.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/node_ops_tutorial.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -182,34 +185,34 @@ The functions are commonly used compositions of tensorflow functions which opera
 <h2>Custom Activations<a class="headerlink" href="#custom-activations" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="node_ops.html#node_ops.ident" title="node_ops.ident"><code class="xref any py py-func docutils literal"><span class="pre">ident</span></code></a></p>
 <p><code class="xref any docutils literal"><span class="pre">tanhlecun</span></code></p>
-<p><a class="reference internal" href="config.html#config.mult_log_reg" title="config.mult_log_reg"><code class="xref any py py-func docutils literal"><span class="pre">mult_log_reg</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.mult_log_reg" title="node_ops.mult_log_reg"><code class="xref any py py-func docutils literal"><span class="pre">mult_log_reg</span></code></a></p>
 </div>
 <div class="section" id="matrix-operations">
 <h2>Matrix Operations<a class="headerlink" href="#matrix-operations" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="node_ops.html#node_ops.concat" title="node_ops.concat"><code class="xref any py py-func docutils literal"><span class="pre">concat</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.x_dot_y" title="node_ops.x_dot_y"><code class="xref any py py-func docutils literal"><span class="pre">x_dot_y</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.cosine" title="node_ops.cosine"><code class="xref any py py-func docutils literal"><span class="pre">cosine</span></code></a></p>
-<p><a class="reference internal" href="config.html#config.linear" title="config.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.linear" title="node_ops.linear"><code class="xref any py py-func docutils literal"><span class="pre">linear</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.embedding" title="node_ops.embedding"><code class="xref any py py-func docutils literal"><span class="pre">embedding</span></code></a></p>
-<p><a class="reference internal" href="config.html#config.lookup" title="config.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.lookup" title="node_ops.lookup"><code class="xref any py py-func docutils literal"><span class="pre">lookup</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.khatri_rao" title="node_ops.khatri_rao"><code class="xref any py py-func docutils literal"><span class="pre">khatri_rao</span></code></a></p>
 </div>
 <div class="section" id="tensor-operations">
 <h2>Tensor Operations<a class="headerlink" href="#tensor-operations" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="node_ops.html#node_ops.nmode_tensor_tomatrix" title="node_ops.nmode_tensor_tomatrix"><code class="xref any py py-func docutils literal"><span class="pre">nmode_tensor_tomatrix</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.nmode_tensor_multiply" title="node_ops.nmode_tensor_multiply"><code class="xref any py py-func docutils literal"><span class="pre">nmode_tensor_multiply</span></code></a></p>
-<p><a class="reference internal" href="config.html#config.binary_tensor_combine" title="config.binary_tensor_combine"><code class="xref any py py-func docutils literal"><span class="pre">binary_tensor_combine</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.binary_tensor_combine" title="node_ops.binary_tensor_combine"><code class="xref any py py-func docutils literal"><span class="pre">binary_tensor_combine</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.ternary_tensor_combine" title="node_ops.ternary_tensor_combine"><code class="xref any py py-func docutils literal"><span class="pre">ternary_tensor_combine</span></code></a></p>
 </div>
 <div class="section" id="tricks-for-training">
 <h2>Tricks for Training<a class="headerlink" href="#tricks-for-training" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="config.html#config.batch_normalize" title="config.batch_normalize"><code class="xref any py py-func docutils literal"><span class="pre">batch_normalize</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.batch_normalize" title="node_ops.batch_normalize"><code class="xref any py py-func docutils literal"><span class="pre">batch_normalize</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.dropout" title="node_ops.dropout"><code class="xref any py py-func docutils literal"><span class="pre">dropout</span></code></a></p>
 </div>
 <div class="section" id="neural-networks">
 <h2>Neural Networks<a class="headerlink" href="#neural-networks" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="config.html#config.dnn" title="config.dnn"><code class="xref any py py-func docutils literal"><span class="pre">dnn</span></code></a></p>
-<p><a class="reference internal" href="config.html#config.residual_dnn" title="config.residual_dnn"><code class="xref any py py-func docutils literal"><span class="pre">residual_dnn</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.dnn" title="node_ops.dnn"><code class="xref any py py-func docutils literal"><span class="pre">dnn</span></code></a></p>
+<p><a class="reference internal" href="node_ops.html#node_ops.residual_dnn" title="node_ops.residual_dnn"><code class="xref any py py-func docutils literal"><span class="pre">residual_dnn</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.highway_dnn" title="node_ops.highway_dnn"><code class="xref any py py-func docutils literal"><span class="pre">highway_dnn</span></code></a></p>
 <p><a class="reference internal" href="node_ops.html#node_ops.convolutional_net" title="node_ops.convolutional_net"><code class="xref any py py-func docutils literal"><span class="pre">convolutional_net</span></code></a></p>
 </div>
