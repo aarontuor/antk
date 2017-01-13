@@ -601,13 +601,14 @@ def load(filename):
     """
     return import_data(filename)
 
-def import_data(filename):
+def import_data(filename, delimiter=','):
     '''
     Decides how to load data into python matrices by file extension.
     Raises :any:`UnsupportedFormatError` if extension is not one of the supported
     extensions (mat, sparse, binary, dense, sparsetxt, densetxt, index).
 
     :param filename: (str) A file of an accepted format representing a matrix.
+    :delimiter: (str) Used to delimit fields in data files.
     :return: A numpy matrix, scipy sparse csr_matrix, or any:`IndexVector`.
     '''
     extension = filename.split(slash)[-1].split('.')[-1].strip()
@@ -627,12 +628,12 @@ def import_data(filename):
     elif extension == 'binary' or extension == 'dense':
         return _matload(filename)
     elif extension == 'sparsetxt':
-        X = np.loadtxt(filename)
+        X = np.loadtxt(filename, delimiter=delimiter)
         if X.shape[1] != 3:
             raise SparseFormatError('Sparse Format: row col val')
         return sps.csr_matrix((X[:, 2], (X[:, 0], X[:, 1])))
     elif extension == 'densetxt':
-        return np.loadtxt(filename)
+        return np.loadtxt(filename, delimiter=delimiter)
     else:
         raise UnsupportedFormatError('Supported extensions: '
                                        'mat, sparse, binary, sparsetxt, densetxt, index')
@@ -651,7 +652,7 @@ def save(filename, data):
     """
     export_data(filename, data)
 
-def export_data(filename, data):
+def export_data(filename, data, delimiter=','):
     """
     Decides how to save data by file extension.
     Raises :any:`UnsupportedFormatError` if extension is not one of the supported
@@ -659,6 +660,7 @@ def export_data(filename, data):
     Data contained in .mat files should be saved in a matrix named *data*.
 
     :param filename: A file of an accepted format representing a matrix.
+    :delimiter: (str) User to delimit fields in data files.
     :param data: A numpy array, scipy sparse matrix, or :any:`IndexVector` object.
     """
     extension = filename.split(slash)[-1].split('.')[-1].strip()
@@ -679,7 +681,7 @@ def export_data(filename, data):
     elif extension == 'densetxt':
         if sps.issparse(data):
             raise UnsupportedFormatError('Only numpy 2d arrays may be saved in .densetxt format')
-        np.savetxt(filename, data)
+        np.savetxt(filename, data, delimiter=delimiter)
     elif extension == 'sparsetxt':
         if not sps.issparse(data):
             raise UnsupportedFormatError('Only scipy sparse matrices may be saved in .sparsetxt format.')
@@ -687,7 +689,7 @@ def export_data(filename, data):
         indices.append(data.data)
         data = [m.reshape((-1,1)) for m in indices]
         data = np.concatenate(data, axis=1)
-        np.savetxt(filename, data)
+        np.savetxt(filename, data, delimiter=delimiter)
     else:
         raise UnsupportedFormatError('Supported extensions: '
                                        'mat, sparse, binary, dense, index, sparsetxt, densetxt')
@@ -831,7 +833,7 @@ def makedirs(datadirectory, sub_directory_list=('train', 'dev', 'test')):
         os.system('mkdir ' + datadirectory + sub)
 
 
-def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix=False):
+def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix=False, delimiter=','):
     """
     :param directory: (str) Root directory containing data to load.
     :param folders: (dict) The subfolders of *directory* to read data from.
@@ -842,6 +844,7 @@ def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix
         It you do not provide a hashlist then anything with
         the privileged prefixes labels_ or features_ will be loaded.
     :param mix: (boolean) Whether to shuffle during mini-batching.
+    :delimiter: (str) Used to delimit fields in data files.
     :return: A :any:`DataSets` object.
 
     :examples:
@@ -914,7 +917,7 @@ def read_data_sets(directory, folders=('train', 'dev', 'test'), hashlist=(), mix
                 prefix_ = prefix + '_'
                 descriptor = (filename.split('.')[0]).split(prefix_)[-1]
                 if (not hashlist) or (descriptor in hashlist):
-                    dataset_map[prefix][descriptor] = import_data(directory + folder + slash + filename)
+                    dataset_map[prefix][descriptor] = import_data(directory + folder + slash + filename, delimiter=delimiter)
         datasets_map[folder] = dataset_map
     return DataSets(datasets_map, mix=mix)
 
